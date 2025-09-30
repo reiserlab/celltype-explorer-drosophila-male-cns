@@ -1,0 +1,580 @@
+/**
+ * Neuron Type Search and Autocomplete
+ * Provides client-side search functionality for neuron types
+ *
+ * This file is generated at build time with embedded neuron types data.
+ * Do not edit manually - it will be overwritten during the build process.
+ *
+ * Generated on: {{ generation_timestamp }}
+ * Total neuron types: {{ neuron_types|length }}
+ */
+
+// Neuron types data embedded at build time
+const NEURON_TYPES_DATA = {{ neuron_types_json|safe }};
+
+// Detailed neuron data with URLs for navigation
+const NEURON_DATA = {{ neuron_types_data_json|safe }};
+
+class NeuronSearch {
+  constructor(inputId = "menulines") {
+    this.inputElement = document.getElementById(inputId);
+    this.neuronTypes = NEURON_TYPES_DATA;
+    this.neuronData = NEURON_DATA;
+    this.filteredTypes = [];
+    this.currentIndex = -1;
+    this.isDropdownVisible = false;
+    this.clickingDropdown = false;
+
+    // Detect if we're on a neuron page (inside types folder) based on current path
+    this.isNeuronPage = this.detectNeuronPageContext();
+
+    // Create autocomplete dropdown
+    this.dropdown = this.createDropdown();
+
+    // Initialize the search functionality
+    this.init();
+  }
+
+  /**
+   * Detect if we're currently on a neuron page (inside types folder)
+   */
+  detectNeuronPageContext() {
+    const pathname = window.location.pathname;
+
+    // Check if we're in a types subdirectory
+    if (pathname.includes('/types/')) {
+      return true;
+    }
+
+    // Check if current page is an HTML file that's not index.html, types.html, or help.html
+    // This catches cases where neuron pages might be in the root but are individual neuron files
+    const filename = pathname.split('/').pop();
+    if (filename && filename.endsWith('.html') &&
+        !['index.html', 'types.html', 'help.html'].includes(filename)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Initialize the search functionality
+   */
+  init() {
+    if (!this.inputElement) {
+      console.warn("Search input element not found");
+      return;
+    }
+
+    // Set up event listeners
+    this.setupEventListeners();
+
+    console.log(`Loaded ${this.neuronTypes.length} neuron types for search`);
+  }
+
+  /**
+   * Create the autocomplete dropdown element
+   */
+  createDropdown() {
+    const dropdown = document.createElement("div");
+    dropdown.className = "neuron-search-dropdown";
+    dropdown.style.cssText = `
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        `;
+
+    // Insert dropdown after the input element
+    const parent = this.inputElement.parentNode;
+    parent.style.position = "relative";
+    parent.appendChild(dropdown);
+
+    return dropdown;
+  }
+
+  /**
+   * Set up event listeners for the search functionality
+   */
+  setupEventListeners() {
+    // Input event for real-time search
+    this.inputElement.addEventListener("input", (e) => {
+      this.handleInput(e.target.value);
+    });
+
+    // Keyboard navigation
+    this.inputElement.addEventListener("keydown", (e) => {
+      this.handleKeyDown(e);
+    });
+
+    // Focus and blur events
+    this.inputElement.addEventListener("focus", () => {
+      if (this.inputElement.value.trim()) {
+        this.showDropdown();
+      }
+    });
+
+    this.inputElement.addEventListener("blur", () => {
+      // Delay hiding to allow click on dropdown items
+      setTimeout(() => {
+        // Only hide if no dropdown item is being clicked
+        if (!this.clickingDropdown) {
+          this.hideDropdown();
+        }
+      }, 300);
+    });
+
+    // Click outside to close dropdown
+    document.addEventListener("click", (e) => {
+      if (
+        !this.inputElement.contains(e.target) &&
+        !this.dropdown.contains(e.target)
+      ) {
+        this.hideDropdown();
+      }
+    });
+  }
+
+  /**
+   * Handle input changes
+   */
+  handleInput(value) {
+    const query = value.trim().toLowerCase();
+
+    if (query.length === 0) {
+      this.hideDropdown();
+      return;
+    }
+
+    // Filter neuron types by name, synonyms, and flywire types
+    this.filteredTypes = this.neuronTypes.filter((type) => {
+      const typeLower = type.toLowerCase();
+
+      // Search in neuron name
+      if (typeLower.includes(query)) {
+        return true;
+      }
+
+      // Search in synonyms and flywire types from detailed data
+      const neuronEntry = this.neuronData.find(entry => entry.name === type);
+      if (neuronEntry) {
+        // Search in synonyms
+        if (neuronEntry.synonyms) {
+          const synonymsLower = neuronEntry.synonyms.toLowerCase();
+          // Search in full synonym text
+          if (synonymsLower.includes(query)) {
+            return true;
+          }
+          // Also search in just the part after colon (the actual name)
+          const synonyms = synonymsLower.split(';').map(s => s.trim());
+          for (const synonym of synonyms) {
+            const colonIndex = synonym.indexOf(':');
+            if (colonIndex !== -1) {
+              const nameAfterColon = synonym.substring(colonIndex + 1).trim();
+              if (nameAfterColon.includes(query)) {
+                return true;
+              }
+            }
+          }
+        }
+
+        // Search in flywire types
+        if (neuronEntry.flywire_types && neuronEntry.flywire_types.toLowerCase().includes(query)) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+
+    // Sort by relevance (exact matches first, then starts with, then contains)
+    this.filteredTypes.sort((a, b) => {
+      const aLower = a.toLowerCase();
+      const bLower = b.toLowerCase();
+
+      // Exact match comes first
+      if (aLower === query) return -1;
+      if (bLower === query) return 1;
+
+      // Starts with query comes next
+      if (aLower.startsWith(query) && !bLower.startsWith(query)) return -1;
+      if (bLower.startsWith(query) && !aLower.startsWith(query)) return 1;
+
+      // Otherwise alphabetical order
+      return a.localeCompare(b);
+    });
+
+    // Limit results to prevent performance issues
+    this.filteredTypes = this.filteredTypes.slice(0, 10);
+
+    this.currentIndex = -1;
+    this.updateDropdown();
+    this.showDropdown();
+  }
+
+  /**
+   * Handle keyboard navigation
+   */
+  handleKeyDown(e) {
+    if (!this.isDropdownVisible) return;
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        this.currentIndex = Math.min(
+          this.currentIndex + 1,
+          this.filteredTypes.length - 1,
+        );
+        this.updateHighlight();
+        break;
+
+      case "ArrowUp":
+        e.preventDefault();
+        this.currentIndex = Math.max(this.currentIndex - 1, -1);
+        this.updateHighlight();
+        break;
+
+      case "Enter":
+        e.preventDefault();
+        if (this.currentIndex >= 0) {
+          this.selectNeuronType(this.filteredTypes[this.currentIndex]);
+        } else if (this.filteredTypes.length > 0) {
+          this.selectNeuronType(this.filteredTypes[0]);
+        }
+        break;
+
+      case "Escape":
+        this.hideDropdown();
+        this.inputElement.blur();
+        break;
+    }
+  }
+
+  /**
+   * Update the dropdown content
+   */
+  updateDropdown() {
+    this.dropdown.innerHTML = "";
+
+    if (this.filteredTypes.length === 0) {
+      const noResults = document.createElement("div");
+      noResults.className = "neuron-search-no-results";
+      noResults.textContent = "No matching neuron types found";
+      noResults.style.cssText = `
+                padding: 8px 12px;
+                color: #666;
+                font-style: italic;
+            `;
+      this.dropdown.appendChild(noResults);
+      return;
+    }
+
+    this.filteredTypes.forEach((type, index) => {
+      const item = document.createElement("div");
+      item.className = "neuron-search-item";
+      item.style.cssText = `
+                padding: 8px 12px;
+                cursor: pointer;
+                border-bottom: 1px solid #eee;
+                transition: background-color 0.2s;
+            `;
+
+      // Create content with neuron name and clickable available sides
+      const neuronEntry = this.neuronData.find(entry => entry.name === type);
+
+      // Create neuron name element
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'neuron-name';
+      nameSpan.style.cssText = `
+        color: inherit;
+        cursor: pointer;
+      `;
+
+      // Highlight matching text in neuron name
+      const query = this.inputElement.value.trim().toLowerCase();
+      if (query) {
+        const regex = new RegExp(`(${this.escapeRegExp(query)})`, "gi");
+        nameSpan.innerHTML = type.replace(regex, "<strong>$1</strong>");
+      } else {
+        nameSpan.textContent = type;
+      }
+
+      item.appendChild(nameSpan);
+
+      // Add available sides as clickable links
+      if (neuronEntry && neuronEntry.urls) {
+        const sides = [];
+        if (neuronEntry.urls.right) sides.push({ label: 'R', side: 'right' });
+        if (neuronEntry.urls.middle) sides.push({ label: 'M', side: 'middle' });
+        if (neuronEntry.urls.left) sides.push({ label: 'L', side: 'left' });
+        if (neuronEntry.urls.combined && sides.length === 0) sides.push({ label: 'Combined', side: 'combined' });
+
+        if (sides.length > 0) {
+          const sidesContainer = document.createElement('span');
+          sidesContainer.textContent = ' (';
+          sidesContainer.style.color = '#666';
+
+          sides.forEach((sideInfo, index) => {
+            if (index > 0) {
+              const separator = document.createElement('span');
+              separator.textContent = ', ';
+              separator.style.color = '#666';
+              sidesContainer.appendChild(separator);
+            }
+
+            const sideLink = document.createElement('a');
+            sideLink.textContent = sideInfo.label;
+            sideLink.href = '#';
+            sideLink.className = 'side-link';
+            sideLink.style.cssText = `
+              color: #0066cc;
+              text-decoration: none;
+              cursor: pointer;
+              font-size: 0.9em;
+            `;
+
+            // Hover effect
+            sideLink.addEventListener('mouseenter', () => {
+              sideLink.style.textDecoration = 'underline';
+            });
+            sideLink.addEventListener('mouseleave', () => {
+              sideLink.style.textDecoration = 'none';
+            });
+
+            // Click handler for side-specific navigation
+            sideLink.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              this.navigateToSomaSide(type, sideInfo.side);
+            });
+
+            sidesContainer.appendChild(sideLink);
+          });
+
+          const closeParen = document.createElement('span');
+          closeParen.textContent = ')';
+          closeParen.style.color = '#666';
+          sidesContainer.appendChild(closeParen);
+
+          item.appendChild(sidesContainer);
+        }
+      }
+
+      // Mouse events for click handling
+      item.addEventListener("mousedown", (e) => {
+        // Only prevent default if not clicking on a side link
+        if (!e.target.classList.contains('side-link')) {
+          e.preventDefault(); // Prevent input blur
+          this.clickingDropdown = true;
+        }
+      });
+
+      // Main item click handler (neuron name goes to primary page, side links handled separately)
+      item.addEventListener("click", (e) => {
+        if (!e.target.classList.contains('side-link')) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.selectNeuronType(type);
+          this.clickingDropdown = false;
+        }
+      });
+
+      // Hover handler
+      item.addEventListener("mouseenter", () => {
+        this.currentIndex = index;
+        this.updateHighlight();
+      });
+
+      this.dropdown.appendChild(item);
+    });
+  }
+
+  /**
+   * Escape regex special characters
+   */
+  escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  /**
+   * Update visual highlighting of selected item
+   */
+  updateHighlight() {
+    const items = this.dropdown.querySelectorAll(".neuron-search-item");
+    items.forEach((item, index) => {
+      if (index === this.currentIndex) {
+        item.style.backgroundColor = "#f0f8ff";
+        item.style.color = "#0066cc";
+      } else {
+        item.style.backgroundColor = "";
+        item.style.color = "";
+      }
+    });
+  }
+
+  /**
+   * Select a neuron type and navigate to its page
+   */
+  selectNeuronType(neuronType) {
+    this.inputElement.value = neuronType;
+    this.hideDropdown();
+
+    // Navigate to the neuron type page
+    this.navigateToNeuronType(neuronType);
+  }
+
+  /**
+   * Navigate to the selected neuron type page
+   */
+  navigateToNeuronType(neuronType) {
+    // Find the neuron data entry for this type
+    const neuronEntry = this.neuronData.find(entry => entry.name === neuronType);
+
+    if (neuronEntry && neuronEntry.primary_url) {
+      // Adjust the URL based on current page context
+      let targetUrl = neuronEntry.primary_url;
+
+      // If we're on a neuron page and the URL starts with 'types/', remove the prefix
+      if (this.isNeuronPage && targetUrl.startsWith('types/')) {
+        targetUrl = targetUrl.substring(6); // Remove 'types/' prefix
+      }
+      // If we're not on a neuron page and the URL doesn't start with 'types/', add the prefix
+      else if (!this.isNeuronPage && !targetUrl.startsWith('types/')) {
+        targetUrl = 'types/' + targetUrl;
+      }
+
+      window.location.href = targetUrl;
+    } else {
+      // Fallback to the old detection method
+      this.navigateToNeuronTypeWithDetection(neuronType);
+    }
+  }
+
+  /**
+   * Fallback navigation method that tries to detect the correct file
+   */
+  async navigateToNeuronTypeWithDetection(neuronType) {
+    // Adjust path prefix based on current page location
+    const pathPrefix = this.isNeuronPage ? '' : 'types/';
+
+    // Check which file naming convention exists for this neuron type
+    const possibleFilenames = [
+      `types/${neuronType}.html`,
+      `types/${neuronType.toLowerCase()}.html`,
+      `types/${neuronType}_combined.html`,
+      `types/${neuronType.toLowerCase()}_combined.html`,
+      `types/${neuronType}_both.html`,
+      `types/${neuronType.toLowerCase()}_both.html`,
+      `types/${neuronType}_all.html`,
+      `types/${neuronType.toLowerCase()}_all.html`,
+    ];
+
+    // Try to find which file exists
+    let targetFile = possibleFilenames[0]; // default fallback
+
+    for (const filename of possibleFilenames) {
+      try {
+        const response = await fetch(filename, { method: "HEAD" });
+        if (response.ok) {
+          targetFile = filename;
+          break;
+        }
+      } catch (e) {
+        // Continue trying other filenames
+        continue;
+      }
+    }
+
+    // Navigate to the found or fallback filename
+    window.location.href = targetFile;
+  }
+
+  /**
+   * Get available URLs for a specific neuron type
+   */
+  getNeuronUrls(neuronType) {
+    const neuronEntry = this.neuronData.find(entry => entry.name === neuronType);
+    return neuronEntry ? neuronEntry.urls : {};
+  }
+
+  /**
+   * Navigate to a specific soma side page for a neuron type
+   */
+  navigateToSomaSide(neuronType, side) {
+    const neuronEntry = this.neuronData.find(entry => entry.name === neuronType);
+
+    if (neuronEntry && neuronEntry.urls[side]) {
+      // Close dropdown and update input
+      this.inputElement.value = neuronType;
+      this.hideDropdown();
+
+      // Adjust the URL based on current page context
+      let targetUrl = neuronEntry.urls[side];
+
+      // If we're on a neuron page and the URL starts with 'types/', remove the prefix
+      if (this.isNeuronPage && targetUrl.startsWith('types/')) {
+        targetUrl = targetUrl.substring(6); // Remove 'types/' prefix
+      }
+      // If we're not on a neuron page and the URL doesn't start with 'types/', add the prefix
+      else if (!this.isNeuronPage && !targetUrl.startsWith('types/')) {
+        targetUrl = 'types/' + targetUrl;
+      }
+
+      // Navigate to the specific side page
+      window.location.href = targetUrl;
+    } else {
+      // Fallback to primary URL
+      this.navigateToNeuronType(neuronType);
+    }
+  }
+
+  /**
+   * Show the dropdown
+   */
+  showDropdown() {
+    if (
+      this.filteredTypes.length > 0 ||
+      this.dropdown.querySelector(".neuron-search-no-results")
+    ) {
+      this.dropdown.style.display = "block";
+      this.isDropdownVisible = true;
+    }
+  }
+
+  /**
+   * Hide the dropdown
+   */
+  hideDropdown() {
+    this.dropdown.style.display = "none";
+    this.isDropdownVisible = false;
+    this.currentIndex = -1;
+    this.clickingDropdown = false;
+  }
+
+  /**
+   * Public method to get neuron types count
+   */
+  getNeuronTypesCount() {
+    return this.neuronTypes.length;
+  }
+}
+
+// Initialize the search functionality when the DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize neuron search
+  window.neuronSearch = new NeuronSearch("menulines");
+});
+
+// Export for module use if needed
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = NeuronSearch;
+}

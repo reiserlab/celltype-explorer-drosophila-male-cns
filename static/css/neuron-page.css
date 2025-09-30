@@ -1,0 +1,2749 @@
+/* --- HEADER STYLES --- */
+/* Responsive Navigation Menu styles */
+.hamburger-menu {
+    position: fixed;
+    top: 10rem;
+    left: 1rem;
+    z-index: 1001;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ddd;
+}
+
+.hamburger-btn {
+    background: transparent;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #333;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.hamburger-btn:hover {
+    background: #f5f5f5;
+}
+
+.hamburger-icon {
+    display: inline-block;
+}
+
+.hamburger-dropdown {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 180px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 0.75rem 0;
+}
+
+.hamburger-dropdown a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s;
+    line-height: 1.4;
+}
+
+.hamburger-dropdown a:last-child {
+    border-bottom: none;
+}
+
+.hamburger-dropdown a:hover {
+    background: #f8f9fa;
+    color: #0066cc;
+    padding-left: 24px;
+}
+
+/* Override hamburger dropdown styles for soma buttons */
+.hamburger-dropdown .soma-button {
+    display: inline-flex !important;
+    width: 29px !important;
+    height: 29px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 3px !important;
+    font-size: 0.9rem !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid !important;
+    vertical-align: top !important;
+}
+
+.hamburger-dropdown .soma-button:hover {
+    padding-left: 0 !important;
+    transform: none !important;
+}
+
+/* Hide hamburger dropdown by default on small screens */
+#hamburgerDropdown {
+    display: none;
+}
+
+/* Navigation title styling */
+.nav-title {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #666;
+    padding: 0 16px 8px 16px;
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 8px;
+}
+
+/* Wide screen styles - show navigation expanded */
+@media (min-width: 1700px) {
+    .hamburger-menu {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 1rem;
+        min-width: 200px;
+        max-width: 220px;
+        transition: all 0.3s ease;
+    }
+
+    .hamburger-menu:hover {
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-1px);
+    }
+
+    .hamburger-btn {
+        display: none !important;
+    }
+
+    .hamburger-icon {
+        display: none !important;
+    }
+
+    .hamburger-dropdown {
+        position: static;
+        display: block !important;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-height: none;
+        overflow: visible;
+    }
+
+    /* Show dropdown menu entries on large screens */
+    #hamburgerDropdown {
+        display: block !important;
+    }
+
+    .hamburger-dropdown a {
+        border-bottom: 1px solid #e9ecef;
+        padding: 10px 16px;
+        border-radius: 6px;
+        margin-bottom: 2px;
+    }
+
+    .hamburger-dropdown a:hover {
+        background: rgba(0, 102, 204, 0.1);
+        padding-left: 20px;
+        transform: translateX(2px);
+    }
+
+    /* Scrollbar styling for navigation */
+    .hamburger-dropdown::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .hamburger-dropdown::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+
+    .hamburger-dropdown::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+
+    .hamburger-dropdown::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+}
+
+/* Small screen styles - show hamburger button */
+@media (max-width: 1699px) {
+    /* Hide all other header elements */
+    .header-flex {
+        display: none;
+    }
+
+    .hamburger-menu {
+        position: fixed;
+        top: 10px;
+        left: 30px;
+        width: auto;
+        z-index: 1001;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .hamburger-btn {
+        display: block;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+    }
+
+    .hamburger-menu:hover .hamburger-btn,
+    .hamburger-menu.menu-open .hamburger-btn {
+        display: block;
+        border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .hamburger-dropdown {
+        display: none;
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #ddd;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 8px 0;
+        min-width: 250px;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease,
+            transform 0.3s ease;
+        transform: translateX(-50%) translateY(-10px);
+    }
+
+    .hamburger-menu:hover .hamburger-dropdown,
+    .hamburger-dropdown.open {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+        left: 0px;
+        transform: translateX(0) translateY(0);
+    }
+
+    .hamburger-menu:hover,
+    .hamburger-menu.menu-open {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+    }
+
+    /* Ensure dropdown is hidden by default on small screens */
+    #hamburgerDropdown {
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Show dropdown when open class is applied or on hover */
+    .hamburger-menu:hover #hamburgerDropdown,
+    #hamburgerDropdown.open {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Neuron Search Dropdown Styles */
+.search-form {
+    position: relative;
+}
+
+.neuron-search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.neuron-search-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+
+.neuron-search-item:hover,
+.neuron-search-item.highlighted {
+    background-color: #f0f8ff;
+    color: #0066cc;
+}
+
+.neuron-search-item:last-child {
+    border-bottom: none;
+}
+
+.neuron-search-no-results {
+    padding: 8px 12px;
+    color: #666;
+    font-style: italic;
+}
+
+.neuron-search-item strong {
+    font-weight: bold;
+    color: #0066cc;
+}
+
+/* Soma Side Navigation Styles */
+/* Legacy soma side nav styles - kept for backward compatibility if needed */
+.soma-side-nav {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 14px;
+    display: none; /* Hidden since we're using the new letter format */
+}
+
+.soma-side-nav .nav-label {
+    color: #666;
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+.soma-side-link {
+    display: inline-block;
+    margin-right: 12px;
+    padding: 4px 8px;
+    background-color: #f5f5f5;
+    color: #333;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid #ddd;
+}
+
+.soma-side-link:hover {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    border-color: #1976d2;
+    text-decoration: none;
+}
+
+#menulines {
+    min-width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#menulines:focus {
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+}
+.neuron-header-bar {
+    background: #fff;
+    color: #333;
+    padding: 0.5rem 0 0.5rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    padding: 0 2rem;
+    position: relative;
+}
+
+.header-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.header-left .nav-links {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.nav-links a {
+    color: #111;
+    text-decoration: none;
+    font-size: 1.05rem;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #888;
+}
+
+.header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand {
+    font-weight: bold;
+    font-size: 1.35rem;
+    color: #222;
+    letter-spacing: 0.5px;
+}
+
+.header-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
+}
+span.soma-side {
+    color: #888;
+    font-size: 80%;
+}
+.search-form {
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.search-form input {
+    max-width: 220px;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+}
+
+.icon-link {
+    margin-left: 0.5rem;
+}
+
+.nav-link {
+    color: #111;
+    text-decoration: none;
+    font-size: 1.05rem;
+    margin-left: 0.5rem;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: #888;
+}
+
+.header-title {
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.header-title h1 {
+    font-size: 2.75rem;
+    color: #333;
+    margin-bottom: 0.4rem;
+}
+
+.soma-side-letters {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.soma-letter {
+    display: inline-block;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.2rem;
+    padding: 4px 6px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    min-width: 20px;
+    text-align: center;
+}
+
+.soma-side-left {
+    background-color: #28a745;
+}
+
+.soma-side-right {
+    background-color: #dc3545;
+}
+.soma-side-middle {
+    background-color: #ffc107;
+}
+
+.soma-letter:hover {
+    color: #1976d2;
+    background-color: #e3f2fd;
+    text-decoration: none;
+}
+
+.soma-letter.current {
+    color: #333;
+    font-weight: 700;
+    font-size: 1.4rem;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.total-column {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    font-weight: bold;
+    border-left: 1px dashed #ccc !important;
+    width: 8ch;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.data-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+}
+
+.data-table table {
+    width: 100%;
+    margin: 0;
+}
+
+.data-table th {
+    background: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* basic stuff */
+
+a.neuroglancer-link {
+    font-size: 60%;
+    vertical-align: super;
+}
+
+/* DataTables 2.x styling customizations */
+.dt-container .dt-length,
+.dt-container .dt-search,
+.dt-container .dt-info,
+.dt-container .dt-paging {
+    margin-bottom: 1rem;
+}
+
+.dt-search {
+    width: 200px;
+}
+
+/* Hide the default length selector */
+.dt-container .dt-length {
+    display: none;
+}
+
+/* Custom connections filter slider in header */
+.dt-container .dt-search {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+    flex-wrap: wrap;
+    min-height: 60px;
+}
+
+/* Search field container alignment */
+.dt-search {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 60px;
+}
+
+.connections-filter-header,
+.percentage-filter-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    height: 60px;
+    justify-content: flex-end;
+}
+
+.regional-connections-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.regional-connections-section h3 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 0.5rem;
+}
+
+.regional-connections-section h4 {
+    color: #495057;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    background-color: #667eea;
+    color: white;
+}
+
+.connections-filter-header label,
+.percentage-filter-header label {
+    color: #495057;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    text-align: right;
+    padding-right: 1ch;
+}
+
+.slider-container-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    flex: 1;
+    height: 38px;
+}
+
+.percentage-slider-header {
+    flex: 1;
+    min-width: 120px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #dee2e6;
+    outline: none;
+}
+
+.percentage-slider-header::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.percentage-slider-header::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.slider-value-header {
+    font-weight: bold;
+    color: #667eea;
+    min-width: 40px;
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+.dt-container .dt-paging .dt-paging-button {
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    background: white;
+}
+
+.dt-container .dt-paging .dt-paging-button:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.dt-container .dt-paging .dt-paging-button.current {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.dt-container .dt-search input {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    margin-left: 0.5rem;
+}
+
+table.dataTable thead th {
+    border-bottom: 2px solid #dee2e6;
+    position: relative;
+}
+
+table.dataTable tbody tr:hover {
+    background-color: rgba(102, 126, 234, 0.1);
+}
+
+.c-p {
+    position: relative;
+}
+
+/* Override DataTables box-shadow for cumulative percentage cells */
+table.dataTable tbody .c-p {
+    box-shadow: none !important;
+}
+
+/* Ensure background gradients show properly in cumulative cells */
+table.dataTable tbody td.c-p[style*="background"] {
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
+    background-position: left center !important;
+}
+
+/* Handle hover states for cumulative cells */
+table.dataTable.hover > tbody > tr:hover > .c-p[style*="background"] {
+    box-shadow: none !important;
+}
+
+/* Handle stripe states for cumulative cells */
+table.dataTable.stripe > tbody > tr:nth-child(odd) > .c-p[style*="background"] {
+    box-shadow: none !important;
+}
+
+.sidebar {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.sidebar h3 {
+    color: #495057;
+    margin-bottom: 1.5rem;
+}
+
+footer {
+    background: #ffffff;
+    color: #333;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 3rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+body {
+    background: #f8f9fa;
+}
+
+section {
+    margin-bottom: 3rem;
+}
+
+section h2 {
+    color: #495057;
+    margin-bottom: 1.5rem;
+    font-size: 2.25rem !important;
+    font-weight: 100 !important;
+}
+
+/* Details/summary styling for column data */
+details {
+    margin: 1rem 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0;
+    background: white;
+}
+
+details summary {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+    user-select: none;
+}
+
+details[open] summary {
+    border-radius: 8px 8px 0 0;
+    border-bottom: 1px solid #ddd;
+}
+
+details .data-table {
+    margin: 0;
+    border-radius: 0 0 8px 8px;
+    box-shadow: none;
+}
+
+/* Fast SVG tooltip styles for inline SVG (--embed mode) */
+.svg-tooltip {
+    position: absolute;
+    background: rgba(128, 128, 128, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+    white-space: pre-line;
+    z-index: 10000;
+    pointer-events: none;
+    display: none;
+    max-width: 300px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    line-height: 1.4;
+}
+
+/* Styling for abbr elements with tooltips */
+abbr[data-original-title] {
+    border-bottom: none; /* Remove default browser styling */
+}
+
+abbr[data-original-title]:hover {
+    text-decoration-color: #007bff;
+}
+
+/* HTML tooltip styles */
+.html-tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.html-tooltip .tooltip-content {
+    display: none;
+    position: absolute;
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    z-index: 10000;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    line-height: 1.4;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+    white-space: normal;
+    word-wrap: break-word;
+    /* Responsive width based on viewport */
+    width: max-content;
+    max-width: min(800px, 90vw);
+    min-width: 200px;
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (max-width: 768px) {
+    .html-tooltip .tooltip-content {
+        max-width: 95vw;
+        min-width: 150px;
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .html-tooltip .tooltip-content {
+        max-width: 500px;
+        min-width: 250px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .html-tooltip .tooltip-content {
+        max-width: 600px;
+        min-width: 300px;
+    }
+}
+
+.html-tooltip .tooltip-content::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+.html-tooltip:hover .tooltip-content {
+    display: block;
+}
+
+/* Alternative positioning for tooltips that might overflow */
+.html-tooltip.tooltip-right .tooltip-content {
+    bottom: auto;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 5px;
+    margin-bottom: 0;
+    max-width: min(800px, calc(100vw - 100% - 15px));
+}
+
+.html-tooltip.tooltip-right .tooltip-content::after {
+    top: 50%;
+    left: -5px;
+    margin-left: 0;
+    margin-top: -5px;
+    border-color: transparent #333 transparent transparent;
+}
+
+.html-tooltip.tooltip-left .tooltip-content {
+    bottom: auto;
+    left: auto;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 5px;
+    margin-bottom: 0;
+    max-width: min(800px, calc(100vw - 100% - 15px));
+}
+
+.html-tooltip.tooltip-left .tooltip-content::after {
+    top: 50%;
+    left: auto;
+    right: -5px;
+    margin-left: 0;
+    margin-top: -5px;
+    border-color: transparent transparent transparent #333;
+}
+
+.html-tooltip.tooltip-bottom .tooltip-content {
+    bottom: auto;
+    top: 100%;
+    margin-top: 5px;
+    margin-bottom: 0;
+    max-width: min(800px, 95vw);
+}
+
+.html-tooltip.tooltip-bottom .tooltip-content::after {
+    top: -5px;
+    border-color: transparent transparent #333 transparent;
+}
+
+/* Responsive improvements for mobile and edge positioning */
+@media (max-width: 480px) {
+    .html-tooltip .tooltip-content {
+        max-width: 98vw;
+        min-width: 120px;
+        font-size: 12px;
+        padding: 5px 8px;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+    }
+
+    .html-tooltip.tooltip-right .tooltip-content,
+    .html-tooltip.tooltip-left .tooltip-content {
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        top: auto !important;
+        bottom: 100% !important;
+        margin: 0 0 5px 0 !important;
+    }
+
+    .html-tooltip.tooltip-right .tooltip-content::after,
+    .html-tooltip.tooltip-left .tooltip-content::after {
+        top: 100% !important;
+        left: 50% !important;
+        right: auto !important;
+        margin-left: -5px !important;
+        margin-top: 0 !important;
+        border-color: #333 transparent transparent transparent !important;
+    }
+}
+
+/* Ensure tooltips never exceed screen bounds */
+.html-tooltip .tooltip-content {
+    box-sizing: border-box;
+}
+
+/* Compact definition list styling for tooltips */
+.html-tooltip .tooltip-content dl {
+    margin: 0;
+    padding: 0;
+}
+
+/* Override Plume framework's dd::before pseudo-element that creates circle bullets */
+.html-tooltip .tooltip-content dd::before {
+    content: none !important;
+    display: none !important;
+}
+
+.html-tooltip .tooltip-content dt {
+    display: inline;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    margin-right: 7px;
+    border: 0 !important;
+}
+
+.html-tooltip .tooltip-content dt:after {
+    content: "";
+}
+
+.html-tooltip .tooltip-content dd {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    margin-right: 12px;
+    text-decoration: none;
+}
+
+.html-tooltip .tooltip-content dd:after {
+    content: "\A";
+    white-space: pre;
+}
+
+.html-tooltip .tooltip-content dd:last-child:after {
+    content: "";
+}
+
+/* Alternative: Inline compact version */
+.html-tooltip .tooltip-content dl.inline dd {
+    margin-right: 8px;
+}
+
+/* Fix DataTables layout conflicts with Plume CSS */
+.plume .dt-container .dt-search input {
+    width: auto !important;
+    display: inline-block !important;
+    flex: none !important;
+}
+
+.plume .dt-container .dt-search {
+    display: flex !important;
+    align-items: flex-end !important;
+    gap: 2rem !important;
+    flex-wrap: nowrap !important;
+}
+
+.plume .dt-search {
+    height: 60px !important;
+    justify-content: flex-end !important;
+}
+
+#layer-stats td {
+    padding: 4px 12px !important;
+}
+
+#layer-stats table {
+    margin-bottom: 0px;
+}
+
+/* CSS classes to replace inline styles */
+.legend-text {
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #666;
+}
+
+.layer-row {
+    margin-bottom: 2rem;
+}
+
+.layer-table {
+    width: 100%;
+}
+
+.layer-table-white {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.layer-table-white th,
+.layer-table-white td {
+    background-color: #fff;
+}
+
+.layer-table-la {
+    background-color: rgba(142, 189, 120, 0.3);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.layer-table-me {
+    background-color: rgba(94, 24, 77, 0.3);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.layer-table-lo {
+    background-color: rgba(187, 74, 95, 0.3);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.layer-table-ame {
+    background-color: rgba(89, 143, 207, 0.3);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.layer-table-lop {
+    background-color: rgba(241, 110, 101, 0.3);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.layer-table-central {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.region-grid-section {
+    margin-bottom: 3rem;
+}
+
+.region-grid-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.region-grid-container-pairs {
+    display: flex;
+    gap: 45px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.region-grid-item {
+    text-align: center;
+    background: #f8f9fa;
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.region-grid-item-no-bg {
+    text-align: center;
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+/* Styles for L/R pairs layout */
+.region-grid-container-pairs .region-grid-item,
+.region-grid-container-pairs .region-grid-item-no-bg {
+    flex: 0 1 45%;
+    min-width: 250px;
+    max-width: 750px;
+}
+
+.grid-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.no-data-text {
+    color: #999;
+}
+
+/* Connectivity tables side-by-side layout */
+.row .col-xs-12.col-md-6 .data-table {
+    margin: 1rem 0;
+}
+
+.row .col-xs-12.col-md-6 .data-table th {
+    padding: 1rem 0.4rem;
+}
+.row .col-xs-12.col-md-6 .data-table td {
+    padding: 0.2rem 0.4rem;
+}
+
+.row .col-xs-12.col-md-6 h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+}
+
+.row .col-xs-12.col-md-6 p {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Make connectivity tables more compact */
+#upstream-table,
+#downstream-table {
+    width: 100% !important;
+}
+
+#roi-table th:first-child,
+#roi-table td:first-child {
+    width: 40% !important;
+    min-width: 200px !important;
+}
+
+#roi-table th:nth-child(2),
+#roi-table td:nth-child(2),
+#roi-table th:nth-child(3),
+#roi-table td:nth-child(3),
+#roi-table th:nth-child(4),
+#roi-table td:nth-child(4),
+#roi-table th:nth-child(5),
+#roi-table td:nth-child(5),
+#roi-table th:nth-child(6),
+#roi-table td:nth-child(6),
+#roi-table th:nth-child(7),
+#roi-table td:nth-child(7) {
+    width: 10% !important;
+    text-align: right !important;
+}
+
+#upstream-table th,
+#downstream-table th,
+#upstream-table td,
+#downstream-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 110px;
+}
+
+/* Adjust specific columns for better fit */
+#upstream-table th:first-child,
+#downstream-table th:first-child,
+#upstream-table td:first-child,
+#downstream-table td:first-child {
+    width: 40%;
+    min-width: 200px;
+}
+
+#upstream-table th:nth-child(2),
+#downstream-table th:nth-child(2),
+#upstream-table td:nth-child(2),
+#downstream-table td:nth-child(2) {
+    width: 15%;
+    text-align: center;
+}
+
+#upstream-table th:nth-child(3),
+#downstream-table th:nth-child(3),
+#upstream-table td:nth-child(3),
+#downstream-table td:nth-child(3) {
+    width: 15%;
+    text-align: right;
+}
+
+#upstream-table th:nth-child(4),
+#downstream-table th:nth-child(4),
+#upstream-table td:nth-child(4),
+#downstream-table td:nth-child(4) {
+    width: 15%;
+    text-align: right;
+}
+
+#upstream-table th:nth-child(5),
+#downstream-table th:nth-child(5),
+#upstream-table td:nth-child(5),
+#downstream-table td:nth-child(5) {
+    width: 15%;
+    text-align: right;
+}
+
+#upstream-table th:nth-child(6),
+#downstream-table th:nth-child(6),
+#upstream-table td:nth-child(6),
+#downstream-table td:nth-child(6) {
+    width: 15%;
+    text-align: right;
+}
+
+.ug {
+    --s: 0%;
+    background: linear-gradient(90deg, #fee395 var(--s), transparent var(--s))
+        no-repeat center;
+}
+
+.dg {
+    --s: 0%;
+    background: linear-gradient(90deg, #69d0e4 var(--s), transparent var(--s))
+        no-repeat center;
+}
+
+/* Add some spacing between the two columns */
+@media (min-width: 64em) {
+    .row .col-xs-12.col-md-6:first-child {
+        padding-right: 1rem;
+    }
+    .row .col-xs-12.col-md-6:last-child {
+        padding-left: 1rem;
+    }
+}
+
+/* Compact search field styling for all tables with sliders */
+#upstream-table_wrapper .dt-search input,
+#downstream-table_wrapper .dt-search input,
+#roi-table_wrapper .dt-search input {
+    width: 200px !important;
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    vertical-align: bottom;
+    height: 38px;
+    box-sizing: border-box;
+}
+
+#upstream-table_wrapper .dt-search label,
+#downstream-table_wrapper .dt-search label,
+#roi-table_wrapper .dt-search label {
+    display: none;
+}
+
+/* DataTables wrapper bottom alignment */
+#upstream-table_wrapper,
+#downstream-table_wrapper,
+#roi-table_wrapper {
+    vertical-align: bottom;
+}
+
+/* Ensure all DataTable elements align to bottom */
+.dt-container {
+    vertical-align: bottom;
+}
+
+@media (max-width: 64em) {
+    .row .col-xs-12.col-md-6 {
+        margin-bottom: 2rem;
+    }
+
+    #upstream-table th,
+    #downstream-table th,
+    #upstream-table td,
+    #downstream-table td {
+        max-width: none;
+        font-size: 0.875rem;
+    }
+
+    #upstream-table_wrapper .dt-search input,
+    #downstream-table_wrapper .dt-search input,
+    #roi-table_wrapper .dt-search input {
+        width: 150px !important;
+        vertical-align: bottom;
+    }
+
+    /* Stack search and slider vertically on small screens but maintain bottom alignment */
+    .dt-container .dt-search {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .connections-filter-header,
+    .percentage-filter-header {
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    /* Responsive styles for soma side letters */
+    /* Remove old responsive rules - now handled above */
+    .title-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .soma-side-letters {
+        position: static;
+        transform: none;
+        margin-top: 0.5rem;
+    }
+
+    .header-title h1 {
+        font-size: 2.2rem;
+    }
+
+    .soma-letter {
+        font-size: 1.1rem;
+    }
+
+    .soma-letter.current {
+        font-size: 1.3rem;
+    }
+}
+
+/* Hamburger Menu Content Styling */
+.hamburger-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #666;
+    padding: 0 16px 8px 0px;
+    margin-bottom: 8px;
+}
+.hamburger-title a {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.soma-button-container {
+    display: flex;
+    gap: 6px;
+    padding: 0px 16px 12px 16px;
+    align-items: flex-end;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.soma-button {
+    display: inline-flex;
+    width: 29px;
+    height: 29px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+    border: 1px solid;
+    vertical-align: top;
+}
+
+.soma-button-current {
+    cursor: default;
+    border-radius: 3px !important;
+}
+
+.soma-button-left {
+    background-color: #f8f9fa;
+    color: #28a745;
+    border-color: #28a745;
+}
+
+.soma-button-left.soma-button-current {
+    background-color: #28a745;
+    color: white;
+    border-radius: 3px;
+}
+
+.soma-button-left:hover:not(.soma-button-current) {
+    background-color: #28a745;
+    color: white;
+}
+
+.soma-button-right {
+    background-color: #f8f9fa;
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.soma-button-right.soma-button-current {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 3px;
+}
+
+.soma-button-right:hover:not(.soma-button-current) {
+    background-color: #dc3545;
+    color: white;
+}
+
+.soma-button-middle {
+    background-color: #f8f9fa;
+    color: #ffc107;
+    border-color: #ffc107;
+}
+
+.soma-button-middle.soma-button-current {
+    background-color: #ffc107;
+    color: #212529;
+    border-radius: 3px;
+}
+
+.soma-button-middle:hover:not(.soma-button-current) {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.soma-button-combined {
+    background-color: #f8f9fa;
+    color: #6f42c1;
+    border-color: #6f42c1;
+}
+
+.soma-button-combined.soma-button-current {
+    background-color: #6f42c1;
+    color: white;
+    border-radius: 3px;
+}
+
+.soma-button-combined:hover:not(.soma-button-current) {
+    background-color: #6f42c1;
+    color: white;
+}
+
+.hamburger-link {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.hamburger-link:last-child {
+    margin-bottom: 0;
+}
+
+.hamburger-link:hover {
+    background-color: #f8f9fa;
+    color: #1976d2;
+    text-decoration: none;
+}
+
+/* =================================================================
+   CSS moved from templates to static file
+   ================================================================= */
+
+/* CSS from header.html template */
+.soma-side-line {
+    height: 3px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Add subtle gradient effect */
+.soma-side-line::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+.neurotransmitter-info {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.neurotransmitter-info span {
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.nt-consensus strong {
+    color: #2e7d32;
+}
+
+.nt-predicted strong {
+    color: #1976d2;
+}
+
+.nt-predictions strong {
+    color: #7b1fa2;
+}
+
+.neurotransmitter-info abbr {
+    text-decoration: none;
+    border-bottom: 1px dotted #666;
+    font-weight: 500;
+}
+
+.classification-info {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.classification-info span {
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.cell-superclass strong {
+    color: #d32f2f;
+}
+
+.cell-class strong {
+    color: #f57c00;
+}
+
+.cell-subclass strong {
+    color: #388e3c;
+}
+
+/* CSS from types.html template */
+.content-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 300px;
+    padding: 40px;
+    background: rgba(248, 249, 250, 0.95);
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.spinner-text {
+    margin-top: 15px;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.index-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.index-intro {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #007bff;
+}
+
+.filter-controls {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Reset Plume CSS interference for form elements */
+.filter-controls input,
+.filter-controls select {
+    margin: 0 !important;
+    vertical-align: baseline !important;
+    font-family: inherit !important;
+}
+
+.filter-controls .row {
+    margin: 0;
+}
+
+.filter-controls [class*="col-"] {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    line-height: 1.2;
+    min-height: 17px;
+    flex-shrink: 0;
+}
+
+.filter-dropdown {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background: white;
+    color: #495057;
+    font-size: 14px;
+    cursor: pointer;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+    line-height: 1.25;
+    height: auto;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.filter-dropdown:hover {
+    border-color: #007bff;
+}
+
+.filter-dropdown:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.filter-input {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    transition:
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
+    width: 100%;
+    box-sizing: border-box;
+    line-height: 1.25;
+    height: auto;
+    vertical-align: middle;
+}
+
+.filter-input:hover {
+    border-color: #adb5bd;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.filter-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.clear-input-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.clear-input-btn:hover {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.filter-input-container input:not([value=""]) + .clear-input-btn {
+    display: flex;
+}
+
+.filter-input-container.has-content .clear-input-btn {
+    display: flex;
+}
+
+.result-count {
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: 500;
+    margin-top: 25px;
+    display: block;
+    line-height: 1.25;
+    align-self: flex-end;
+}
+
+.no-results-message {
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #6c757d;
+}
+
+.no-results-content h3 {
+    margin: 0 0 15px 0;
+    color: #495057;
+    font-size: 1.3em;
+}
+
+.no-results-content p {
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.intro-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #495057;
+}
+
+.stats-summary {
+    display: flex;
+    gap: 30px;
+    font-size: 0.95em;
+    color: #6c757d;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+}
+
+.neuron-section {
+    margin-bottom: 40px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background: white;
+    overflow: hidden;
+}
+
+.section-title {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    margin: 0;
+    padding: 20px 25px;
+    font-size: 1.4em;
+    font-weight: 600;
+    border-bottom: 3px solid #0056b3;
+    display: inline-block;
+    width: 40%;
+}
+
+.section-description {
+    background: #f8f9fa;
+    padding: 20px 25px;
+    border-bottom: 3px solid #e9ecef;
+    display: inline-block;
+    width: 60%;
+}
+
+.section-description p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.neuron-section .row {
+    margin: 0;
+    padding: 25px;
+}
+
+.neuron-section [class*="col-"] {
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.neuron-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    transition:
+        box-shadow 0.2s,
+        transform 0.2s;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neuron-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.neuron-name-link {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.neuron-name-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.neuron-name {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #495057;
+}
+
+.neuron-name abbr,
+.neuron-name-link abbr {
+    text-decoration: none;
+    border-bottom: 1px dotted #6c757d;
+    cursor: help;
+}
+
+.neuron-name abbr:hover,
+.neuron-name-link abbr:hover {
+    border-bottom-color: #495057;
+}
+
+.soma-indicators {
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+}
+
+.soma-label {
+    color: #6c757d;
+}
+
+.soma-separator {
+    color: #6c757d;
+    margin: 0 2px;
+}
+
+.soma-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition:
+        background-color 0.2s,
+        color 0.2s;
+}
+
+.soma-link:hover {
+    background-color: #e9ecef;
+    color: #343a40;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.soma-link.left:hover {
+    background-color: #28a745;
+}
+
+.soma-link.right:hover {
+    background-color: #dc3545;
+}
+
+.soma-link.middle:hover {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.card-info {
+    border-top: 1px solid #e9ecef;
+    padding-top: 15px;
+    flex-shrink: 0;
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Common tag styling */
+.view-indicator,
+.roi-tag,
+.neuron-count-tag,
+.nt-tag,
+.class-tag,
+.dimorphism-tag,
+.synonym-tag,
+.flywire-type-tag {
+    font-size: 0.75em;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+/* Neuron count tag styling */
+.neuron-count-tag {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    border-color: #bbdefb;
+    cursor: default;
+}
+
+.neuron-count-tag:hover {
+    background-color: #bbdefb;
+    border-color: #90caf9;
+}
+
+.neuron-count-tag.clickable-count {
+    cursor: pointer;
+}
+
+.neuron-count-tag.clickable-count:hover {
+    background-color: #90caf9;
+    border-color: #64b5f6;
+    transform: translateY(-1px);
+}
+
+.neuron-count-tag.selected {
+    background-color: #1976d2;
+    color: white;
+    border-color: #1565c0;
+}
+
+.neuron-count-tag.selected:hover {
+    background-color: #1565c0;
+    border-color: #0d47a1;
+}
+
+/* Neurotransmitter tag styling */
+.nt-tag {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+    border-color: #e1bee7;
+    cursor: pointer;
+}
+
+.nt-tag:hover {
+    background-color: #e1bee7;
+    border-color: #ce93d8;
+}
+
+.nt-tag.selected {
+    background-color: #7b1fa2;
+    color: white;
+    border-color: #4a148c;
+}
+
+.nt-tag.selected:hover {
+    background-color: #4a148c;
+    border-color: #6a1b9a;
+}
+
+/* Class tags styling */
+.class-tag {
+    cursor: pointer;
+}
+
+.superclass-tag {
+    background-color: #ffebee;
+    color: #d32f2f;
+    border-color: #ffcdd2;
+}
+
+.superclass-tag:hover {
+    background-color: #ffcdd2;
+    border-color: #ef9a9a;
+}
+
+.superclass-tag.selected {
+    background-color: #d32f2f;
+    color: white;
+    border-color: #b71c1c;
+}
+
+.superclass-tag.selected:hover {
+    background-color: #b71c1c;
+    border-color: #c62828;
+}
+
+.class-tag {
+    background-color: #fff3e0;
+    color: #f57c00;
+    border-color: #ffe0b2;
+}
+
+.class-tag:hover {
+    background-color: #ffe0b2;
+    border-color: #ffcc02;
+}
+
+.class-tag.selected {
+    background-color: #f57c00;
+    color: white;
+    border-color: #e65100;
+}
+
+.class-tag.selected:hover {
+    background-color: #e65100;
+    border-color: #ff6f00;
+}
+
+.subclass-tag {
+    background-color: #e8f5e8;
+    color: #388e3c;
+    border-color: #c8e6c9;
+}
+
+.subclass-tag:hover {
+    background-color: #c8e6c9;
+    border-color: #a5d6a7;
+}
+
+.subclass-tag.selected {
+    background-color: #388e3c;
+    color: white;
+    border-color: #1b5e20;
+}
+
+.subclass-tag.selected:hover {
+    background-color: #1b5e20;
+    border-color: #2e7d32;
+}
+
+.dimorphism-tag {
+    background-color: #fff8e1;
+    color: #f57f17;
+    border-color: #ffecb3;
+    cursor: pointer;
+}
+
+.dimorphism-tag:hover {
+    background-color: #ffecb3;
+    border-color: #ffe082;
+}
+
+.dimorphism-tag.selected {
+    background-color: #f57f17;
+    color: white;
+    border-color: #f57f17;
+}
+
+.dimorphism-tag.selected:hover {
+    background-color: #f9a825;
+    border-color: #fb8c00;
+}
+
+/* Synonym tags */
+.synonym-tag {
+    background-color: #f0f4ff;
+    color: #4338ca;
+    border-color: #e0e7ff;
+    cursor: pointer;
+}
+
+.synonym-tag:hover {
+    background-color: #e0e7ff;
+    border-color: #c7d2fe;
+}
+
+/* FlyWire type tags */
+.flywire-type-tag {
+    background-color: #ecfdf5;
+    color: #059669;
+    border-color: #d1fae5;
+    cursor: pointer;
+}
+
+.flywire-type-tag:hover {
+    background-color: #d1fae5;
+    border-color: #a7f3d0;
+}
+
+.synonym-tag.selected {
+    background-color: #4338ca;
+    color: white;
+    border-color: #3730a3;
+    box-shadow: 0 2px 4px rgba(67, 56, 202, 0.3);
+}
+
+.synonym-tag.selected:hover {
+    background-color: #3730a3;
+    transform: translateY(-1px);
+}
+
+.flywire-type-tag.selected {
+    background-color: #059669;
+    color: white;
+    border-color: #047857;
+    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
+}
+
+.flywire-type-tag.selected:hover {
+    background-color: #047857;
+    transform: translateY(-1px);
+}
+
+/* Side indicator tags - pastel when inactive, bright when selected */
+.view-indicator.undefined {
+    background-color: #e8d5f0;
+    color: #6f42c1;
+    border-color: #d1b3e0;
+}
+
+.view-indicator.undefined:hover {
+    background-color: #dcc5e8;
+    transform: translateY(-1px);
+}
+
+.view-indicator.undefined.selected {
+    background-color: #6f42c1;
+    color: white;
+    border-color: #5a32a3;
+    box-shadow: 0 2px 4px rgba(111, 66, 193, 0.3);
+}
+
+.view-indicator.left {
+    background-color: #d4edda;
+    color: #28a745;
+    border-color: #c3e6cb;
+}
+
+.view-indicator.left:hover {
+    background-color: #c3e6cb;
+    transform: translateY(-1px);
+}
+
+.view-indicator.left.selected {
+    background-color: #28a745;
+    color: white;
+    border-color: #1e7e34;
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+}
+
+.view-indicator.right {
+    background-color: #f8d7da;
+    color: #dc3545;
+    border-color: #f1b0b7;
+}
+
+.view-indicator.right:hover {
+    background-color: #f1b0b7;
+    transform: translateY(-1px);
+}
+
+.view-indicator.right.selected {
+    background-color: #dc3545;
+    color: white;
+    border-color: #c82333;
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+.view-indicator.middle {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #fdeaa7;
+}
+
+.view-indicator.middle:hover {
+    background-color: #fdeaa7;
+    transform: translateY(-1px);
+}
+
+.view-indicator.middle.selected {
+    background-color: #ffc107;
+    color: #212529;
+    border-color: #d39e00;
+    box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3);
+}
+
+/* Regular ROI tags - pastel orange when inactive, bright orange when selected */
+.roi-tag {
+    background-color: #ffe5d0;
+    color: #fd7e14;
+    border-color: #ffdbcc;
+}
+
+.roi-tag:hover {
+    background-color: #ffdbcc;
+    transform: translateY(-1px);
+}
+
+.roi-tag.selected {
+    background-color: #fd7e14;
+    color: white;
+    border-color: #e8681a;
+    box-shadow: 0 2px 4px rgba(253, 126, 20, 0.3);
+}
+
+.roi-tag.selected:hover {
+    background-color: #e8681a;
+    transform: translateY(-1px);
+}
+
+/* Parent ROI (region) tags - pastel blue when inactive, bright blue when selected */
+.roi-tag.parent-roi {
+    background-color: #cce7ff;
+    color: #007bff;
+    border-color: #b8daff;
+}
+
+.roi-tag.parent-roi:hover {
+    background-color: #b8daff;
+    transform: translateY(-1px);
+}
+
+.roi-tag.parent-roi.selected {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.roi-tag.parent-roi.selected:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* Search functionality integration */
+#filtered-cards-container {
+    display: none;
+}
+
+/* Responsive adjustments for header template styles */
+@media (max-width: 768px) {
+    .neurotransmitter-info {
+        font-size: 0.8em;
+    }
+
+    .neurotransmitter-info span {
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+
+    .classification-info {
+        font-size: 0.8em;
+    }
+
+    .classification-info span {
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+
+    /* Index page responsive styles */
+    .neuron-section .row {
+        padding: 15px 10px;
+        margin: 0;
+    }
+
+    .neuron-section [class*="col-"] {
+        padding: 8px;
+        margin-bottom: 20px;
+    }
+
+    .neuron-card {
+        padding: 15px;
+        margin-bottom: 0;
+    }
+
+    .section-title {
+        padding: 15px 20px;
+        font-size: 1.2em;
+    }
+
+    .section-description {
+        padding: 12px 20px;
+    }
+
+    .stats-summary {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .filter-controls .row {
+        flex-direction: column;
+    }
+
+    .filter-controls [class*="col-"] {
+        margin-bottom: 15px;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .filter-controls [class*="col-"]:last-child {
+        margin-bottom: 0;
+    }
+
+    .result-count {
+        text-align: left;
+        margin-top: 5px;
+    }
+
+    .tag-list {
+        gap: 4px;
+    }
+
+    .roi-tag,
+    .view-indicator,
+    .neuron-count-tag,
+    .nt-tag,
+    .class-tag {
+        font-size: 0.7em;
+        padding: 2px 6px;
+    }
+}
+
+/* Neuroglancer view */
+
+/* Header row layout */
+#neuron-visualization .nv-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* 3-column grid: label | toggle | label */
+.nv-theme {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    justify-items: center;
+    column-gap: 0.75rem;
+    min-width: 240px;
+    user-select: none;
+    line-height: 0;
+}
+.nv-theme-label {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+.nv-theme-label--left {
+    justify-self: end;
+}
+.nv-theme-label--right {
+    justify-self: start;
+}
+
+/* Middle cell wraps both the input and the visual slider */
+.nv-switch {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+    padding-bottom: 15px;
+}
+
+/* Hide native checkbox, keep accessible */
+.nv-toggle-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}
+
+/* Slider look */
+.nv-toggle {
+    position: relative;
+    width: 46px;
+    height: 24px;
+    border-radius: 9999px;
+    background: #bbb;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: inline-block;
+}
+.nv-toggle::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s ease;
+}
+
+/* Checked state */
+.nv-toggle-input:checked + .nv-toggle {
+    background: #4caf50;
+}
+.nv-toggle-input:checked + .nv-toggle::after {
+    transform: translateX(22px);
+}
+/* renamed from partner-cell to shorten html files */
+.p-c {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.p-c-label {
+    flex: 1;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+/* Styles for disabled checkboxes when data-body-ids is empty */
+.p-c.no-body-ids {
+    color: var(--pm-app-text-color, #333);
+}
+
+.p-c.no-body-ids input[type="checkbox"] {
+    background-color: #8b0000 !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.p-c.no-body-ids .p-c-label {
+    color: var(--pm-app-text-color, #333);
+}
+
+/* ROI checkbox styles */
+.roi-cell {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.roi-cell-label {
+    display: inline !important;
+    flex: 1 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+table.dataTable#upstream-table thead > tr > th:first-child,
+table.dataTable#upstream-table tbody > tr > td:first-child,
+table.dataTable#downstream-table thead > tr > th:first-child,
+table.dataTable#downstream-table tbody > tr > td:first-child {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    padding-bottom: 0px !important;
+    padding-top: 10px !important;
+}
+
+table.dataTable#roi-table thead > tr > th:first-child,
+table.dataTable#roi-table tbody > tr > td:first-child {
+    width: 250px !important;
+    max-width: 250px !important;
+}
+
+/* Additional ROI table fixes to eliminate white gap */
+table.dataTable#roi-table {
+    table-layout: fixed !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Force ROI table to ignore DataTables auto-width */
+table.dataTable#roi-table,
+table.dataTable#roi-table.dataTable,
+table.dataTable#roi-table.no-footer {
+    table-layout: fixed !important;
+    width: 100% !important;
+}
+
+/* Aggressive column width enforcement */
+table#roi-table,
+table.dataTable#roi-table,
+#roi-table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+
+table#roi-table thead tr,
+table#roi-table tbody tr,
+table.dataTable#roi-table thead tr,
+table.dataTable#roi-table tbody tr {
+    width: 100% !important;
+    display: table-row !important;
+}
+
+table#roi-table thead th,
+table#roi-table tbody td,
+table.dataTable#roi-table thead th,
+table.dataTable#roi-table tbody td {
+    display: table-cell !important;
+    box-sizing: border-box !important;
+    padding: 8px !important;
+    margin: 0 !important;
+    border: none !important;
+    vertical-align: middle !important;
+}
+
+/* First column absolute width control */
+table#roi-table thead th:first-child,
+table#roi-table tbody td:first-child,
+table.dataTable#roi-table thead th:first-child,
+table.dataTable#roi-table tbody td:first-child,
+#roi-table thead th:first-child,
+#roi-table tbody td:first-child {
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+}
+
+/* Other columns fixed width */
+table#roi-table thead th:nth-child(n + 2),
+table#roi-table tbody td:nth-child(n + 2),
+table.dataTable#roi-table thead th:nth-child(n + 2),
+table.dataTable#roi-table tbody td:nth-child(n + 2),
+#roi-table thead th:nth-child(n + 2),
+#roi-table tbody td:nth-child(n + 2) {
+    width: calc((100% - 250px) / 6) !important;
+    min-width: calc((100% - 250px) / 6) !important;
+    max-width: calc((100% - 250px) / 6) !important;
+    text-align: right !important;
+}
+
+table.dataTable#roi-table thead > tr > th,
+table.dataTable#roi-table tbody > tr > td {
+    box-sizing: border-box !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Simple ROI table first column width */
+table.dataTable#roi-table tbody > tr > td:first-child {
+    width: 250px !important;
+    max-width: 250px !important;
+}
+
+/* Reset filters button styling */
+#reset-filters {
+    width: auto !important;
+    min-width: 60px !important;
+    margin-top: 20px !important;
+}
