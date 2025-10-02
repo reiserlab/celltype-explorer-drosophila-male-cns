@@ -439,7 +439,9 @@
     justify-content: flex-end;
     gap: 1.5rem;
 }
-span.soma-side {
+span.soma-side,
+span.soma-neuromere,
+span.truman-hl {
     color: #888;
     font-size: 80%;
 }
@@ -2083,6 +2085,8 @@ abbr[data-original-title]:hover {
 .nt-tag,
 .class-tag,
 .dimorphism-tag,
+.soma-neuromere-tag,
+.truman-hl-tag,
 .synonym-tag,
 .flywire-type-tag {
     font-size: 0.75em;
@@ -2244,6 +2248,53 @@ abbr[data-original-title]:hover {
 .dimorphism-tag.selected:hover {
     background-color: #f9a825;
     border-color: #fb8c00;
+}
+
+/* Soma Neuromere Tag Styles */
+.soma-neuromere-tag {
+    background-color: #f0f8ff;
+    color: #1e88e5;
+    border-color: #e3f2fd;
+    cursor: pointer;
+}
+
+.soma-neuromere-tag:hover {
+    background-color: #e3f2fd;
+    border-color: #bbdefb;
+}
+
+.soma-neuromere-tag.selected {
+    background-color: #1e88e5;
+    color: white;
+    border-color: #1565c0;
+}
+
+.soma-neuromere-tag.selected:hover {
+    background-color: #1565c0;
+    border-color: #0d47a1;
+}
+
+.truman-hl-tag {
+    background-color: #fff3e0;
+    color: #f57c00;
+    border-color: #ffe0b2;
+    cursor: pointer;
+}
+
+.truman-hl-tag:hover {
+    background-color: #ffe0b2;
+    border-color: #ffcc02;
+}
+
+.truman-hl-tag.selected {
+    background-color: #f57c00;
+    color: white;
+    border-color: #ef6c00;
+}
+
+.truman-hl-tag.selected:hover {
+    background-color: #ef6c00;
+    border-color: #e65100;
 }
 
 /* Synonym tags */
@@ -2746,4 +2797,28 @@ table.dataTable#roi-table tbody > tr > td:first-child {
     width: auto !important;
     min-width: 60px !important;
     margin-top: 20px !important;
+}
+
+.cv-high {
+    background-image: linear-gradient(
+        90deg,
+        #ffffff00 95%,
+        var(--pm-color-error) 99%
+    );
+}
+
+.cv-middle {
+    background-image: linear-gradient(
+        90deg,
+        #ffffff00 95%,
+        var(--pm-color-warning) 99%
+    );
+}
+
+.cv-low {
+    background-image: linear-gradient(
+        90deg,
+        #ffffff00 95%,
+        var(--pm-color-success) 99%
+    );
 }

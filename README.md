@@ -1,15 +1,15 @@
-# Male CNS Cell Type Explorer v2.6 - Dataset Documentation
+# Male CNS – Cell Type Explorer - Dataset Documentation
 
-**Dataset:** cns
+**Dataset:** male-cns:v0.9
 **Server:** neuprint-cns.janelia.org
-**Generated:** 2025-09-30 01:09:08 UTC
+**Generated:** 2025-10-01 21:48:18 UTC
 **Total Neuron Types:** 11732
 
 ---
 
 ## Overview
 
-This website provides an interactive catalog of neuron types from the cns dataset. The catalog allows you to explore detailed information about each neuron type, including connectivity patterns, anatomical distributions, and morphological properties.
+This website provides an interactive catalog of neuron types from the male-cns:v0.9 dataset. The catalog allows you to explore detailed information about each neuron type, including connectivity patterns, anatomical distributions, and morphological properties.
 
 ## Getting Started
 
@@ -173,7 +173,7 @@ Neurotransmitter assignments are computational predictions based on:
 ## Dataset Information
 
 **Source Database**: neuPrint (neuprint-cns.janelia.org)
-**Dataset Version**: cns
+**Dataset Version**: male-cns:v0.9
 **Data Type**: Electron microscopy connectome data
 **Species**: *Drosophila melanogaster*
 **Resolution**: Synaptic-level connectivity
@@ -194,8 +194,8 @@ Neurotransmitter assignments are computational predictions based on:
 
 When using data from this catalog, please cite:
 1. The original neuPrint database and dataset
-2. The specific dataset version (cns)
-3. The generation date of this catalog (2025-09-30)
+2. The specific dataset version (male-cns:v0.9)
+3. The generation date of this catalog (2025-10-01)
 
 For the most current citation information, visit the neuPrint database at neuprint-cns.janelia.org.
 
@@ -216,4 +216,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2025-09-30 at 01:09:08 UTC. For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2025-10-01 at 21:48:18 UTC. For the most up-to-date information, please consult the original neuPrint database.*

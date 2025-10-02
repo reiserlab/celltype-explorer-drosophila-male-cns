@@ -478,7 +478,7 @@ ROI: ME (right)</title></path></g><g transform="translate(184.4,376.09)"><path d
 Synapse count: 719
 ROI: ME (right)</title></path></g><g transform="translate(174.5,370.38)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fcbba1" default-fill="#fcbba1" layer-colors='["#fee5d9", "#fee5d9", "#fee5d9", "#fee5d9", "#fcbba1", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["255\nROI: ME1", "175\nROI: ME2", "12\nROI: ME3", "6\nROI: ME4", "316\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 3, 7\nSynapse count: 764\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 3, 7
 Synapse count: 764
-ROI: ME (right)</title></path></g><g transform="translate(164.6,364.66)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fc9272" default-fill="#fc9272" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#ffffff", "#fcbba1", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["269\nROI: ME1", "164\nROI: ME2", "5\nROI: ME3", "0\nROI: ME4", "465\nROI: ME5", "47\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 3, 8\nSynapse count: 950\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 3, 8
+ROI: ME (right)</title></path></g><g transform="translate(164.6,364.66)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fc9272" default-fill="#fc9272" layer-colors='["#fee5d9", "#fee5d9", "#fee5d9", "#ffffff", "#fcbba1", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["269\nROI: ME1", "164\nROI: ME2", "5\nROI: ME3", "0\nROI: ME4", "465\nROI: ME5", "47\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 3, 8\nSynapse count: 950\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 3, 8
 Synapse count: 950
 ROI: ME (right)</title></path></g><g transform="translate(154.7,358.95)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fc9272" default-fill="#fc9272" layer-colors='["#fee5d9", "#fee5d9", "#fee5d9", "#fee5d9", "#fcbba1", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["229\nROI: ME1", "234\nROI: ME2", "12\nROI: ME3", "1\nROI: ME4", "447\nROI: ME5", "19\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 3, 9\nSynapse count: 942\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 3, 9
 Synapse count: 942
@@ -812,7 +812,7 @@ ROI: ME (right)</title></path></g><g transform="translate(85.4,238.91)"><path d=
 Synapse count: 1021
 ROI: ME (right)</title></path></g><g transform="translate(75.5,233.2)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["486\nROI: ME1", "75\nROI: ME2", "15\nROI: ME3", "214\nROI: ME4", "560\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 10, 24\nSynapse count: 1350\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 10, 24
 Synapse count: 1350
-ROI: ME (right)</title></path></g><g transform="translate(65.6,227.48)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#ffffff", "#fee5d9", "#fc9272", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["592\nROI: ME1", "58\nROI: ME2", "0\nROI: ME3", "180\nROI: ME4", "537\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 10, 25\nSynapse count: 1367\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 10, 25
+ROI: ME (right)</title></path></g><g transform="translate(65.6,227.48)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#ffffff", "#fee5d9", "#fcbba1", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["592\nROI: ME1", "58\nROI: ME2", "0\nROI: ME3", "180\nROI: ME4", "537\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 10, 25\nSynapse count: 1367\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 10, 25
 Synapse count: 1367
 ROI: ME (right)</title></path></g><g transform="translate(55.7,221.77)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["491\nROI: ME1", "79\nROI: ME2", "11\nROI: ME3", "224\nROI: ME4", "651\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 10, 26\nSynapse count: 1456\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 10, 26
 Synapse count: 1456
@@ -1324,7 +1324,7 @@ ROI: ME (right)</title></path></g><g transform="translate(55.7,130.32)"><path d=
 Synapse count: 1349
 ROI: ME (right)</title></path></g><g transform="translate(362.6,296.07)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fcbba1" default-fill="#fcbba1" layer-colors='["#fee5d9", "#fee5d9", "#fee5d9", "#ffffff", "#fee5d9", "#fcbba1", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["1\nROI: ME1", "129\nROI: ME2", "20\nROI: ME3", "0\nROI: ME4", "62\nROI: ME5", "306\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 19, 4\nSynapse count: 518\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 19, 4
 Synapse count: 518
-ROI: ME (right)</title></path></g><g transform="translate(352.7,290.36)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fcbba1" default-fill="#fcbba1" layer-colors='["#fee5d9", "#fee5d9", "#fee5d9", "#ffffff", "#fcbba1", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["124\nROI: ME1", "263\nROI: ME2", "14\nROI: ME3", "0\nROI: ME4", "269\nROI: ME5", "131\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 19, 5\nSynapse count: 801\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 19, 5
+ROI: ME (right)</title></path></g><g transform="translate(352.7,290.36)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fcbba1" default-fill="#fcbba1" layer-colors='["#fee5d9", "#fee5d9", "#fee5d9", "#ffffff", "#fee5d9", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["124\nROI: ME1", "263\nROI: ME2", "14\nROI: ME3", "0\nROI: ME4", "269\nROI: ME5", "131\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 19, 5\nSynapse count: 801\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 19, 5
 Synapse count: 801
 ROI: ME (right)</title></path></g><g transform="translate(342.8,284.64)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fc9272" default-fill="#fc9272" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["513\nROI: ME1", "79\nROI: ME2", "7\nROI: ME3", "1\nROI: ME4", "544\nROI: ME5", "131\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 19, 6\nSynapse count: 1275\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 19, 6
 Synapse count: 1275
@@ -1426,7 +1426,7 @@ ROI: ME (right)</title></path></g><g transform="translate(184.4,181.76)"><path d
 Synapse count: 1368
 ROI: ME (right)</title></path></g><g transform="translate(174.5,176.04)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fc9272", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["595\nROI: ME1", "88\nROI: ME2", "49\nROI: ME3", "649\nROI: ME4", "43\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 20, 24\nSynapse count: 1424\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 20, 24
 Synapse count: 1424
-ROI: ME (right)</title></path></g><g transform="translate(164.6,170.33)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fcbba1", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "119\nROI: ME2", "2\nROI: ME3", "510\nROI: ME4", "225\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 20, 25\nSynapse count: 1393\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 20, 25
+ROI: ME (right)</title></path></g><g transform="translate(164.6,170.33)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fcbba1", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "119\nROI: ME2", "2\nROI: ME3", "510\nROI: ME4", "225\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 20, 25\nSynapse count: 1393\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 20, 25
 Synapse count: 1393
 ROI: ME (right)</title></path></g><g transform="translate(154.7,164.61)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fc9272", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["583\nROI: ME1", "77\nROI: ME2", "1\nROI: ME3", "552\nROI: ME4", "121\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 20, 26\nSynapse count: 1334\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 20, 26
 Synapse count: 1334
@@ -1698,7 +1698,7 @@ ROI: ME (right)</title></path></g><g transform="translate(332.9,210.34)"><path d
 Synapse count: 1343
 ROI: ME (right)</title></path></g><g transform="translate(323.0,204.62)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#a50f15" default-fill="#a50f15" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fee5d9", "#ef6548", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["675\nROI: ME1", "102\nROI: ME2", "2\nROI: ME3", "94\nROI: ME4", "842\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 25, 14\nSynapse count: 1715\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 25, 14
 Synapse count: 1715
-ROI: ME (right)</title></path></g><g transform="translate(313.1,198.9)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fee5d9", "#ef6548", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "107\nROI: ME2", "1\nROI: ME3", "23\nROI: ME4", "829\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 25, 15\nSynapse count: 1497\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 25, 15
+ROI: ME (right)</title></path></g><g transform="translate(313.1,198.9)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#ef6548", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "107\nROI: ME2", "1\nROI: ME3", "23\nROI: ME4", "829\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 25, 15\nSynapse count: 1497\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 25, 15
 Synapse count: 1497
 ROI: ME (right)</title></path></g><g transform="translate(303.2,193.19)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#a50f15" default-fill="#a50f15" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fee5d9", "#ef6548", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["727\nROI: ME1", "62\nROI: ME2", "22\nROI: ME3", "2\nROI: ME4", "1034\nROI: ME5", "5\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 25, 16\nSynapse count: 1852\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 25, 16
 Synapse count: 1852
@@ -1750,7 +1750,7 @@ ROI: ME (right)</title></path></g><g transform="translate(362.6,216.05)"><path d
 Synapse count: 1148
 ROI: ME (right)</title></path></g><g transform="translate(352.7,210.34)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fcbba1" default-fill="#fcbba1" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#ffffff", "#fcbba1", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["279\nROI: ME1", "58\nROI: ME2", "26\nROI: ME3", "0\nROI: ME4", "360\nROI: ME5", "51\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 26, 12\nSynapse count: 774\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 26, 12
 Synapse count: 774
-ROI: ME (right)</title></path></g><g transform="translate(342.8,204.62)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fee5d9", "#ef6548", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "44\nROI: ME2", "1\nROI: ME3", "28\nROI: ME4", "870\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 26, 13\nSynapse count: 1480\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 26, 13
+ROI: ME (right)</title></path></g><g transform="translate(342.8,204.62)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#ef6548", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "44\nROI: ME2", "1\nROI: ME3", "28\nROI: ME4", "870\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 26, 13\nSynapse count: 1480\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 26, 13
 Synapse count: 1480
 ROI: ME (right)</title></path></g><g transform="translate(332.9,198.9)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#ef6548", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["520\nROI: ME1", "97\nROI: ME2", "1\nROI: ME3", "80\nROI: ME4", "829\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 26, 14\nSynapse count: 1527\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 26, 14
 Synapse count: 1527
@@ -1796,7 +1796,7 @@ ROI: ME (right)</title></path></g><g transform="translate(134.9,84.59)"><path d=
 Synapse count: 1529
 ROI: ME (right)</title></path></g><g transform="translate(125.0,78.87)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["533\nROI: ME1", "72\nROI: ME2", "30\nROI: ME3", "78\nROI: ME4", "610\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 26, 35\nSynapse count: 1323\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 26, 35
 Synapse count: 1323
-ROI: ME (right)</title></path></g><g transform="translate(115.1,73.16)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "110\nROI: ME2", "18\nROI: ME3", "177\nROI: ME4", "565\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 26, 36\nSynapse count: 1407\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 26, 36
+ROI: ME (right)</title></path></g><g transform="translate(115.1,73.16)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "110\nROI: ME2", "18\nROI: ME3", "177\nROI: ME4", "565\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 26, 36\nSynapse count: 1407\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 26, 36
 Synapse count: 1407
 ROI: ME (right)</title></path></g><g transform="translate(105.2,67.44)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["535\nROI: ME1", "81\nROI: ME2", "29\nROI: ME3", "137\nROI: ME4", "552\nROI: ME5", "31\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 26, 37\nSynapse count: 1365\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 26, 37
 Synapse count: 1365
@@ -1930,7 +1930,7 @@ ROI: ME (right)</title></path></g><g transform="translate(303.2,147.46)"><path d
 Synapse count: 1644
 ROI: ME (right)</title></path></g><g transform="translate(293.3,141.75)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["376\nROI: ME1", "101\nROI: ME2", "18\nROI: ME3", "2\nROI: ME4", "775\nROI: ME5", "34\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 29, 21\nSynapse count: 1306\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 29, 21
 Synapse count: 1306
-ROI: ME (right)</title></path></g><g transform="translate(283.4,136.03)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fee5d9", "#ef6548", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "79\nROI: ME2", "18\nROI: ME3", "2\nROI: ME4", "825\nROI: ME5", "2\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 29, 22\nSynapse count: 1463\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 29, 22
+ROI: ME (right)</title></path></g><g transform="translate(283.4,136.03)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#ef6548", "#fee5d9", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["537\nROI: ME1", "79\nROI: ME2", "18\nROI: ME3", "2\nROI: ME4", "825\nROI: ME5", "2\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 29, 22\nSynapse count: 1463\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 29, 22
 Synapse count: 1463
 ROI: ME (right)</title></path></g><g transform="translate(273.5,130.32)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["538\nROI: ME1", "104\nROI: ME2", "7\nROI: ME3", "32\nROI: ME4", "774\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 29, 23\nSynapse count: 1455\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 29, 23
 Synapse count: 1455
@@ -2164,7 +2164,7 @@ ROI: ME (right)</title></path></g><g transform="translate(273.5,73.16)"><path d=
 Synapse count: 1023
 ROI: ME (right)</title></path></g><g transform="translate(263.6,67.44)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ef6548" default-fill="#ef6548" layer-colors='["#fc9272", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["546\nROI: ME1", "108\nROI: ME2", "18\nROI: ME3", "93\nROI: ME4", "584\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 34, 29\nSynapse count: 1349\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 34, 29
 Synapse count: 1349
-ROI: ME (right)</title></path></g><g transform="translate(253.7,61.73)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fc9272" default-fill="#fc9272" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fc9272", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["432\nROI: ME1", "91\nROI: ME2", "12\nROI: ME3", "148\nROI: ME4", "537\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 34, 30\nSynapse count: 1220\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 34, 30
+ROI: ME (right)</title></path></g><g transform="translate(253.7,61.73)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fc9272" default-fill="#fc9272" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fcbba1", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["432\nROI: ME1", "91\nROI: ME2", "12\nROI: ME3", "148\nROI: ME4", "537\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 34, 30\nSynapse count: 1220\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 34, 30
 Synapse count: 1220
 ROI: ME (right)</title></path></g><g transform="translate(243.8,56.01)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#fc9272" default-fill="#fc9272" layer-colors='["#fcbba1", "#fee5d9", "#fee5d9", "#fee5d9", "#fcbba1", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]' tooltip-layers='["391\nROI: ME1", "93\nROI: ME2", "20\nROI: ME3", "159\nROI: ME4", "419\nROI: ME5", "0\nROI: ME6", "0\nROI: ME7", "0\nROI: ME8", "0\nROI: ME9", "0\nROI: ME10"]' base-title='"Column: 34, 31\nSynapse count: 1082\nROI: ME (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 34, 31
 Synapse count: 1082
@@ -2234,8 +2234,8 @@ ROI: ME (right)</title></path></g></g>
 
     <g
         id="legend-ME"
-        data-base-thresholds='[49.0, 464.0, 879.0, 1294.0, 1709.0, 2124.0]'
-        data-layer-thresholds='{"LO": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "LOP": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "ME": [1.0, 268.8, 536.6, 804.4, 1072.2, 1340.0]}'
+        data-base-thresholds='[49.0, 464.20000000000005, 879.4000000000001, 1294.6, 1709.8000000000002, 2125.0]'
+        data-layer-thresholds='{"LO": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "LOP": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "ME": [1.0, 269.0, 537.0, 805.0, 1073.0, 1341.0]}'
     >
         <text
             x="368.5"
@@ -2292,7 +2292,7 @@ ROI: ME (right)</title></path></g></g>
             onmouseover="sT(evt)"
             onmouseout="ht(); rT(evt);"
         ><title
-            >879…1294</title>
+            >879…1295</title>
         </rect>
         
         
@@ -2308,7 +2308,7 @@ ROI: ME (right)</title></path></g></g>
             onmouseover="sT(evt)"
             onmouseout="ht(); rT(evt);"
         ><title
-            >1294…1709</title>
+            >1295…1710</title>
         </rect>
         
         
@@ -2324,7 +2324,7 @@ ROI: ME (right)</title></path></g></g>
             onmouseover="sT(evt)"
             onmouseout="ht(); rT(evt);"
         ><title
-            >1709…2124</title>
+            >1710…2125</title>
         </rect>
         
         
@@ -2365,7 +2365,7 @@ ROI: ME (right)</title></path></g></g>
             font-family="Helvetica, Arial, 'Liberation Sans', 'Nimbus Sans', 'DejaVu Sans', sans-serif"
             text-anchor="end"
             font-size="10"
-        >1294</text>
+        >1295</text>
         
         
         <text
@@ -2375,7 +2375,7 @@ ROI: ME (right)</title></path></g></g>
             font-family="Helvetica, Arial, 'Liberation Sans', 'Nimbus Sans', 'DejaVu Sans', sans-serif"
             text-anchor="end"
             font-size="10"
-        >1709</text>
+        >1710</text>
         
         
         <text
@@ -2385,7 +2385,7 @@ ROI: ME (right)</title></path></g></g>
             font-family="Helvetica, Arial, 'Liberation Sans', 'Nimbus Sans', 'DejaVu Sans', sans-serif"
             text-anchor="end"
             font-size="10"
-        >2124</text>
+        >2125</text>
         
     </g>
 <g id="tooltip" class="tooltip-box" opacity="0">

@@ -950,7 +950,7 @@ const NEUROGLANCER_TEMPLATE = {
 };
 
 // Dataset information for conditional behavior
-const DATASET_NAME = "cns";
+const DATASET_NAME = "male-cns:v0.9";
 const IS_FAFB_DATASET = DATASET_NAME.toLowerCase().includes("fafb");
 
 
