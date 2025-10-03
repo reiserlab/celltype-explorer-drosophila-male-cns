@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to give us feedback! It would be helpful if you could provide some details about your experience with the Male CNS - Cell Type Explorer.
+        Thanks for taking the time to give us feedback! It would be helpful if you could provide some details about your experience with the Male CNS Cell Type Explorer.
 
   - type: textarea
     id: feedback-description
