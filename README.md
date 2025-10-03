@@ -2,7 +2,7 @@
 
 **Dataset:** male-cns:v0.9
 **Server:** neuprint-cns.janelia.org
-**Generated:** 2025-10-01 21:48:18 UTC
+**Generated:** 2025-10-03 13:25:25 UTC
 **Total Neuron Types:** 11732
 
 ---
@@ -195,7 +195,7 @@ Neurotransmitter assignments are computational predictions based on:
 When using data from this catalog, please cite:
 1. The original neuPrint database and dataset
 2. The specific dataset version (male-cns:v0.9)
-3. The generation date of this catalog (2025-10-01)
+3. The generation date of this catalog (2025-10-03)
 
 For the most current citation information, visit the neuPrint database at neuprint-cns.janelia.org.
 
@@ -216,4 +216,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2025-10-01 at 21:48:18 UTC. For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2025-10-03 at 13:25:25 UTC. For the most up-to-date information, please consult the original neuPrint database.*

@@ -5,7 +5,7 @@
  * This file is generated at build time with embedded neuron types data.
  * Do not edit manually - it will be overwritten during the build process.
  *
- * Generated on: 2025-10-01 21:48:18
+ * Generated on: 2025-10-03 13:25:25
  * Total neuron types: 11732
  */
 
@@ -134278,7 +134278,7 @@ const NEURON_DATA = [
       "right": "types/VP4+_vPN_R.html"
     },
     "synonyms": null,
-    "flywire_types": "VP4+_vPN",
+    "flywire_types": "VP4_vPN",
     "primary_url": "types/VP4+_vPN.html"
   },
   {
@@ -134289,7 +134289,7 @@ const NEURON_DATA = [
       "right": "types/VP4_vPN_R.html"
     },
     "synonyms": null,
-    "flywire_types": "VP4+_vPN",
+    "flywire_types": "VP4_vPN",
     "primary_url": "types/VP4_vPN.html"
   },
   {

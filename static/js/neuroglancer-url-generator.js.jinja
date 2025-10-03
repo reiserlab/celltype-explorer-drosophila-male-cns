@@ -14,6 +14,9 @@ const NEUROGLANCER_TEMPLATE = {{ neuroglancer_json | safe }};
 // Dataset information for conditional behavior
 const DATASET_NAME = "{{ dataset_name }}";
 const IS_FAFB_DATASET = DATASET_NAME.toLowerCase().includes("fafb");
+
+// Neuroglancer base URL from configuration
+const NEUROGLANCER_BASE_URL = "{{ neuroglancer_base_url }}";
 {% raw %}
 
 /* ────────────────────────────────────────────────────────────────────────── */
@@ -953,7 +956,7 @@ function generateNeuroglancerUrl(
     );
 
     const encodedState = encodeURIComponent(JSON.stringify(neuroglancerState));
-    return `https://clio-ng.janelia.org/#!${encodedState}`;
+    return `${NEUROGLANCER_BASE_URL}/#!${encodedState}`;
   } catch (error) {
     console.error("Error generating neuroglancer URL:", error);
     throw error;
