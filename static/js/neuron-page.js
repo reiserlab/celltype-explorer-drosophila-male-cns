@@ -179,12 +179,51 @@ function setupTooltipListeners(element, tooltipText, tooltip, titleElement) {
     tooltip.innerHTML = tooltipText.replace(/\n/g, "<br>");
     tooltip.style.display = "block";
 
-    // Position tooltip near mouse
+    // Position tooltip near mouse with edge detection
     var updateTooltipPosition = function (event) {
       var x = event.clientX + window.scrollX;
       var y = event.clientY + window.scrollY;
-      tooltip.style.left = x + 10 + "px";
-      tooltip.style.top = y - 10 + "px";
+
+      // Get viewport dimensions
+      var viewportWidth = window.innerWidth;
+      var viewportHeight = window.innerHeight;
+      var scrollX = window.scrollX;
+      var scrollY = window.scrollY;
+
+      // Get tooltip dimensions (temporarily show to measure)
+      tooltip.style.visibility = "hidden";
+      tooltip.style.display = "block";
+      var tooltipRect = tooltip.getBoundingClientRect();
+      var tooltipWidth = tooltipRect.width;
+      var tooltipHeight = tooltipRect.height;
+      tooltip.style.visibility = "visible";
+
+      // Default offset
+      var offsetX = 10;
+      var offsetY = -10;
+
+      // Check right edge
+      if (x + offsetX + tooltipWidth > scrollX + viewportWidth) {
+        offsetX = -tooltipWidth - 10; // Show to the left instead
+      }
+
+      // Check bottom edge
+      if (y + offsetY + tooltipHeight > scrollY + viewportHeight) {
+        offsetY = -tooltipHeight + 10; // Show above instead
+      }
+
+      // Check left edge
+      if (x + offsetX < scrollX) {
+        offsetX = 10; // Force to the right
+      }
+
+      // Check top edge
+      if (y + offsetY < scrollY) {
+        offsetY = 10; // Force below
+      }
+
+      tooltip.style.left = x + offsetX + "px";
+      tooltip.style.top = y + offsetY + "px";
     };
 
     updateTooltipPosition(e);
@@ -258,12 +297,51 @@ function initializeTitleTooltips() {
         tooltip.textContent = currentTitle;
         tooltip.style.display = "block";
 
-        // Position tooltip near mouse
+        // Position tooltip near mouse with edge detection
         var updateTooltipPosition = function (event) {
           var x = event.clientX + window.scrollX;
           var y = event.clientY + window.scrollY;
-          tooltip.style.left = x + 10 + "px";
-          tooltip.style.top = y - 10 + "px";
+
+          // Get viewport dimensions
+          var viewportWidth = window.innerWidth;
+          var viewportHeight = window.innerHeight;
+          var scrollX = window.scrollX;
+          var scrollY = window.scrollY;
+
+          // Get tooltip dimensions (temporarily show to measure)
+          tooltip.style.visibility = "hidden";
+          tooltip.style.display = "block";
+          var tooltipRect = tooltip.getBoundingClientRect();
+          var tooltipWidth = tooltipRect.width;
+          var tooltipHeight = tooltipRect.height;
+          tooltip.style.visibility = "visible";
+
+          // Default offset
+          var offsetX = 10;
+          var offsetY = -10;
+
+          // Check right edge
+          if (x + offsetX + tooltipWidth > scrollX + viewportWidth) {
+            offsetX = -tooltipWidth - 10; // Show to the left instead
+          }
+
+          // Check bottom edge
+          if (y + offsetY + tooltipHeight > scrollY + viewportHeight) {
+            offsetY = -tooltipHeight + 10; // Show above instead
+          }
+
+          // Check left edge
+          if (x + offsetX < scrollX) {
+            offsetX = 10; // Force to the right
+          }
+
+          // Check top edge
+          if (y + offsetY < scrollY) {
+            offsetY = 10; // Force below
+          }
+
+          tooltip.style.left = x + offsetX + "px";
+          tooltip.style.top = y + offsetY + "px";
         };
 
         updateTooltipPosition(e);

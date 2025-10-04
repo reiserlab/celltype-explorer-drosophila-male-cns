@@ -5,7 +5,7 @@
  * This file is generated at build time with embedded neuron types data.
  * Do not edit manually - it will be overwritten during the build process.
  *
- * Generated on: 2025-10-03 13:25:25
+ * Generated on: 2025-10-03 22:20:28
  * Total neuron types: 11732
  */
 
