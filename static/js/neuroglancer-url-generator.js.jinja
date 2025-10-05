@@ -17,6 +17,17 @@ const IS_FAFB_DATASET = DATASET_NAME.toLowerCase().includes("fafb");
 
 // Neuroglancer base URL from configuration
 const NEUROGLANCER_BASE_URL = "{{ neuroglancer_base_url }}";
+
+// ROI data loaded dynamically from Google Cloud Storage
+const ROI_IDS = {{ roi_ids|tojson }};
+const ALL_ROIS = {{ all_rois|tojson }};
+const VNC_IDS = {{ vnc_ids|tojson }};
+const VNC_NAMES = {{ vnc_names|tojson }};
+
+// ROI context tracking to fix ID collision issues
+// Stores ROI IDs with their source context (brain vs vnc)
+const selectedRoiContexts = new Map(); // id -> {source: 'brain'|'vnc', name: string}
+
 {% raw %}
 
 /* ────────────────────────────────────────────────────────────────────────── */
@@ -317,8 +328,10 @@ function syncRoiCheckboxes() {
 
     // Check if it's a brain ROI or VNC neuropil
     let roiId = roiNameToId(roiName);
+    let isVnc = false;
     if (!roiId) {
       roiId = vncNameToId(roiName);
+      isVnc = true;
     }
     if (!roiId) return;
 
@@ -358,9 +371,6 @@ function syncRoiCheckboxes() {
       td.appendChild(label);
     }
 
-    // Store ROI IDs in checkbox data for event handling
-    checkbox.dataset.roiIds = JSON.stringify(roiIds);
-
     // Update checkbox state
     checkbox.checked = isSelected;
 
@@ -399,17 +409,23 @@ function wireRoiCheckboxes(pageData) {
       return;
     }
 
-    // Get ROI IDs from checkbox data (set during syncRoiCheckboxes)
-    let roiIds;
-    try {
-      roiIds = JSON.parse(checkbox.dataset.roiIds || "[]");
-    } catch (e) {
-      console.warn("[ROI CHECKBOX] Invalid ROI IDs data:", checkbox.dataset.roiIds);
+    // Check if it's a brain ROI or VNC neuropil
+    let roiId = roiNameToId(roiName);
+    let isVnc = false;
+    if (!roiId) {
+      roiId = vncNameToId(roiName);
+      isVnc = true;
+    }
+    if (!roiId) {
+      console.warn("[ROI CHECKBOX] ROI not found:", roiName);
+      checkbox.checked = false;
       return;
     }
 
-    if (!Array.isArray(roiIds) || roiIds.length === 0) {
-      console.warn("[ROI CHECKBOX] Missing or empty ROI IDs for:", roiName);
+    // Handle both single IDs and arrays of IDs for combined ROIs
+    const roiIds = Array.isArray(roiId) ? roiId : [roiId];
+    if (roiIds.length === 0) {
+      console.warn("[ROI CHECKBOX] No ROI IDs for:", roiName);
       return;
     }
 
@@ -418,20 +434,30 @@ function wireRoiCheckboxes(pageData) {
       roiName,
       " -> ids:",
       roiIds,
+      "isVnc:",
+      isVnc,
       "checked:",
       checkbox.checked,
     );
 
     if (checkbox.checked) {
-      roiIds.forEach(id => selectedRoiIds.add(id));
+      // Add ROI IDs with proper context
+      if (isVnc) {
+        addVncRoiIds(roiIds, roiName);
+      } else {
+        addBrainRoiIds(roiIds, roiName);
+      }
       console.log(
         "[ROI TOGGLE] added",
         roiIds,
+        "source:",
+        isVnc ? 'vnc' : 'brain',
         "current:",
         Array.from(selectedRoiIds),
       );
     } else {
-      roiIds.forEach(id => selectedRoiIds.delete(id));
+      // Remove ROI IDs and clear context
+      removeRoiIds(roiIds);
       console.log(
         "[ROI TOGGLE] removed",
         roiIds,
@@ -461,119 +487,7 @@ function wireRoiCheckboxes(pageData) {
 /* ROI clicking: map label → segment ID; toggle; style; update NG             */
 /* ────────────────────────────────────────────────────────────────────────── */
 // Make ROI shell visible when clicked on within the ROI table.
-// Eventually retrieve these values programmatically.
-const ROI_IDS = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-  23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
-  42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-  61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
-  80, 81, 82, 83, 84, 85, 86, 93, 94, 95, 96,
-];
-
-const ALL_ROIS = [
-  "AL(L)",
-  "AL(R)",
-  "AME(L)",
-  "AME(R)",
-  "AMMC(L)",
-  "AMMC(R)",
-  "AOTU(L)",
-  "AOTU(R)",
-  "ATL(L)",
-  "ATL(R)",
-  "AVLP(L)",
-  "AVLP(R)",
-  "BU(L)",
-  "BU(R)",
-  "CA(L)",
-  "CA(R)",
-  "CAN(L)",
-  "CAN(R)",
-  "CRE(L)",
-  "CRE(R)",
-  "EB",
-  "EPA(L)",
-  "EPA(R)",
-  "FB",
-  "FLA(L)",
-  "FLA(R)",
-  "GA(L)",
-  "GA(R)",
-  "GNG",
-  "GOR(L)",
-  "GOR(R)",
-  "IB",
-  "ICL(L)",
-  "ICL(R)",
-  "IPS(L)",
-  "IPS(R)",
-  "LA(L)",
-  "LA(R)",
-  "LAL(L)",
-  "LAL(R)",
-  "LH(L)",
-  "LH(R)",
-  "LO(L)",
-  "LO(R)",
-  "LOP(L)",
-  "LOP(R)",
-  "ME(L)",
-  "ME(R)",
-  "NO",
-  "PB",
-  "PED(L)",
-  "PED(R)",
-  "PLP(L)",
-  "PLP(R)",
-  "PRW",
-  "PVLP(L)",
-  "PVLP(R)",
-  "ROB(L)",
-  "ROB(R)",
-  "RUB(L)",
-  "RUB(R)",
-  "SAD",
-  "SCL(L)",
-  "SCL(R)",
-  "SIP(L)",
-  "SIP(R)",
-  "SLP(L)",
-  "SLP(R)",
-  "SMP(L)",
-  "SMP(R)",
-  "SPS(L)",
-  "SPS(R)",
-  "VES(L)",
-  "VES(R)",
-  "WED(L)",
-  "WED(R)",
-  "a'L(L)",
-  "a'L(R)",
-  "aL(L)",
-  "aL(R)",
-  "b'L(L)",
-  "b'L(R)",
-  "bL(L)",
-  "bL(R)",
-  "gL(L)",
-  "gL(R)",
-  "AB(R)",
-  "AB(L)",
-  "CV-anterior",
-  "CRN",
-];
-
-const VNC_IDS = [
-    4, 5, 6, 7, 8, 9, 10,
-    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    21, 22, 23, 24, 25, 26, 27
-];
-
-const VNC_NAMES = [
-    "CV-posterior", "LegNp(T1)(L)", "LegNp(T1)(R)", "LegNp(T2)(L)", "LegNp(T2)(R)", "LegNp(T3)(L)", "LegNp(T3)(R)",
-    "Ov(L)", "Ov(R)", "IntTct", "LTct", "NTct(UTct-T1)(L)", "NTct(UTct-T1)(R)", "NTct(UTct-T2)(L)", "NTct(UTct-T2)(R)", "NTct(UTct-T3)(L)", "NTct(UTct-T3)(R)",
-    "ANm", "mVAC(T1)(L)", "mVAC(T1)(R)", "mVAC(T2)(L)", "mVAC(T2)(R)", "mVAC(T3)(L)", "mVAC(T3)(R)"
-];
+// ROI data is loaded dynamically from Google Cloud Storage (defined above)
 
 if (ROI_IDS.length !== ALL_ROIS.length) {
   console.warn(
@@ -694,6 +608,90 @@ function roiNameToId(roiName) {
 }
 
 /**
+ * Add ROI ID(s) to the selected set with brain context.
+ * @param {string|string[]} roiId - Single ID or array of IDs
+ * @param {string} roiName - Original ROI name for context
+ */
+function addBrainRoiIds(roiId, roiName) {
+  const roiIds = Array.isArray(roiId) ? roiId : [roiId];
+  roiIds.forEach(id => {
+    selectedRoiIds.add(id);
+    selectedRoiContexts.set(id, { source: 'brain', name: roiName });
+  });
+}
+
+/**
+ * Add ROI ID(s) to the selected set with VNC context.
+ * @param {string|string[]} roiId - Single ID or array of IDs
+ * @param {string} roiName - Original ROI name for context
+ */
+function addVncRoiIds(roiId, roiName) {
+  const roiIds = Array.isArray(roiId) ? roiId : [roiId];
+  roiIds.forEach(id => {
+    selectedRoiIds.add(id);
+    selectedRoiContexts.set(id, { source: 'vnc', name: roiName });
+  });
+}
+
+/**
+ * Remove ROI ID(s) from the selected set and clear context.
+ * @param {string|string[]} roiId - Single ID or array of IDs
+ */
+function removeRoiIds(roiId) {
+  const roiIds = Array.isArray(roiId) ? roiId : [roiId];
+  roiIds.forEach(id => {
+    selectedRoiIds.delete(id);
+    selectedRoiContexts.delete(id);
+  });
+}
+
+/**
+ * Initialize ROI contexts for existing selected ROI IDs.
+ * This ensures that ROI IDs loaded from pageData have proper source context.
+ * @param {string[]} existingRoiIds - Array of existing ROI IDs
+ */
+function initializeRoiContexts(existingRoiIds) {
+  if (!Array.isArray(existingRoiIds)) return;
+
+  existingRoiIds.forEach(roiId => {
+    // Skip if context already exists
+    if (selectedRoiContexts.has(roiId)) return;
+
+    // Try to find the ROI name and source by checking both datasets
+    const roiIdNum = parseInt(roiId);
+    let found = false;
+
+    // Check brain ROIs first
+    const brainIndex = ROI_IDS.indexOf(roiIdNum);
+    if (brainIndex !== -1 && brainIndex < ALL_ROIS.length) {
+      selectedRoiContexts.set(roiId, {
+        source: 'brain',
+        name: ALL_ROIS[brainIndex]
+      });
+      found = true;
+    }
+
+    // Check VNC ROIs if not found in brain ROIs
+    if (!found) {
+      const vncIndex = VNC_IDS.indexOf(roiIdNum);
+      if (vncIndex !== -1 && vncIndex < VNC_NAMES.length) {
+        selectedRoiContexts.set(roiId, {
+          source: 'vnc',
+          name: VNC_NAMES[vncIndex]
+        });
+        found = true;
+      }
+    }
+
+    if (!found) {
+      console.warn("[INIT ROI CONTEXT] Unknown ROI ID:", roiId);
+    }
+  });
+
+  console.log("[INIT ROI CONTEXT] Initialized contexts for", existingRoiIds.length, "ROI IDs");
+}
+
+/**
  * Resolve a VNC neuropil label to its Neuroglancer segment ID (as a string).
  *
  * Looks up the label in the prebuilt VNC_TO_ID table. If the label is not found,
@@ -736,8 +734,10 @@ function renderRoiLinkStyles(pageData) {
 
     // Check if it's a brain ROI or VNC neuropil
     let roiId = roiNameToId(roiName);
+    let isVnc = false;
     if (!roiId) {
       roiId = vncNameToId(roiName);
+      isVnc = true;
     }
     if (!roiId) return;
 
@@ -754,8 +754,10 @@ function renderRoiLinkStyles(pageData) {
 
     // Check if it's a brain ROI or VNC neuropil
     let roiId = roiNameToId(roiName);
+    let isVnc = false;
     if (!roiId) {
       roiId = vncNameToId(roiName);
+      isVnc = true;
     }
     if (!roiId) return;
 
@@ -806,8 +808,10 @@ function wireRoiClicks(pageData) {
 
     // Check if it's a brain ROI or VNC neuropil
     let roiId = roiNameToId(roiName);
+    let isVnc = false;
     if (!roiId) {
       roiId = vncNameToId(roiName);
+      isVnc = true;
     }
     console.log("[ROI CLICK] name:", roiName, " -> id:", roiId);
 
@@ -817,7 +821,7 @@ function wireRoiClicks(pageData) {
 
     if (isCurrentlySelected) {
       // Remove all sided ROI IDs for combined ROIs
-      roiIds.forEach(id => selectedRoiIds.delete(id));
+      removeRoiIds(roiIds);
       el.classList.remove("selected");
       console.log(
         "[ROI TOGGLE] removed",
@@ -826,8 +830,12 @@ function wireRoiClicks(pageData) {
         Array.from(selectedRoiIds),
       );
     } else {
-      // Add all sided ROI IDs for combined ROIs
-      roiIds.forEach(id => selectedRoiIds.add(id));
+      // Add all sided ROI IDs for combined ROIs with proper context
+      if (isVnc) {
+        addVncRoiIds(roiIds, roiName);
+      } else {
+        addBrainRoiIds(roiIds, roiName);
+      }
       el.classList.add("selected");
       console.log(
         "[ROI TOGGLE] added",
@@ -944,21 +952,30 @@ function generateNeuroglancerUrl(
       mainSegLayer.segmentQuery = hasConnectivityBodies ? "" : neuronQuery || "";
     }
     if (neuropilLayer) {
-      // Split ROIs between brain and VNC based on their ID arrays
-      // VNC ROIs take priority - exclude them from brain ROIs to prevent overlap
-      const brainRois = rois.filter(roiId =>
-        ROI_IDS.includes(parseInt(roiId)) && !VNC_IDS.includes(parseInt(roiId))
-      );
+      // Filter ROIs based on their source context to fix ID collision issues
+      const brainRois = rois.filter(roiId => {
+        const context = selectedRoiContexts.get(roiId);
+        return context && context.source === 'brain';
+      });
 
       neuropilLayer.segments = brainRois;
       neuropilLayer.visible = brainRois.length > 0;
+
+      console.log("[LAYER ASSIGNMENT] brain-neuropils:", brainRois, "contexts:",
+        brainRois.map(id => selectedRoiContexts.get(id)));
     }
     if (vncNeuropilLayer) {
-      // Only VNC neuropils go to vnc-neuropils layer
-      const vncRois = rois.filter(roiId => VNC_IDS.includes(parseInt(roiId)));
+      // Filter ROIs based on their source context to fix ID collision issues
+      const vncRois = rois.filter(roiId => {
+        const context = selectedRoiContexts.get(roiId);
+        return context && context.source === 'vnc';
+      });
 
       vncNeuropilLayer.segments = vncRois;
       vncNeuropilLayer.visible = vncRois.length > 0;
+
+      console.log("[LAYER ASSIGNMENT] vnc-neuropils:", vncRois, "contexts:",
+        vncRois.map(id => selectedRoiContexts.get(id)));
     }
 
     console.log(
@@ -1036,6 +1053,17 @@ function updateNeuroglancerLinks(
  */
 function initializeNeuroglancerLinks(pageData) {
   const run = () => {
+    // Initialize ROI contexts and sync selectedRoiIds with pageData.visibleRois
+    if (pageData.visibleRois && Array.isArray(pageData.visibleRois)) {
+      // Clear existing data
+      selectedRoiIds.clear();
+      selectedRoiContexts.clear();
+
+      // Add existing ROI IDs to selectedRoiIds and initialize contexts
+      pageData.visibleRois.forEach(roiId => selectedRoiIds.add(String(roiId)));
+      initializeRoiContexts(pageData.visibleRois.map(String));
+    }
+
     const input = document.getElementById("nv-theme-toggle");
     const saved = localStorage.getItem("nvTheme");
     const initialTheme = saved || (input && input.checked ? "light" : "dark");
@@ -1125,10 +1153,16 @@ function forceRoiTableLayout() {
   });
 }
 
+// Enhanced page load initialization
+function initializePage() {
+  forceRoiTableLayout();
+  console.log("[PAGE INIT] ROI contexts initialized:", selectedRoiContexts.size, "entries");
+}
+
 // Run on page load
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", forceRoiTableLayout);
+  document.addEventListener("DOMContentLoaded", initializePage);
 } else {
-  forceRoiTableLayout();
+  initializePage();
 }
 {% endraw %}

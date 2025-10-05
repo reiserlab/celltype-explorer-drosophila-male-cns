@@ -1,8 +1,8 @@
 # Male CNS – Cell Type Explorer - Dataset Documentation
 
 **Dataset:** male-cns:v0.9
-**Server:** neuprint-cns.janelia.org
-**Generated:** 2025-10-03 22:20:28 UTC
+**Server:** neuprint.janelia.org
+**Generated:** 2025-10-04 20:58:34 UTC
 **Total Neuron Types:** 11732
 
 ---
@@ -69,7 +69,7 @@ Use the search box in the header to quickly find neuron types by name. The searc
 - **Home**: Returns to the main index page
 - **Cell Types**: Alternative view of neuron type listings
 - **Glossary**: Definitions and explanations of terminology
-- **neuPrint**: Direct link to the source neuPrint database at neuprint-cns.janelia.org
+- **neuPrint**: Direct link to the source neuPrint database at neuprint.janelia.org
 
 ## Individual Neuron Type Pages
 
@@ -172,7 +172,7 @@ Neurotransmitter assignments are computational predictions based on:
 
 ## Dataset Information
 
-**Source Database**: neuPrint (neuprint-cns.janelia.org)
+**Source Database**: neuPrint (neuprint.janelia.org)
 **Dataset Version**: male-cns:v0.9
 **Data Type**: Electron microscopy connectome data
 **Species**: *Drosophila melanogaster*
@@ -195,9 +195,9 @@ Neurotransmitter assignments are computational predictions based on:
 When using data from this catalog, please cite:
 1. The original neuPrint database and dataset
 2. The specific dataset version (male-cns:v0.9)
-3. The generation date of this catalog (2025-10-03)
+3. The generation date of this catalog (2025-10-04)
 
-For the most current citation information, visit the neuPrint database at neuprint-cns.janelia.org.
+For the most current citation information, visit the neuPrint database at neuprint.janelia.org.
 
 ## Getting Help
 
@@ -216,4 +216,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2025-10-03 at 22:20:28 UTC. For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2025-10-04 at 20:58:34 UTC. For the most up-to-date information, please consult the original neuPrint database.*
