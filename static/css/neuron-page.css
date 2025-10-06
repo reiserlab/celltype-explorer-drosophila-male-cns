@@ -1232,6 +1232,51 @@ abbr[data-original-title]:hover {
     height: auto;
 }
 
+/* Eyemap download functionality */
+.eyemap-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.eyemap-download-btn {
+    position: absolute;
+    top: 50px;
+    right: 350px;
+    width: 25px;
+    height: 25px;
+    background-color: var(--pm-secondary-color) !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    z-index: 10;
+}
+
+.eyemap-download-btn svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+}
+
+.eyemap-container:hover .eyemap-download-btn {
+    opacity: 0.5;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.eyemap-download-btn:hover {
+    transform: scale(1.1);
+    opacity: 1 !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
 .no-data-text {
     color: #999;
 }
@@ -1392,6 +1437,64 @@ abbr[data-original-title]:hover {
 #downstream-table_wrapper,
 #roi-table_wrapper {
     vertical-align: bottom;
+}
+
+/* DataTables Buttons styling for all tables */
+#upstream-table_wrapper .dt-buttons,
+#downstream-table_wrapper .dt-buttons,
+#roi-table_wrapper .dt-buttons {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+#upstream-table_wrapper .dt-button,
+#downstream-table_wrapper .dt-button,
+#roi-table_wrapper .dt-button {
+    background-color: var(--pm-secondary-color);
+    border: 1px solid var(--pm-secondary-color);
+    opacity: 0.6;
+    color: white;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease-in-out;
+    width: 2rem;
+    height: 2rem;
+    min-width: 2rem;
+    min-height: 2rem;
+    text-align: center;
+    line-height: 1;
+    text-overflow: clip !important;
+}
+
+#upstream-table_wrapper .dt-button:hover,
+#downstream-table_wrapper .dt-button:hover,
+#roi-table_wrapper .dt-button:hover {
+    background-color: #a02cc4;
+    border-color: #a02cc4;
+    color: white;
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+#upstream-table_wrapper .dt-button:focus,
+#downstream-table_wrapper .dt-button:focus,
+#roi-table_wrapper .dt-button:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(192, 58, 233, 0.25);
+}
+
+#upstream-table_wrapper .dt-button:active,
+#downstream-table_wrapper .dt-button:active,
+#roi-table_wrapper .dt-button:active {
+    background-color: #8a249f;
+    border-color: #8a249f;
+    transform: translateY(0);
 }
 
 /* Ensure all DataTable elements align to bottom */
