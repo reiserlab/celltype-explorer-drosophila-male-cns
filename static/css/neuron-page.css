@@ -2911,6 +2911,10 @@ table.dataTable#roi-table tbody > tr > td:first-child {
     max-width: 250px !important;
 }
 
+.roi-table td:not(.roi-cell) {
+    text-align: right !important;
+}
+
 /* Reset filters button styling */
 #reset-filters {
     width: auto !important;

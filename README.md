@@ -2,7 +2,7 @@
 
 **Dataset:** male-cns:v0.9
 **Server:** neuprint.janelia.org
-**Generated:** 2025-10-06 16:06:09 UTC
+**Generated:** 2025-10-06 20:31:40 UTC
 **Total Neuron Types:** 11732
 
 ---
@@ -216,4 +216,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2025-10-06 at 16:06:09 UTC. For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2025-10-06 at 20:31:40 UTC. For the most up-to-date information, please consult the original neuPrint database.*
