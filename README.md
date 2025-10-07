@@ -2,7 +2,9 @@
 
 **Dataset:** male-cns:v0.9
 **Server:** neuprint.janelia.org
-**Generated:** 2025-10-06 20:31:40 UTC
+**Dataset UUID:** 9949a1af14e248a2a2af5030d4c55343
+**Dataset Last Updated:** 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
+**Generated:** 2025-10-07 14:20:47 UTC
 **Total Neuron Types:** 11732
 
 ---
@@ -174,6 +176,8 @@ Neurotransmitter assignments are computational predictions based on:
 
 **Source Database**: neuPrint (neuprint.janelia.org)
 **Dataset Version**: male-cns:v0.9
+**Dataset UUID**: 9949a1af14e248a2a2af5030d4c55343
+**Dataset Last Updated**: 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
 **Data Type**: Electron microscopy connectome data
 **Species**: *Drosophila melanogaster*
 **Resolution**: Synaptic-level connectivity
@@ -194,8 +198,9 @@ Neurotransmitter assignments are computational predictions based on:
 
 When using data from this catalog, please cite:
 1. The original neuPrint database and dataset
-2. The specific dataset version (male-cns:v0.9)
-3. The generation date of this catalog (2025-10-06)
+2. The specific dataset version (male-cns:v0.9) with UUID 9949a1af14e248a2a2af5030d4c55343
+3. The dataset last updated on 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
+4. The generation date of this catalog (2025-10-07)
 
 For the most current citation information, visit the neuPrint database at neuprint.janelia.org.
 
@@ -216,4 +221,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2025-10-06 at 20:31:40 UTC. For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2025-10-07 at 14:20:47 UTC using dataset male-cns:v0.9 (UUID: 9949a1af14e248a2a2af5030d4c55343, last updated: 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*
