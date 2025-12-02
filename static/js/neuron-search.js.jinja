@@ -2,37 +2,36 @@
  * Neuron Type Search and Autocomplete
  * Provides client-side search functionality for neuron types
  *
- * This file is generated at build time with embedded neuron types data.
+ * This file is generated at build time.
  * Do not edit manually - it will be overwritten during the build process.
  *
  * Generated on: {{ generation_timestamp }}
  * Total neuron types: {{ neuron_types|length }}
  */
 
-// Neuron types data embedded at build time
-const NEURON_TYPES_DATA = {{ neuron_types_json|safe }};
-
-// Detailed neuron data with URLs for navigation
-const NEURON_DATA = {{ neuron_types_data_json|safe }};
-
 class NeuronSearch {
   constructor(inputId = "menulines") {
     this.inputElement = document.getElementById(inputId);
-    this.neuronTypes = NEURON_TYPES_DATA;
-    this.neuronData = NEURON_DATA;
+    this.neuronTypes = [];
+    this.neuronData = [];
     this.filteredTypes = [];
     this.currentIndex = -1;
     this.isDropdownVisible = false;
     this.clickingDropdown = false;
+    this.isReady = false;
+    this.dataSource = null;
 
     // Detect if we're on a neuron page (inside types folder) based on current path
     this.isNeuronPage = this.detectNeuronPageContext();
 
+    // Set path prefix for loading resources
+    this.pathPrefix = this.isNeuronPage ? '../' : '';
+
+    // Set URL prefix for neuron pages
+    this.urlPrefix = this.isNeuronPage ? '' : 'types/';
+
     // Create autocomplete dropdown
     this.dropdown = this.createDropdown();
-
-    // Initialize the search functionality
-    this.init();
   }
 
   /**
@@ -60,16 +59,135 @@ class NeuronSearch {
   /**
    * Initialize the search functionality
    */
-  init() {
+  async init() {
     if (!this.inputElement) {
       console.warn("Search input element not found");
       return;
     }
 
+    // Load neuron data
+    const data = await this.loadNeuronData();
+    this.neuronTypes = data.names || [];
+    this.neuronData = data.neurons || [];
+    this.isReady = true;
+
     // Set up event listeners
     this.setupEventListeners();
 
-    console.log(`Loaded ${this.neuronTypes.length} neuron types for search`);
+    console.log(
+      `Loaded ${this.neuronTypes.length} neuron types (source: ${this.dataSource})`
+    );
+  }
+
+  /**
+   * Load neuron data with fallback mechanism
+   * Try JSON first, fall back to JS file if that fails
+   */
+  async loadNeuronData() {
+    // Try loading from JSON first
+    try {
+      const data = await this.loadFromJSON();
+      this.dataSource = 'json';
+      return data;
+    } catch (jsonError) {
+      console.warn('JSON loading failed, trying fallback JS file:', jsonError.message);
+
+      // Fall back to loading JS file
+      try {
+        const data = await this.loadFromJSFallback();
+        this.dataSource = 'js-fallback';
+        return data;
+      } catch (jsError) {
+        console.error('Both JSON and JS fallback loading failed:', jsError.message);
+        this.dataSource = 'none';
+
+        // Return empty data as last resort
+        return {
+          types: [],
+          details: [],
+          metadata: { error: true }
+        };
+      }
+    }
+  }
+
+  /**
+   * Load data from JSON file (preferred method)
+   */
+  async loadFromJSON() {
+    const url = `${this.pathPrefix}data/neurons.json`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return {
+      names: data.names || [],
+      neurons: data.neurons || []
+    };
+  }
+
+  /**
+   * Load data from JS fallback file (for CORS-restricted environments)
+   * Uses dynamic script loading which bypasses CORS
+   */
+  loadFromJSFallback() {
+    return new Promise((resolve, reject) => {
+      // Set up callback for the JS file to call
+      window.neuronDataCallback = (data) => {
+        delete window.neuronDataCallback; // Clean up
+        resolve({
+          names: data.names || [],
+          neurons: data.neurons || []
+        });
+      };
+
+      // Create script element
+      const script = document.createElement('script');
+      script.src = `${this.pathPrefix}data/neurons.js`;
+      script.async = true;
+
+      // Handle successful load
+      script.onload = () => {
+        // If data was already set globally instead of using callback
+        if (window.NEURON_DATA_FALLBACK && window.neuronDataCallback) {
+          const data = window.NEURON_DATA_FALLBACK;
+          delete window.NEURON_DATA_FALLBACK; // Clean up
+          delete window.neuronDataCallback;
+          resolve({
+            names: data.names || [],
+            neurons: data.neurons || []
+          });
+        }
+        // If callback hasn't been called within 100ms, something went wrong
+        setTimeout(() => {
+          if (window.neuronDataCallback) {
+            delete window.neuronDataCallback;
+            reject(new Error('JS fallback loaded but callback not invoked'));
+          }
+        }, 100);
+      };
+
+      // Handle load error
+      script.onerror = () => {
+        delete window.neuronDataCallback;
+        reject(new Error('Failed to load neurons.js fallback file'));
+      };
+
+      // Add script to document
+      document.head.appendChild(script);
+
+      // Timeout after 5 seconds
+      setTimeout(() => {
+        if (window.neuronDataCallback) {
+          delete window.neuronDataCallback;
+          script.remove();
+          reject(new Error('Timeout loading neuron data fallback'));
+        }
+      }, 5000);
+    });
   }
 
   /**
@@ -164,22 +282,21 @@ class NeuronSearch {
         return true;
       }
 
-      // Search in synonyms and flywire types from detailed data
+      // Search in types (synonyms and flywire) from detailed data
       const neuronEntry = this.neuronData.find(entry => entry.name === type);
-      if (neuronEntry) {
+      if (neuronEntry && neuronEntry.types) {
         // Search in synonyms
-        if (neuronEntry.synonyms) {
-          const synonymsLower = neuronEntry.synonyms.toLowerCase();
-          // Search in full synonym text
-          if (synonymsLower.includes(query)) {
-            return true;
-          }
-          // Also search in just the part after colon (the actual name)
-          const synonyms = synonymsLower.split(';').map(s => s.trim());
-          for (const synonym of synonyms) {
-            const colonIndex = synonym.indexOf(':');
+        if (neuronEntry.types.synonyms && Array.isArray(neuronEntry.types.synonyms)) {
+          for (const synonym of neuronEntry.types.synonyms) {
+            const synonymLower = synonym.toLowerCase();
+            // Search in full synonym text
+            if (synonymLower.includes(query)) {
+              return true;
+            }
+            // Also search in just the part after colon (the actual name)
+            const colonIndex = synonymLower.indexOf(':');
             if (colonIndex !== -1) {
-              const nameAfterColon = synonym.substring(colonIndex + 1).trim();
+              const nameAfterColon = synonymLower.substring(colonIndex + 1).trim();
               if (nameAfterColon.includes(query)) {
                 return true;
               }
@@ -188,8 +305,12 @@ class NeuronSearch {
         }
 
         // Search in flywire types
-        if (neuronEntry.flywire_types && neuronEntry.flywire_types.toLowerCase().includes(query)) {
-          return true;
+        if (neuronEntry.types.flywire && Array.isArray(neuronEntry.types.flywire)) {
+          for (const flywireType of neuronEntry.types.flywire) {
+            if (flywireType.toLowerCase().includes(query)) {
+              return true;
+            }
+          }
         }
       }
 
@@ -439,18 +560,16 @@ class NeuronSearch {
     // Find the neuron data entry for this type
     const neuronEntry = this.neuronData.find(entry => entry.name === neuronType);
 
-    if (neuronEntry && neuronEntry.primary_url) {
-      // Adjust the URL based on current page context
-      let targetUrl = neuronEntry.primary_url;
+    if (neuronEntry && neuronEntry.urls) {
+      // Get primary URL (prefer combined, then left, then right, then middle)
+      let targetUrl = neuronEntry.urls.combined ||
+                      neuronEntry.urls.left ||
+                      neuronEntry.urls.right ||
+                      neuronEntry.urls.middle ||
+                      `${neuronType}.html`;
 
-      // If we're on a neuron page and the URL starts with 'types/', remove the prefix
-      if (this.isNeuronPage && targetUrl.startsWith('types/')) {
-        targetUrl = targetUrl.substring(6); // Remove 'types/' prefix
-      }
-      // If we're not on a neuron page and the URL doesn't start with 'types/', add the prefix
-      else if (!this.isNeuronPage && !targetUrl.startsWith('types/')) {
-        targetUrl = 'types/' + targetUrl;
-      }
+      // Add URL prefix (types/ for non-neuron pages, empty for neuron pages)
+      targetUrl = this.urlPrefix + targetUrl;
 
       window.location.href = targetUrl;
     } else {
@@ -512,22 +631,13 @@ class NeuronSearch {
   navigateToSomaSide(neuronType, side) {
     const neuronEntry = this.neuronData.find(entry => entry.name === neuronType);
 
-    if (neuronEntry && neuronEntry.urls[side]) {
+    if (neuronEntry && neuronEntry.urls && neuronEntry.urls[side]) {
       // Close dropdown and update input
       this.inputElement.value = neuronType;
       this.hideDropdown();
 
-      // Adjust the URL based on current page context
-      let targetUrl = neuronEntry.urls[side];
-
-      // If we're on a neuron page and the URL starts with 'types/', remove the prefix
-      if (this.isNeuronPage && targetUrl.startsWith('types/')) {
-        targetUrl = targetUrl.substring(6); // Remove 'types/' prefix
-      }
-      // If we're not on a neuron page and the URL doesn't start with 'types/', add the prefix
-      else if (!this.isNeuronPage && !targetUrl.startsWith('types/')) {
-        targetUrl = 'types/' + targetUrl;
-      }
+      // Add URL prefix (types/ for non-neuron pages, empty for neuron pages)
+      let targetUrl = this.urlPrefix + neuronEntry.urls[side];
 
       // Navigate to the specific side page
       window.location.href = targetUrl;
@@ -569,9 +679,12 @@ class NeuronSearch {
 }
 
 // Initialize the search functionality when the DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   // Initialize neuron search
-  window.neuronSearch = new NeuronSearch("menulines");
+  if (document.getElementById('menulines')) {
+    window.neuronSearch = new NeuronSearch("menulines");
+    await window.neuronSearch.init();
+  }
 });
 
 // Export for module use if needed

@@ -283,7 +283,7 @@ function updateLayer(layer, regionId) {
         font-family="Arial, sans-serif"
         font-size="12"
         fill="#CCCCCC"
-    >LOP Cell Count (All Columns)</text>
+    >Cell Count (All Columns)</text>
 <text
         x="5"
         y="28"
@@ -292,6 +292,14 @@ function updateLayer(layer, regionId) {
         font-size="10"
         fill="#CCCCCC"
     >5-HTPMPV01 (L)</text>
+  <text
+        x="5"
+        y="41"
+        text-anchor="start"
+        font-family="Arial, sans-serif"
+        font-size="10"
+        fill="#CCCCCC"
+    >LOP (L)</text>
 
 
 

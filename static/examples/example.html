@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuview Iframe Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .controls {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .controls h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #status {
+            padding: 10px;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 3px;
+            margin-bottom: 20px;
+        }
+        #status.ready {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        .log {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin: 2px 0;
+        }
+        .log-info { color: #0066cc; }
+        .log-success { color: #28a745; }
+        .log-warning { color: #ffc107; }
+    </style>
+</head>
+<body>
+    <h1>Neuview Iframe Controller - Example</h1>
+
+    <div id="status">Loading...</div>
+
+    <div class="controls">
+        <h2>Current URL</h2>
+        <div id="current-url" style="padding: 10px; background: white; border: 1px solid #ddd; border-radius: 3px; font-family: monospace; font-size: 12px; word-break: break-all;">
+            Not loaded yet
+        </div>
+    </div>
+
+    <div class="controls">
+        <h2>Navigate to Sections</h2>
+        <button onclick="jumpTo('neuron-visualization')">🔬 Neuron Visualization</button>
+        <button onclick="jumpTo('roi-innervation')">📊 ROI Innervation</button>
+        <button onclick="jumpTo('connectivity-inputs')">⬅️ Inputs</button>
+        <button onclick="jumpTo('connectivity-outputs')">➡️ Outputs</button>
+    </div>
+
+    <div class="controls">
+        <h2>Load Different Page</h2>
+        <input type="text" id="url-input" placeholder="Enter URL (e.g., ../types/Mi1.html)" value="../types/LC11.html">
+        <button onclick="loadNewPage()">Load Page</button>
+    </div>
+
+    <iframe id="neuron-iframe" src="../types/LC11.html"></iframe>
+
+    <div class="log" id="log"></div>
+
+    <!-- Include the controller library -->
+    <script src="neuview-iframe-controller.js"></script>
+
+    <script>
+        // Initialize the controller
+        const controller = new NeuviewIframeController('#neuron-iframe', {
+            debug: true,
+            
+            // Called when a neuron page finishes loading
+            onPageLoaded: function(data) {
+                log('✓ Page loaded: ' + data.url, 'success');
+                updateStatus('Ready - ' + data.url, true);
+            },
+            
+            // Called when the iframe URL changes
+            onUrlChanged: function(data) {
+                log('→ URL changed from: ' + (data.previousUrl || 'none'), 'info');
+                log('→ URL changed to: ' + data.currentUrl, 'info');
+                document.getElementById('current-url').textContent = data.currentUrl;
+            },
+            
+            // Called when user clicks a link in the iframe
+            onNavigationRequest: function(data) {
+                log('Navigation requested: ' + data.url, 'warning');
+                // Optionally intercept and load in same iframe
+                // controller.loadPage(data.url);
+            },
+            
+            // Called when anchor scroll completes
+            onAnchorResult: function(data) {
+                if (data.found) {
+                    log('✓ Scrolled to: ' + data.anchor, 'success');
+                } else {
+                    log('✗ Anchor not found: ' + data.anchor, 'warning');
+                }
+            }
+        });
+
+        // Jump to a section
+        function jumpTo(anchor) {
+            log('Jumping to: ' + anchor, 'info');
+            controller.jumpToAnchor(anchor);
+        }
+
+        // Load a new page
+        function loadNewPage() {
+            const url = document.getElementById('url-input').value;
+            log('Loading page: ' + url, 'info');
+            updateStatus('Loading...', false);
+            controller.loadPage(url);
+        }
+
+        // Update status display
+        function updateStatus(message, ready) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = ready ? 'ready' : '';
+        }
+
+        // Log messages
+        function log(message, type) {
+            type = type || 'info';
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry log-' + type;
+            entry.textContent = new Date().toLocaleTimeString() + ' - ' + message;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        // Initial log
+        log('Controller initialized', 'success');
+    </script>
+</body>
+</html>
