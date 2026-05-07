@@ -1,6 +1,30 @@
 // Neuron Page Static JavaScript Functions
 // Functions that don't require Jinja2 template variables
 
+// Build a filename that includes the current value shown next to a slider.
+/* @param {string} baseName        - Base filename prefix (no extension).
+ * @param {string} valueElementId  - ID of the element showing the slider value (e.g. "downstream-slider-value").
+ * @param {string} suffix          - Extra suffix to append (e.g. "_min_connections").
+ * @returns {string}
+ */
+function makeSliderFilename(baseName, valueElementId, suffix) {
+
+  var valueEl = document.getElementById(valueElementId);
+  if (!valueEl) {
+    return baseName + "_" + defaultLabel + suffix;
+  }
+
+  var text = (valueEl.textContent || "").trim();
+  if (!text) {
+    return baseName + "_" + defaultLabel + suffix;
+  }
+
+  var label;
+  label = text.replace(/[^\d.]/g, "");
+
+  return baseName + "_" + label + suffix;
+}
+
 // General cumulative percentage calculation for ROI tables (input/output percentages)
 function calculateCumulativePercentages(table, cumulativeCol, roiPreciseData) {
   var cumulativeSum = 0;

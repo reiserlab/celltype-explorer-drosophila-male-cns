@@ -2991,3 +2991,81 @@ table.dataTable#roi-table tbody > tr > td:first-child {
         height: 20px;
     }
 }
+
+.plume dl dt.highlight,
+.plume dl dd.highlight {
+    background-color: rgba(180, 180, 180, 0.1);
+    border-left: solid 4px var(--pm-primary-color);
+}
+/* Autocomplete dropdown produced by NeuronSearch
+   (templates/static/js/neuron-search.js.jinja). Hidden by default; the
+   .is-open modifier is toggled from JS to show. */
+
+.search-form,
+.quick-search-container {
+    position: relative;
+}
+
+.neuron-search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.neuron-search-dropdown.is-open {
+    display: block;
+}
+
+.neuron-search-no-results {
+    padding: 8px 12px;
+    color: #666;
+    font-style: italic;
+}
+
+.neuron-search-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+
+.neuron-search-item.is-active {
+    background-color: #f0f8ff;
+    color: #0066cc;
+}
+
+.neuron-search-item .neuron-name {
+    color: inherit;
+    cursor: pointer;
+}
+
+.neuron-search-sides {
+    color: #666;
+}
+
+.neuron-search-sides .side-link {
+    color: #0066cc;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.neuron-search-sides .side-link:hover {
+    text-decoration: underline;
+}
+
+.neuron-search-aliases {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 2px;
+}

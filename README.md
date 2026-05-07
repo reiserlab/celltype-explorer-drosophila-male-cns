@@ -2,9 +2,9 @@
 
 **Dataset:** male-cns:v0.9
 **Server:** neuprint.janelia.org
-**Dataset UUID:** 9949a1af14e248a2a2af5030d4c55343
+**Dataset UUID:** 79f9a4cb54b0463cad8615b26bf8f137
 **Dataset Last Updated:** 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
-**Generated:** 2025-12-02 18:06:42 UTC
+**Generated:** 2026-05-07 18:25:37 UTC
 **Total Neuron Types:** 11732
 
 ---
@@ -20,17 +20,14 @@ This website provides an interactive catalog of neuron types from the male-cns:v
 The index page serves as the main entry point for exploring the dataset. It contains several filtering options to help you find specific neurons of interest:
 
 **Filter Options:**
-- **Neuron Type Filter**: Use the search box to filter neurons by type name. Type part of a neuron name to see matching results.
-- **Hemisphere Filter**: Choose between "All", "Left", or "Right" to filter neurons by their soma hemisphere location.
-- **Synapse Count Filters**: Use the slider controls to filter neurons based on their presynaptic and postsynaptic synapse counts.
-- **Search and Sort**: All columns in the neuron table are sortable by clicking the column headers. Use the global search box to quickly find specific entries.
+- **Search**: Use the search box above the cards to filter by neuron type name, published synonyms, or the cell type's name in the FlyWire FAFB dataset. Search is case-insensitive and supports partial matches.
+- **Filter dropdowns**: Single-select dropdowns above the cards filter on Side, ROI, Region, Neurotransmitter, Cell Count, Dimorphism, Superclass, Class, Subclass, Soma Neuromere, and Truman Hemilineage. See **Advanced Filtering Options** below for details.
+- **Tag clicks**: Many tags shown on each card are themselves clickable; clicking a tag adds it to the active filter set.
 
 **Navigation:**
-- Click on any neuron type name in the table to view detailed analysis pages
-- Use the pagination controls at the bottom to browse through large datasets
-- Column visibility can be toggled using the column visibility button
+- Click on any neuron type name in a card to open its detailed analysis page
 
-The filters work together, so you can combine multiple criteria to narrow down your search (e.g., show only left hemisphere neurons with more than 100 presynaptic connections).
+The filters work together, so you can combine multiple criteria to narrow down your search (e.g., show only left-hemisphere neurons in a particular ROI).
 
 ### Advanced Filtering Options
 
@@ -59,6 +56,18 @@ The index page provides additional powerful filtering capabilities:
   - Useful for focusing on well-represented vs. rare neuron types
   - Ranges from single neurons to large populations
 
+- **Dimorphism**: Restrict to neuron types flagged as potentially sex-specific
+  - The CNS dataset is based on a male fruit fly
+
+- **Superclass / Class / Subclass**: Filter by the cell-type hierarchy defined in the neuPrint database
+  - *Superclass*: high-level functional grouping (e.g., Optic Lobe Intrinsic, Ascending Neuron, VNC Motor)
+  - *Class*: more specific functional grouping within a superclass
+  - *Subclass*: finest level of functional classification
+
+- **Soma Neuromere**: Filter by the segmental unit of the VNC where the soma sits (e.g., A1, T2, CB)
+
+- **Truman Hemilineage**: Filter by developmental groups of related neurons (e.g., 01B, 04A, 21X)
+
 ### Search Functionality
 
 Use the search box in the header to quickly find neuron types by name. The search supports:
@@ -69,8 +78,8 @@ Use the search box in the header to quickly find neuron types by name. The searc
 ### Site Navigation
 
 - **Home**: Returns to the main index page
-- **Cell Types**: Alternative view of neuron type listings
-- **Glossary**: Definitions and explanations of terminology
+- **Types List**: Sortable, filterable listing of all neuron types
+- **Help**: User guide and terminology
 - **neuPrint**: Direct link to the source neuPrint database at neuprint.janelia.org
 
 ## Individual Neuron Type Pages
@@ -90,7 +99,7 @@ Each neuron type in the index table links to a comprehensive analysis page conta
 - **View neuron reconstructions** in their anatomical context
 
 ### Layer Analysis
-- **Detailed breakdown** of neuron presence across brain regions (LA, ME, LO, LOP, AME, Central Brain)
+- **Detailed breakdown** of neuron presence across brain regions: Lamina (LA), Medulla (ME), Lobula (LO), Lobula Plate (LOP), Accessory Medulla (AME), and Central Brain (CB)
 - **Quantitative analysis** of neuron distribution within anatomical layers
 - **Interactive tables** showing layer-specific statistics
 - **Region-specific counts** for different anatomical areas
@@ -176,7 +185,7 @@ Neurotransmitter assignments are computational predictions based on:
 
 **Source Database**: neuPrint (neuprint.janelia.org)
 **Dataset Version**: male-cns:v0.9
-**Dataset UUID**: 9949a1af14e248a2a2af5030d4c55343
+**Dataset UUID**: 79f9a4cb54b0463cad8615b26bf8f137
 **Dataset Last Updated**: 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
 **Data Type**: Electron microscopy connectome data
 **Species**: *Drosophila melanogaster*
@@ -198,9 +207,9 @@ Neurotransmitter assignments are computational predictions based on:
 
 When using data from this catalog, please cite:
 1. The original neuPrint database and dataset
-2. The specific dataset version (male-cns:v0.9) with UUID 9949a1af14e248a2a2af5030d4c55343
+2. The specific dataset version (male-cns:v0.9) with UUID 79f9a4cb54b0463cad8615b26bf8f137
 3. The dataset last updated on 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
-4. The generation date of this catalog (2025-12-02)
+4. The generation date of this catalog (2026-05-07)
 
 For the most current citation information, visit the neuPrint database at neuprint.janelia.org.
 
@@ -221,4 +230,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2025-12-02 at 18:06:42 UTC using dataset male-cns:v0.9 (UUID: 9949a1af14e248a2a2af5030d4c55343, last updated: 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2026-05-07 at 18:25:37 UTC using dataset male-cns:v0.9 (UUID: 79f9a4cb54b0463cad8615b26bf8f137, last updated: 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*
