@@ -1277,6 +1277,51 @@ abbr[data-original-title]:hover {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
+/* Scatterplot download functionality */
+.scatterplot-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.scatterplot-download-btn {
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    width: 25px;
+    height: 25px;
+    background-color: var(--pm-secondary-color) !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    z-index: 10;
+}
+
+.scatterplot-download-btn svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+}
+
+.scatterplot-container:hover .scatterplot-download-btn {
+    opacity: 0.5;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scatterplot-download-btn:hover {
+    transform: scale(1.1);
+    opacity: 1 !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
 .no-data-text {
     color: #999;
 }

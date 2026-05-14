@@ -1,10 +1,10 @@
 # Male CNS – Cell Type Explorer - Dataset Documentation
 
-**Dataset:** male-cns:v0.9
-**Server:** neuprint.janelia.org
-**Dataset UUID:** 79f9a4cb54b0463cad8615b26bf8f137
-**Dataset Last Updated:** 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
-**Generated:** 2026-05-07 18:25:37 UTC
+**Dataset:** male-cns:v0.9\
+**Server:** neuprint.janelia.org\
+**Dataset UUID:** 79f9a4cb54b0463cad8615b26bf8f137\
+**Dataset Last Updated:** 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)\
+**Generated:** 2026-05-14 00:30:21 UTC\
 **Total Neuron Types:** 11732
 
 ---
@@ -209,7 +209,7 @@ When using data from this catalog, please cite:
 1. The original neuPrint database and dataset
 2. The specific dataset version (male-cns:v0.9) with UUID 79f9a4cb54b0463cad8615b26bf8f137
 3. The dataset last updated on 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
-4. The generation date of this catalog (2026-05-07)
+4. The generation date of this catalog (2026-05-14)
 
 For the most current citation information, visit the neuPrint database at neuprint.janelia.org.
 
@@ -230,4 +230,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2026-05-07 at 18:25:37 UTC using dataset male-cns:v0.9 (UUID: 79f9a4cb54b0463cad8615b26bf8f137, last updated: 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2026-05-14 at 00:30:21 UTC using dataset male-cns:v0.9 (UUID: 79f9a4cb54b0463cad8615b26bf8f137, last updated: 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*

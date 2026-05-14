@@ -1,0 +1,1190 @@
+<svg
+  width="480"
+  height="480"
+  viewBox="0 0 480 480"
+  xmlns="http://www.w3.org/2000/svg"
+>
+<defs>
+<style>
+.axis-line { stroke:#444; stroke-width:1; shape-rendering:crispEdges; }
+.tick-mark { stroke:#444; stroke-width:1; shape-rendering:crispEdges; }
+.tick-label { fill:#444; font-size:14px; font-family:Helvetica, Arial, sans-serif; }
+.title { fill:#777; font-size:26px; font-family:Arial, sans-serif; }
+.axis-label { fill:#333; font-size:18px; font-family:Helvetica, Arial, sans-serif; cursor:pointer; }
+.legend-label { fill:#555; font-size:14px; font-family:Helvetica, Arial, sans-serif; }
+.legend-title { fill:#555; font-size:16px; font-family:Helvetica, Arial, sans-serif; cursor:pointer; }
+.guide { stroke:#bcbcbc; fill:none; }
+.dot { cursor:pointer; opacity:0.9; transition:opacity 0.15s; }
+.dot:hover { opacity:1; }
+.highlighted { stroke:#CCCC00; stroke-width:2; }
+.tooltip-box { pointer-events:none; transition:opacity 0.2s; z-index:9999; }
+.tooltip-rect { fill:rgba(0, 0, 0, 0.8); rx:3; ry:3; }
+.tooltip-text { fill:white; font-family:Helvetica, Arial, 'Liberation Sans', 'Nimbus Sans', 'DejaVu Sans', sans-serif; font-size:16px; }
+</style>
+</defs>
+
+<script>
+//<![CDATA[
+
+
+function sT(evt) {
+  const tooltip = document.getElementById("tooltip");
+  const elem = evt.target;
+
+  let text = elem.getAttribute("data-tooltip");
+  if (!text) {
+    const g = evt.currentTarget;
+    const c = g.querySelector("circle");
+    if (c) {
+      const dataTitle = c.getAttribute("data-title");
+      if (dataTitle) {
+        try {
+          text = JSON.parse(dataTitle);
+        } catch (e) {
+          text = dataTitle;
+        }
+      }
+      if (c) {
+        const baseR = parseFloat(c.getAttribute("data-base-r") || "4");
+        c.setAttribute("r", String(baseR * 3));
+        const baseSW = parseFloat(c.getAttribute("data-base-sw") || "0.5");
+        c.setAttribute("stroke-width", String(baseSW * 3));
+      }
+    }
+  } else {
+    try {
+      text = JSON.parse(text);
+    } catch (e) {
+      // text is already a string
+    }
+  }
+
+  if (!text) return;
+
+  const lines = text.split("\n");
+  const textGroup = document.getElementById("tooltip-text-group");
+  while (textGroup.firstChild) textGroup.removeChild(textGroup.firstChild);
+
+  let maxWidth = 0;
+  const lineHeight = 14;
+  const padding = 6;
+
+  for (let i = 0; i < lines.length; i++) {
+    const s = lines[i].trim();
+    if (!s) continue;
+    const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    t.setAttribute("x", padding);
+    t.setAttribute("y", padding + lineHeight + (i * lineHeight));
+    t.setAttribute("class", "tooltip-text");
+    t.textContent = s;
+    textGroup.appendChild(t);
+    const approx = s.length * 7.5;
+    if (approx > maxWidth) maxWidth = approx;
+  }
+
+  const rect = document.getElementById("tooltip-rect");
+  const boxWidth = Math.max(maxWidth + padding * 2, 100);
+  const boxHeight = lines.length * lineHeight + padding * 2;
+  rect.setAttribute("width", boxWidth);
+  rect.setAttribute("height", boxHeight);
+
+  const svgRect = evt.currentTarget.ownerSVGElement.getBoundingClientRect();
+  let x = evt.clientX - svgRect.left + 10;
+  let y = evt.clientY - svgRect.top - boxHeight - 10;
+
+  if (x + boxWidth > 480) x = 480 - boxWidth - 5;
+  if (y < 0) y = evt.clientY - svgRect.top + 10;
+  if (x < 0) x = 5;
+
+  tooltip.setAttribute("transform", "translate(" + x + "," + y + ")");
+  tooltip.setAttribute("opacity", "1");
+}
+
+
+function ht(evt) {
+  const tooltip = document.getElementById("tooltip");
+  if (tooltip) {
+    tooltip.setAttribute("opacity", "0");
+  }
+
+  const g = evt.currentTarget;
+  const c = g ? g.querySelector("circle") : null;
+  if (c) {
+    const baseR = parseFloat(c.getAttribute("data-base-r") || "4");
+    const baseSW = parseFloat(c.getAttribute("data-base-sw") || "0.5");
+    c.setAttribute("r", String(baseR));
+    c.setAttribute("stroke-width", String(baseSW));
+  }
+}
+
+function highlightByName(name) {
+  var needle = String(name || '').trim().toLowerCase();
+  if (!needle) return false;
+
+  var markers = Array.prototype.slice.call(document.querySelectorAll('g.marker'));
+  for (var i = 0; i < markers.length; i++) {
+    var g = markers[i];
+    var c = g.querySelector('circle');
+    if (!c) continue;
+
+    var dataType = (c.getAttribute('data-type') || '').trim().toLowerCase();
+    if (!dataType || dataType !== needle) continue;
+
+    c.classList.add('highlighted');
+    g.parentNode.appendChild(g);
+
+    var rect = c.getBoundingClientRect();
+    sT({
+      currentTarget: g,
+      target: c,
+      clientX: rect.left + rect.width / 2,
+      clientY: rect.top + rect.height / 2
+    });
+    return true;
+  }
+  return false;
+}
+
+function getHighlightParam() {
+  var hash = location.hash ? location.hash.slice(1) : '';
+  var search = location.search ? location.search.slice(1) : '';
+  var params = new URLSearchParams(hash || search);
+  return params.get('highlight');
+}
+
+function initDefaultHighlight() {
+  var target = getHighlightParam();
+  if (target) highlightByName(target);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initDefaultHighlight);
+} else {
+  initDefaultHighlight();
+}
+//]]>
+</script><g id="scatter" transform="translate(50, 60)"><line class="axis-line" x1="0" y1="356" x2="356" y2="356" />
+  <line class="axis-line" x1="0" y1="0" x2="0" y2="356" /><line class="tick-mark" x1="10.0" y1="356" x2="10.0" y2="362" />
+  <text class="tick-label" x="10.0" y="374" text-anchor="middle">1</text><line class="tick-mark" x1="122.0" y1="356" x2="122.0" y2="362" />
+  <text class="tick-label" x="122.0" y="374" text-anchor="middle">10</text><line class="tick-mark" x1="234.0" y1="356" x2="234.0" y2="362" />
+  <text class="tick-label" x="234.0" y="374" text-anchor="middle">100</text><line class="tick-mark" x1="346.0" y1="356" x2="346.0" y2="362" />
+  <text class="tick-label" x="346.0" y="374" text-anchor="middle">1000</text><line class="tick-mark" x1="0" y1="346.0" x2="-6" y2="346.0" />
+  <text class="tick-label" x="-8" y="346.0" text-anchor="middle" transform="rotate(-90, -8, 346.0)">1</text><line class="tick-mark" x1="0" y1="234.0" x2="-6" y2="234.0" />
+  <text class="tick-label" x="-8" y="234.0" text-anchor="middle" transform="rotate(-90, -8, 234.0)">10</text><line class="tick-mark" x1="0" y1="122.0" x2="-6" y2="122.0" />
+  <text class="tick-label" x="-8" y="122.0" text-anchor="middle" transform="rotate(-90, -8, 122.0)">100</text><line class="tick-mark" x1="0" y1="10.0" x2="-6" y2="10.0" />
+  <text class="tick-label" x="-8" y="10.0" text-anchor="middle" transform="rotate(-90, -8, 10.0)">1000</text><line class="guide" x1="10.0" y1="94.50258120481521" x2="261.4974187951848" y2="346.0" stroke-width="0.25" /><line class="guide" x1="10.0" y1="49.933300233547016" x2="306.066699766453" y2="346.0" stroke-width="0.4" /><line class="guide" x1="10.0" y1="16.217940719181115" x2="339.7820592808189" y2="346.0" stroke-width="0.8" /><line class="guide" x1="37.497418795184785" y1="10.0" x2="346.0" y2="318.5025812048152" stroke-width="0.4" /><line class="guide" x1="82.066699766453" y1="10.0" x2="346.0" y2="273.933300233547" stroke-width="0.25" /><g class="marker" transform="translate(10.0, 36.49606472095098)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"5-HTPMPV03\n 1 cells\n cell size: 580.00\n coverage: 1.56"' fill="rgb(250,237,237)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="5-HTPMPV03"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"5thsLNv_LNd6\n 2 cells\n cell size: 2.50\n coverage: 1.67"' fill="rgb(249,234,234)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="5thsLNv_LNd6"></circle>
+  </g><g class="marker" transform="translate(88.28464048563411, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"AN09A005\n 5 cells\n cell size: 6.00\n coverage: 1.09"' fill="rgb(254,252,252)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="AN09A005"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"AN27X013\n 2 cells\n cell size: 6.00\n coverage: 1.11"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="AN27X013"></circle>
+  </g><g class="marker" transform="translate(10.0, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"AOTU045\n 1 cells\n cell size: 9.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="AOTU045"></circle>
+  </g><g class="marker" transform="translate(10.0, 29.99048481866538)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Am1\n 1 cells\n cell size: 663.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Am1"></circle>
+  </g><g class="marker" transform="translate(339.2820333608583, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"C2\n 871 cells\n cell size: 9.00\n coverage: 9.23"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="C2"></circle>
+  </g><g class="marker" transform="translate(340.16744542115333, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"C3\n 887 cells\n cell size: 6.00\n coverage: 6.20"' fill="rgb(207,92,92)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="C3"></circle>
+  </g><g class="marker" transform="translate(10.0, 19.77162998881181)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"CT1\n 1 cells\n cell size: 818.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="CT1"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 100.84000981878444)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm-DRA\n 4 cells\n cell size: 154.50\n coverage: 2.23"' fill="rgb(244,217,217)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm-DRA"></circle>
+  </g><g class="marker" transform="translate(276.78590876838524, 221.23834454163426)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm1\n 241 cells\n cell size: 13.00\n coverage: 4.05"' fill="rgb(227,159,159)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm1"></circle>
+  </g><g class="marker" transform="translate(194.06669976645298, 139.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm10\n 44 cells\n cell size: 70.00\n coverage: 4.00"' fill="rgb(227,161,161)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm10"></circle>
+  </g><g class="marker" transform="translate(182.93562096723088, 150.20294097530555)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm11a\n 35 cells\n cell size: 56.00\n coverage: 2.62"' fill="rgb(240,204,204)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm11a"></circle>
+  </g><g class="marker" transform="translate(168.4770149727316, 113.13170044266602)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm11b\n 26 cells\n cell size: 120.00\n coverage: 4.15"' fill="rgb(226,156,156)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm11b"></circle>
+  </g><g class="marker" transform="translate(158.08856101019896, 109.61395244648415)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm11c\n 21 cells\n cell size: 129.00\n coverage: 3.47"' fill="rgb(232,178,178)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm11c"></circle>
+  </g><g class="marker" transform="translate(116.87516105720438, 97.05575523147067)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm11d\n 9 cells\n cell size: 167.00\n coverage: 2.19"' fill="rgb(244,218,218)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm11d"></circle>
+  </g><g class="marker" transform="translate(182.93562096723088, 122.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm12\n 35 cells\n cell size: 100.00\n coverage: 4.51"' fill="rgb(223,145,145)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm12"></circle>
+  </g><g class="marker" transform="translate(166.56928097126823, 109.99248339943873)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm13\n 25 cells\n cell size: 128.00\n coverage: 4.05"' fill="rgb(227,159,159)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm13"></circle>
+  </g><g class="marker" transform="translate(166.56928097126823, 118.2565393854616)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm14\n 25 cells\n cell size: 108.00\n coverage: 4.38"' fill="rgb(224,149,149)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm14"></circle>
+  </g><g class="marker" transform="translate(166.56928097126823, 154.75214027703115)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm15\n 25 cells\n cell size: 51.00\n coverage: 2.45"' fill="rgb(242,210,210)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm15"></circle>
+  </g><g class="marker" transform="translate(158.08856101019896, 135.9931385001296)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm16\n 21 cells\n cell size: 75.00\n coverage: 3.09"' fill="rgb(236,189,189)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm16"></circle>
+  </g><g class="marker" transform="translate(141.7222210142363, 113.94921518171395)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm17\n 15 cells\n cell size: 118.00\n coverage: 2.47"' fill="rgb(241,209,209)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm17"></circle>
+  </g><g class="marker" transform="translate(138.36633999596265, 188.46749979139702)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm18\n 14 cells\n cell size: 25.50\n coverage: 1.56"' fill="rgb(250,237,237)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm18"></circle>
+  </g><g class="marker" transform="translate(144.86143805746357, 100.21439370916369)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm19\n 16 cells\n cell size: 156.50\n coverage: 3.21"' fill="rgb(235,186,186)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm19"></circle>
+  </g><g class="marker" transform="translate(262.5905205715703, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm2\n 180 cells\n cell size: 10.00\n coverage: 3.38"' fill="rgb(233,180,180)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm2"></circle>
+  </g><g class="marker" transform="translate(134.76165545836574, 134.0854044986662)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm20\n 13 cells\n cell size: 78.00\n coverage: 2.21"' fill="rgb(244,217,217)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm20"></circle>
+  </g><g class="marker" transform="translate(130.868299557334, 93.4094794284297)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm21\n 12 cells\n cell size: 180.00\n coverage: 2.80"' fill="rgb(238,199,199)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm21"></circle>
+  </g><g class="marker" transform="translate(116.87516105720438, 137.30783966650893)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm22\n 9 cells\n cell size: 73.00\n coverage: 2.06"' fill="rgb(245,222,222)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm22"></circle>
+  </g><g class="marker" transform="translate(116.87516105720438, 120.56223083302075)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm23\n 9 cells\n cell size: 103.00\n coverage: 1.95"' fill="rgb(246,225,225)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm23"></circle>
+  </g><g class="marker" transform="translate(97.1529400429681, 96.1897208056333)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm24\n 6 cells\n cell size: 170.00\n coverage: 1.88"' fill="rgb(247,227,227)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm24"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 103.59248015214303)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm25\n 4 cells\n cell size: 146.00\n coverage: 1.69"' fill="rgb(249,233,233)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm25"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 94.22699416747767)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm26\n 7 cells\n cell size: 177.00\n coverage: 2.31"' fill="rgb(243,214,214)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm26"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 104.94370542909769)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm27\n 4 cells\n cell size: 142.00\n coverage: 1.73"' fill="rgb(248,232,232)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm27"></circle>
+  </g><g class="marker" transform="translate(97.1529400429681, 75.61661543533859)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm28\n 6 cells\n cell size: 259.50\n coverage: 2.33"' fill="rgb(243,213,213)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm28"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 41.80762551290252)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm29\n 3 cells\n cell size: 520.00\n coverage: 2.22"' fill="rgb(244,217,217)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm29"></circle>
+  </g><g class="marker" transform="translate(255.6299550156997, 185.68725841419342)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm3\n 156 cells\n cell size: 27.00\n coverage: 5.21"' fill="rgb(216,123,123)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm3"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 38.77082597594898)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm30\n 2 cells\n cell size: 553.50\n coverage: 1.58"' fill="rgb(250,237,237)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm30"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 26.35174988977718)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm31a\n 2 cells\n cell size: 714.50\n coverage: 1.91"' fill="rgb(247,227,227)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm31a"></circle>
+  </g><g class="marker" transform="translate(10.0, 23.92832705553309)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm31b\n 1 cells\n cell size: 751.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm31b"></circle>
+  </g><g class="marker" transform="translate(10.0, 40.062058299085265)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm32\n 1 cells\n cell size: 539.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm32"></circle>
+  </g><g class="marker" transform="translate(10.0, 44.896979935696436)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm33\n 1 cells\n cell size: 488.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm33"></circle>
+  </g><g class="marker" transform="translate(10.0, 20.490475317829862)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm34\n 1 cells\n cell size: 806.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm34"></circle>
+  </g><g class="marker" transform="translate(10.0, 27.14100359777973)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm35\n 1 cells\n cell size: 703.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm35"></circle>
+  </g><g class="marker" transform="translate(244.8539214569023, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm4\n 125 cells\n cell size: 10.00\n coverage: 2.85"' fill="rgb(238,197,197)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm4"></circle>
+  </g><g class="marker" transform="translate(236.3732014958331, 177.42320242817053)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm5\n 105 cells\n cell size: 32.00\n coverage: 4.19"' fill="rgb(226,155,155)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm5"></circle>
+  </g><g class="marker" transform="translate(236.3732014958331, 175.9264387336766)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm6\n 105 cells\n cell size: 33.00\n coverage: 4.28"' fill="rgb(225,152,152)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm6"></circle>
+  </g><g class="marker" transform="translate(229.41263593996248, 164.19607947543514)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm7\n 91 cells\n cell size: 42.00\n coverage: 4.52"' fill="rgb(222,144,144)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm7"></circle>
+  </g><g class="marker" transform="translate(229.9442366627022, 149.7705738442229)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm8\n 92 cells\n cell size: 56.50\n coverage: 6.58"' fill="rgb(204,80,80)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm8"></circle>
+  </g><g class="marker" transform="translate(216.65098048159678, 169.0642371789173)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Cm9\n 70 cells\n cell size: 38.00\n coverage: 3.38"' fill="rgb(233,180,180)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Cm9"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"DN1a\n 2 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="DN1a"></circle>
+  </g><g class="marker" transform="translate(10.0, 56.80890335388864)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"DNc01\n 1 cells\n cell size: 382.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="DNc01"></circle>
+  </g><g class="marker" transform="translate(10.0, 80.85613684508587)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"DNc02\n 1 cells\n cell size: 233.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="DNc02"></circle>
+  </g><g class="marker" transform="translate(10.0, 211.13856194253643)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"DNp27\n 1 cells\n cell size: 16.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="DNp27"></circle>
+  </g><g class="marker" transform="translate(10.0, 125.26909958227802)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"DNp30\n 1 cells\n cell size: 93.50\n coverage: 1.08"' fill="rgb(254,252,252)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="DNp30"></circle>
+  </g><g class="marker" transform="translate(164.58365907169986, 171.02319918087483)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm-DRA1\n 24 cells\n cell size: 36.50\n coverage: 3.74"' fill="rgb(230,169,169)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm-DRA1"></circle>
+  </g><g class="marker" transform="translate(141.7222210142363, 211.13856194253643)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm-DRA2\n 15 cells\n cell size: 16.00\n coverage: 2.46"' fill="rgb(241,209,209)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm-DRA2"></circle>
+  </g><g class="marker" transform="translate(190.63179195261037, 157.70098141393422)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm1\n 41 cells\n cell size: 48.00\n coverage: 2.33"' fill="rgb(243,213,213)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm1"></circle>
+  </g><g class="marker" transform="translate(289.81078202443524, 211.13856194253643)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm10\n 315 cells\n cell size: 16.00\n coverage: 5.91"' fill="rgb(210,101,101)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm10"></circle>
+  </g><g class="marker" transform="translate(220.6511223354486, 202.77959669328317)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm11\n 76 cells\n cell size: 19.00\n coverage: 1.94"' fill="rgb(246,225,225)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm11"></circle>
+  </g><g class="marker" transform="translate(250.01765762845864, 180.56241947139782)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm12\n 139 cells\n cell size: 30.00\n coverage: 4.80"' fill="rgb(220,136,136)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm12"></circle>
+  </g><g class="marker" transform="translate(166.56928097126823, 120.56223083302075)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm13\n 25 cells\n cell size: 103.00\n coverage: 2.92"' fill="rgb(237,195,195)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm13"></circle>
+  </g><g class="marker" transform="translate(150.59052057157027, 110.5658611426743)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm14\n 18 cells\n cell size: 126.50\n coverage: 2.71"' fill="rgb(239,201,201)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm14"></circle>
+  </g><g class="marker" transform="translate(277.18790264301094, 208.18972080563333)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm15\n 243 cells\n cell size: 17.00\n coverage: 4.97"' fill="rgb(218,130,130)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm15"></circle>
+  </g><g class="marker" transform="translate(220.6511223354486, 166.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm16\n 76 cells\n cell size: 40.00\n coverage: 3.47"' fill="rgb(232,177,177)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm16"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 51.79241755732676)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm17\n 4 cells\n cell size: 423.50\n coverage: 1.97"' fill="rgb(246,225,225)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm17"></circle>
+  </g><g class="marker" transform="translate(177.03250970943853, 111.93062751878742)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm18\n 31 cells\n cell size: 123.00\n coverage: 4.20"' fill="rgb(226,155,155)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm18"></circle>
+  </g><g class="marker" transform="translate(141.7222210142363, 75.1502553721885)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm19\n 15 cells\n cell size: 262.00\n coverage: 4.52"' fill="rgb(223,145,145)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm19"></circle>
+  </g><g class="marker" transform="translate(330.4249015184105, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm2\n 726 cells\n cell size: 10.00\n coverage: 8.18"' fill="rgb(189,30,30)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm2"></circle>
+  </g><g class="marker" transform="translate(200.2846404856341, 99.29080301196163)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm20\n 50 cells\n cell size: 159.50\n coverage: 9.12"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm20"></circle>
+  </g><g class="marker" transform="translate(321.3955389596969, 208.18972080563333)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm3a\n 603 cells\n cell size: 17.00\n coverage: 11.75"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm3a"></circle>
+  </g><g class="marker" transform="translate(318.22942615577716, 202.77959669328317)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm3b\n 565 cells\n cell size: 19.00\n coverage: 12.32"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm3b"></circle>
+  </g><g class="marker" transform="translate(299.69777812323656, 193.4864823660296)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm3c\n 386 cells\n cell size: 23.00\n coverage: 10.14"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm3c"></circle>
+  </g><g class="marker" transform="translate(201.24785972296885, 185.68725841419342)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm4\n 51 cells\n cell size: 27.00\n coverage: 1.62"' fill="rgb(249,235,235)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm4"></circle>
+  </g><g class="marker" transform="translate(180.0735612663234, 129.3361734607204)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm6\n 33 cells\n cell size: 86.00\n coverage: 3.43"' fill="rgb(233,179,179)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm6"></circle>
+  </g><g class="marker" transform="translate(285.2827724342072, 208.18972080563333)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm8a\n 287 cells\n cell size: 17.00\n coverage: 5.80"' fill="rgb(211,104,104)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm8a"></circle>
+  </g><g class="marker" transform="translate(281.76926127283247, 208.18972080563333)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm8b\n 267 cells\n cell size: 17.00\n coverage: 5.69"' fill="rgb(212,108,108)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm8b"></circle>
+  </g><g class="marker" transform="translate(249.6664576769385, 205.40947942842973)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Dm9\n 138 cells\n cell size: 18.00\n coverage: 2.80"' fill="rgb(238,199,199)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Dm9"></circle>
+  </g><g class="marker" transform="translate(10.0, 285.0643790327691)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"EA27X006\n 1 cells\n cell size: 3.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="EA27X006"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"HBeyelet\n 4 cells\n cell size: 2.00\n coverage: 3.00"' fill="rgb(237,192,192)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="HBeyelet"></circle>
+  </g><g class="marker" transform="translate(340.0026536814642, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"L1\n 884 cells\n cell size: 4.00\n coverage: 3.85"' fill="rgb(229,165,165)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="L1"></circle>
+  </g><g class="marker" transform="translate(340.1125768513497, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"L2\n 886 cells\n cell size: 4.00\n coverage: 3.65"' fill="rgb(231,172,172)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="L2"></circle>
+  </g><g class="marker" transform="translate(339.7820592808189, 251.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"L3\n 880 cells\n cell size: 7.00\n coverage: 6.79"' fill="rgb(202,73,73)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="L3"></circle>
+  </g><g class="marker" transform="translate(339.72675400826245, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"L4\n 879 cells\n cell size: 4.00\n coverage: 3.76"' fill="rgb(230,168,168)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="L4"></circle>
+  </g><g class="marker" transform="translate(340.2769972286639, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"L5\n 889 cells\n cell size: 6.00\n coverage: 5.61"' fill="rgb(212,110,110)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="L5"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC10_unclear\n 4 cells\n cell size: 6.00\n coverage: 1.29"' fill="rgb(252,246,246)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC10_unclear"></circle>
+  </g><g class="marker" transform="translate(248.5973820714407, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC10a\n 135 cells\n cell size: 4.00\n coverage: 2.15"' fill="rgb(244,219,219)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC10a"></circle>
+  </g><g class="marker" transform="translate(197.27496008880038, 251.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC10b\n 47 cells\n cell size: 7.00\n coverage: 1.24"' fill="rgb(253,248,248)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC10b"></circle>
+  </g><g class="marker" transform="translate(212.29215708619537, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC10c-1\n 64 cells\n cell size: 4.00\n coverage: 1.38"' fill="rgb(252,243,243)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC10c-1"></circle>
+  </g><g class="marker" transform="translate(208.33542530392015, 326.2777789857637)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC10c-2\n 59 cells\n cell size: 1.50\n coverage: 1.08"' fill="rgb(254,252,252)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC10c-2"></circle>
+  </g><g class="marker" transform="translate(237.7434606145384, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC10d\n 108 cells\n cell size: 6.00\n coverage: 1.78"' fill="rgb(248,230,230)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC10d"></circle>
+  </g><g class="marker" transform="translate(210.74786922380443, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC10e\n 62 cells\n cell size: 4.00\n coverage: 1.25"' fill="rgb(253,247,247)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC10e"></circle>
+  </g><g class="marker" transform="translate(215.24099822309847, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC11\n 68 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC11"></circle>
+  </g><g class="marker" transform="translate(279.72287611492715, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC12\n 256 cells\n cell size: 3.00\n coverage: 1.12"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC12"></circle>
+  </g><g class="marker" transform="translate(224.93674634612026, 267.7153595143659)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC13\n 83 cells\n cell size: 5.00\n coverage: 1.17"' fill="rgb(253,250,250)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC13"></circle>
+  </g><g class="marker" transform="translate(141.7222210142363, 272.8401984571615)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC14a-1\n 15 cells\n cell size: 4.50\n coverage: 1.57"' fill="rgb(250,237,237)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC14a-1"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC14a-2\n 7 cells\n cell size: 10.00\n coverage: 1.74"' fill="rgb(248,232,232)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC14a-2"></circle>
+  </g><g class="marker" transform="translate(158.08856101019896, 219.40261792855932)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC14b\n 21 cells\n cell size: 13.50\n coverage: 1.64"' fill="rgb(249,235,235)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC14b"></circle>
+  </g><g class="marker" transform="translate(209.95694152120595, 272.8401984571615)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC15\n 61 cells\n cell size: 4.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC15"></circle>
+  </g><g class="marker" transform="translate(227.78205928081888, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC16\n 88 cells\n cell size: 2.00\n coverage: 1.59"' fill="rgb(250,236,236)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC16"></circle>
+  </g><g class="marker" transform="translate(262.0470402585961, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC17\n 178 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC17"></circle>
+  </g><g class="marker" transform="translate(178.57679757182947, 244.8539214569023)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC20a\n 32 cells\n cell size: 8.00\n coverage: 1.04"' fill="rgb(255,254,254)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC20a"></circle>
+  </g><g class="marker" transform="translate(188.1992359869679, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC20b\n 39 cells\n cell size: 4.00\n coverage: 1.33"' fill="rgb(252,245,245)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC20b"></circle>
+  </g><g class="marker" transform="translate(186.9357628210827, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC22\n 38 cells\n cell size: 9.00\n coverage: 1.35"' fill="rgb(252,244,244)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC22"></circle>
+  </g><g class="marker" transform="translate(88.28464048563411, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC23\n 5 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC23"></circle>
+  </g><g class="marker" transform="translate(189.4307190287318, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC24\n 40 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC24"></circle>
+  </g><g class="marker" transform="translate(173.7885757646831, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC25\n 29 cells\n cell size: 1.00\n coverage: 1.25"' fill="rgb(253,247,247)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC25"></circle>
+  </g><g class="marker" transform="translate(186.9357628210827, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC26\n 38 cells\n cell size: 2.00\n coverage: 1.12"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC26"></circle>
+  </g><g class="marker" transform="translate(162.5135176339704, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC27\n 23 cells\n cell size: 3.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC27"></circle>
+  </g><g class="marker" transform="translate(177.03250970943853, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC28\n 31 cells\n cell size: 3.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC28"></circle>
+  </g><g class="marker" transform="translate(158.08856101019896, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC29\n 21 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC29"></circle>
+  </g><g class="marker" transform="translate(144.86143805746357, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC33\n 16 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC33"></circle>
+  </g><g class="marker" transform="translate(88.28464048563411, 263.0793787766447)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC35a\n 5 cells\n cell size: 5.50\n coverage: 1.19"' fill="rgb(253,249,249)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC35a"></circle>
+  </g><g class="marker" transform="translate(10.0, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC35b\n 1 cells\n cell size: 3.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC35b"></circle>
+  </g><g class="marker" transform="translate(144.86143805746357, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC36\n 16 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC36"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 326.2777789857637)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC39a\n 3 cells\n cell size: 1.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC39a"></circle>
+  </g><g class="marker" transform="translate(153.22040330671683, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC40\n 19 cells\n cell size: 2.50\n coverage: 2.00"' fill="rgb(246,224,224)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC40"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC41\n 7 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC41"></circle>
+  </g><g class="marker" transform="translate(111.14607854309769, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC43\n 8 cells\n cell size: 4.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC43"></circle>
+  </g><g class="marker" transform="translate(208.33542530392015, 285.0643790327691)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC6\n 59 cells\n cell size: 3.50\n coverage: 1.40"' fill="rgb(251,242,242)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC6"></circle>
+  </g><g class="marker" transform="translate(235.90773400146338, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LC9\n 104 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LC9"></circle>
+  </g><g class="marker" transform="translate(251.39763619608695, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LLPC1\n 143 cells\n cell size: 2.50\n coverage: 1.25"' fill="rgb(253,247,247)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LLPC1"></circle>
+  </g><g class="marker" transform="translate(244.8539214569023, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LLPC2\n 125 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LLPC2"></circle>
+  </g><g class="marker" transform="translate(237.2909831007435, 267.7153595143659)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LLPC3\n 107 cells\n cell size: 5.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LLPC3"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LLPC4\n 3 cells\n cell size: 6.00\n coverage: 1.13"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LLPC4"></circle>
+  </g><g class="marker" transform="translate(185.63859309550344, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LOLP1\n 37 cells\n cell size: 6.00\n coverage: 1.10"' fill="rgb(254,252,252)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LOLP1"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 217.63366000403735)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LOP_ME_unclear\n 4 cells\n cell size: 14.00\n coverage: 1.05"' fill="rgb(255,253,253)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LOP_ME_unclear"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LOP_unclear\n 2 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LOP_unclear"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 251.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LO_ME_unclear\n 2 cells\n cell size: 7.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LO_ME_unclear"></circle>
+  </g><g class="marker" transform="translate(126.63598073772118, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LO_unclear\n 11 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LO_unclear"></circle>
+  </g><g class="marker" transform="translate(215.24099822309847, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LPLC1\n 68 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LPLC1"></circle>
+  </g><g class="marker" transform="translate(230.99031960316623, 263.0793787766447)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LPLC2\n 94 cells\n cell size: 5.50\n coverage: 1.12"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LPLC2"></circle>
+  </g><g class="marker" transform="translate(198.29901858606578, 263.0793787766447)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LPLC4\n 48 cells\n cell size: 5.50\n coverage: 1.27"' fill="rgb(252,246,246)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LPLC4"></circle>
+  </g><g class="marker" transform="translate(10.0, 36.161761123411225)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LPT54\n 1 cells\n cell size: 584.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LPT54"></circle>
+  </g><g class="marker" transform="translate(170.31274158580658, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LPi2c\n 27 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LPi2c"></circle>
+  </g><g class="marker" transform="translate(199.30196096319352, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LPi2e\n 49 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LPi2e"></circle>
+  </g><g class="marker" transform="translate(209.95694152120595, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LPi34\n 61 cells\n cell size: 1.00\n coverage: 1.43"' fill="rgb(251,242,242)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LPi34"></circle>
+  </g><g class="marker" transform="translate(197.27496008880038, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LPi3412\n 47 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LPi3412"></circle>
+  </g><g class="marker" transform="translate(147.81027919436667, 285.0643790327691)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LPi4a\n 17 cells\n cell size: 3.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LPi4a"></circle>
+  </g><g class="marker" transform="translate(10.0, 267.7153595143659)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT34\n 1 cells\n cell size: 5.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT34"></circle>
+  </g><g class="marker" transform="translate(10.0, 221.23834454163426)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT36\n 1 cells\n cell size: 13.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT36"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT37\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT37"></circle>
+  </g><g class="marker" transform="translate(10.0, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT39\n 1 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT39"></circle>
+  </g><g class="marker" transform="translate(10.0, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT42\n 1 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT42"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 285.0643790327691)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT43\n 2 cells\n cell size: 3.50\n coverage: 1.17"' fill="rgb(253,250,250)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT43"></circle>
+  </g><g class="marker" transform="translate(126.63598073772118, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT51\n 11 cells\n cell size: 9.00\n coverage: 1.06"' fill="rgb(254,253,253)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT51"></circle>
+  </g><g class="marker" transform="translate(147.81027919436667, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT52\n 17 cells\n cell size: 4.00\n coverage: 1.41"' fill="rgb(251,242,242)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT52"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT54\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT54"></circle>
+  </g><g class="marker" transform="translate(10.0, 97.34789413951384)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT58\n 1 cells\n cell size: 166.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT58"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT61a\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT61a"></circle>
+  </g><g class="marker" transform="translate(10.0, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT61b\n 1 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT61b"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 247.9931385001296)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT63\n 2 cells\n cell size: 7.50\n coverage: 1.36"' fill="rgb(252,244,244)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT63"></circle>
+  </g><g class="marker" transform="translate(10.0, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT64\n 1 cells\n cell size: 6.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT64"></circle>
+  </g><g class="marker" transform="translate(10.0, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT66\n 1 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT66"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT67\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT67"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 251.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT68\n 2 cells\n cell size: 7.00\n coverage: 1.27"' fill="rgb(252,246,246)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT68"></circle>
+  </g><g class="marker" transform="translate(10.0, 244.8539214569023)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT72\n 1 cells\n cell size: 8.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT72"></circle>
+  </g><g class="marker" transform="translate(10.0, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT75\n 1 cells\n cell size: 3.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT75"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 263.0793787766447)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT77\n 3 cells\n cell size: 5.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT77"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 241.90508031999923)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT78\n 4 cells\n cell size: 8.50\n coverage: 1.13"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT78"></circle>
+  </g><g class="marker" transform="translate(10.0, 221.23834454163426)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT79\n 1 cells\n cell size: 13.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT79"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT82a\n 2 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT82a"></circle>
+  </g><g class="marker" transform="translate(10.0, 193.4864823660296)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT84\n 1 cells\n cell size: 23.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT84"></circle>
+  </g><g class="marker" transform="translate(10.0, 244.8539214569023)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT87\n 1 cells\n cell size: 8.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT87"></circle>
+  </g><g class="marker" transform="translate(10.0, 50.71335560842306)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LT88\n 1 cells\n cell size: 433.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LT88"></circle>
+  </g><g class="marker" transform="translate(184.3058800859362, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Lai\n 36 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Lai"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Lat1\n 4 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Lat1"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Lat2\n 2 cells\n cell size: 2.00\n coverage: 2.00"' fill="rgb(246,224,224)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Lat2"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 178.96749029056147)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Lat3\n 4 cells\n cell size: 31.00\n coverage: 1.27"' fill="rgb(253,247,247)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Lat3"></circle>
+  </g><g class="marker" transform="translate(10.0, 127.66831925576977)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Lat4\n 1 cells\n cell size: 89.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Lat4"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Lat5\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Lat5"></circle>
+  </g><g class="marker" transform="translate(261.77300583252236, 167.8007640130321)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Lawf1\n 177 cells\n cell size: 39.00\n coverage: 7.91"' fill="rgb(191,38,38)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Lawf1"></circle>
+  </g><g class="marker" transform="translate(266.483876472602, 157.70098141393422)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Lawf2\n 195 cells\n cell size: 48.00\n coverage: 10.53"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Lawf2"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 326.2777789857637)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li11a\n 2 cells\n cell size: 1.50\n coverage: 1.50"' fill="rgb(250,239,239)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li11a"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 217.63366000403735)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li12\n 2 cells\n cell size: 14.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li12"></circle>
+  </g><g class="marker" transform="translate(178.57679757182947, 244.8539214569023)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li13\n 32 cells\n cell size: 8.00\n coverage: 1.85"' fill="rgb(247,228,228)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li13"></circle>
+  </g><g class="marker" transform="translate(236.3732014958331, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li14\n 105 cells\n cell size: 3.00\n coverage: 1.15"' fill="rgb(254,250,250)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li14"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 190.41339855117235)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li16\n 2 cells\n cell size: 24.50\n coverage: 1.36"' fill="rgb(252,244,244)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li16"></circle>
+  </g><g class="marker" transform="translate(130.868299557334, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li17\n 12 cells\n cell size: 2.00\n coverage: 1.25"' fill="rgb(253,247,247)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li17"></circle>
+  </g><g class="marker" transform="translate(168.4770149727316, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li18a\n 26 cells\n cell size: 3.00\n coverage: 2.13"' fill="rgb(245,219,219)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li18a"></circle>
+  </g><g class="marker" transform="translate(138.36633999596265, 326.2777789857637)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li18b\n 14 cells\n cell size: 1.50\n coverage: 1.50"' fill="rgb(250,239,239)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li18b"></circle>
+  </g><g class="marker" transform="translate(166.56928097126823, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li19\n 25 cells\n cell size: 2.50\n coverage: 1.91"' fill="rgb(247,226,226)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li19"></circle>
+  </g><g class="marker" transform="translate(153.22040330671683, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li20\n 19 cells\n cell size: 6.00\n coverage: 1.21"' fill="rgb(253,249,249)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li20"></circle>
+  </g><g class="marker" transform="translate(234.96321923733476, 251.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li21\n 102 cells\n cell size: 7.00\n coverage: 1.32"' fill="rgb(252,245,245)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li21"></circle>
+  </g><g class="marker" transform="translate(239.94478567014303, 236.49495620764907)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li22\n 113 cells\n cell size: 9.50\n coverage: 1.62"' fill="rgb(249,235,235)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li22"></circle>
+  </g><g class="marker" transform="translate(208.33542530392015, 247.9931385001296)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li23\n 59 cells\n cell size: 7.50\n coverage: 1.14"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li23"></circle>
+  </g><g class="marker" transform="translate(206.65798383531902, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li25\n 57 cells\n cell size: 2.50\n coverage: 1.17"' fill="rgb(253,250,250)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li25"></circle>
+  </g><g class="marker" transform="translate(155.7153595143659, 272.8401984571615)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li26\n 20 cells\n cell size: 4.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li26"></circle>
+  </g><g class="marker" transform="translate(204.9206212233553, 285.0643790327691)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li27\n 55 cells\n cell size: 3.50\n coverage: 1.24"' fill="rgb(253,248,248)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li27"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 221.23834454163426)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li30\n 4 cells\n cell size: 13.00\n coverage: 1.13"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li30"></circle>
+  </g><g class="marker" transform="translate(10.0, 183.91830048967145)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li31\n 1 cells\n cell size: 28.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li31"></circle>
+  </g><g class="marker" transform="translate(10.0, 221.23834454163426)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li32\n 1 cells\n cell size: 13.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li32"></circle>
+  </g><g class="marker" transform="translate(10.0, 185.68725841419342)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li33\n 1 cells\n cell size: 27.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li33"></circle>
+  </g><g class="marker" transform="translate(181.52563870873257, 272.8401984571615)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li34a\n 34 cells\n cell size: 4.50\n coverage: 1.91"' fill="rgb(247,226,226)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li34a"></circle>
+  </g><g class="marker" transform="translate(175.43758052860218, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li34b\n 30 cells\n cell size: 6.00\n coverage: 1.08"' fill="rgb(254,252,252)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li34b"></circle>
+  </g><g class="marker" transform="translate(138.36633999596265, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li35\n 14 cells\n cell size: 3.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li35"></circle>
+  </g><g class="marker" transform="translate(10.0, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li36\n 1 cells\n cell size: 9.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li36"></circle>
+  </g><g class="marker" transform="translate(10.0, 182.2114242353169)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li37\n 1 cells\n cell size: 29.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li37"></circle>
+  </g><g class="marker" transform="translate(10.0, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li38\n 1 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li38"></circle>
+  </g><g class="marker" transform="translate(10.0, 211.13856194253643)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Li39\n 1 cells\n cell size: 16.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Li39"></circle>
+  </g><g class="marker" transform="translate(10.0, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVC1\n 1 cells\n cell size: 10.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVC1"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 221.23834454163426)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVC18\n 2 cells\n cell size: 13.00\n coverage: 1.08"' fill="rgb(254,252,252)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVC18"></circle>
+  </g><g class="marker" transform="translate(10.0, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVC2\n 1 cells\n cell size: 3.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVC2"></circle>
+  </g><g class="marker" transform="translate(10.0, 151.0793787766447)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVC21\n 1 cells\n cell size: 55.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVC21"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 247.9931385001296)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVC22\n 2 cells\n cell size: 7.50\n coverage: 1.07"' fill="rgb(254,253,253)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVC22"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 200.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVC24\n 7 cells\n cell size: 20.00\n coverage: 2.53"' fill="rgb(241,207,207)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVC24"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVC9\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVC9"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVCLo1\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVCLo1"></circle>
+  </g><g class="marker" transform="translate(10.0, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVCLo2\n 1 cells\n cell size: 2.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVCLo2"></circle>
+  </g><g class="marker" transform="translate(10.0, 254.95370405600016)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVCLo3\n 1 cells\n cell size: 6.50\n coverage: 1.08"' fill="rgb(254,252,252)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVCLo3"></circle>
+  </g><g class="marker" transform="translate(166.56928097126823, 267.7153595143659)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP1\n 25 cells\n cell size: 5.00\n coverage: 1.06"' fill="rgb(254,253,253)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP1"></circle>
+  </g><g class="marker" transform="translate(10.0, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP100\n 1 cells\n cell size: 4.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP100"></circle>
+  </g><g class="marker" transform="translate(10.0, 217.63366000403735)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP101\n 1 cells\n cell size: 14.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP101"></circle>
+  </g><g class="marker" transform="translate(10.0, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP102\n 1 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP102"></circle>
+  </g><g class="marker" transform="translate(10.0, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP106\n 1 cells\n cell size: 9.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP106"></circle>
+  </g><g class="marker" transform="translate(10.0, 221.23834454163426)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP109\n 1 cells\n cell size: 13.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP109"></circle>
+  </g><g class="marker" transform="translate(170.31274158580658, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP13\n 27 cells\n cell size: 2.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP13"></circle>
+  </g><g class="marker" transform="translate(122.0, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP14\n 10 cells\n cell size: 4.00\n coverage: 1.24"' fill="rgb(253,248,248)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP14"></circle>
+  </g><g class="marker" transform="translate(97.1529400429681, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP18\n 6 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP18"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP25\n 3 cells\n cell size: 4.00\n coverage: 1.09"' fill="rgb(254,252,252)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP25"></circle>
+  </g><g class="marker" transform="translate(97.1529400429681, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP26\n 6 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP26"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP32\n 3 cells\n cell size: 2.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP32"></circle>
+  </g><g class="marker" transform="translate(10.0, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP34\n 1 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP34"></circle>
+  </g><g class="marker" transform="translate(10.0, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP47\n 1 cells\n cell size: 3.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP47"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 267.7153595143659)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP50\n 3 cells\n cell size: 5.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP50"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP53\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP53"></circle>
+  </g><g class="marker" transform="translate(126.63598073772118, 267.7153595143659)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP6\n 11 cells\n cell size: 5.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP6"></circle>
+  </g><g class="marker" transform="translate(10.0, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP63\n 1 cells\n cell size: 6.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP63"></circle>
+  </g><g class="marker" transform="translate(134.76165545836574, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP8\n 13 cells\n cell size: 2.50\n coverage: 1.21"' fill="rgb(253,248,248)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP8"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP90a\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP90a"></circle>
+  </g><g class="marker" transform="translate(10.0, 267.7153595143659)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP90b\n 1 cells\n cell size: 5.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP90b"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 221.23834454163426)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP92\n 7 cells\n cell size: 13.00\n coverage: 2.56"' fill="rgb(241,206,206)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP92"></circle>
+  </g><g class="marker" transform="translate(122.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"LoVP_unclear\n 10 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="LoVP_unclear"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 139.00281889696336)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"ME_LO_unclear\n 4 cells\n cell size: 70.50\n coverage: 1.12"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="ME_LO_unclear"></circle>
+  </g><g class="marker" transform="translate(160.35134025208708, 205.40947942842973)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"ME_unclear\n 22 cells\n cell size: 18.00\n coverage: 1.58"' fill="rgb(250,237,237)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="ME_unclear"></circle>
+  </g><g class="marker" transform="translate(209.15294004296808, 164.19607947543514)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo1\n 60 cells\n cell size: 42.00\n coverage: 2.95"' fill="rgb(237,194,194)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo1"></circle>
+  </g><g class="marker" transform="translate(177.03250970943853, 122.4888582050744)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo10\n 31 cells\n cell size: 99.00\n coverage: 3.92"' fill="rgb(228,164,164)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo10"></circle>
+  </g><g class="marker" transform="translate(162.5135176339704, 175.9264387336766)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo11\n 23 cells\n cell size: 33.00\n coverage: 2.34"' fill="rgb(243,213,213)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo11"></circle>
+  </g><g class="marker" transform="translate(166.56928097126823, 160.8401984571615)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo12\n 25 cells\n cell size: 45.00\n coverage: 2.02"' fill="rgb(246,223,223)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo12"></circle>
+  </g><g class="marker" transform="translate(184.3058800859362, 164.77861316824564)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo13\n 36 cells\n cell size: 41.50\n coverage: 1.95"' fill="rgb(246,225,225)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo13"></circle>
+  </g><g class="marker" transform="translate(153.22040330671683, 129.3361734607204)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo14\n 19 cells\n cell size: 86.00\n coverage: 2.07"' fill="rgb(245,222,222)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo14"></circle>
+  </g><g class="marker" transform="translate(219.35395260986934, 165.96503739995714)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo2\n 74 cells\n cell size: 40.50\n coverage: 3.55"' fill="rgb(231,175,175)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo2"></circle>
+  </g><g class="marker" transform="translate(200.2846404856341, 177.42320242817053)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo3a\n 50 cells\n cell size: 32.00\n coverage: 2.97"' fill="rgb(237,193,193)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo3a"></circle>
+  </g><g class="marker" transform="translate(190.63179195261037, 163.0515329750863)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo3b\n 41 cells\n cell size: 43.00\n coverage: 3.35"' fill="rgb(233,181,181)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo3b"></circle>
+  </g><g class="marker" transform="translate(181.52563870873257, 185.68725841419342)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo4\n 34 cells\n cell size: 27.00\n coverage: 2.20"' fill="rgb(244,217,217)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo4"></circle>
+  </g><g class="marker" transform="translate(150.59052057157027, 197.91143898980104)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo5\n 18 cells\n cell size: 21.00\n coverage: 2.06"' fill="rgb(245,222,222)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo5"></circle>
+  </g><g class="marker" transform="translate(178.57679757182947, 171.6941199140638)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo6\n 32 cells\n cell size: 36.00\n coverage: 2.01"' fill="rgb(246,223,223)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo6"></circle>
+  </g><g class="marker" transform="translate(198.29901858606578, 178.96749029056147)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo7\n 48 cells\n cell size: 31.00\n coverage: 1.88"' fill="rgb(247,227,227)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo7"></circle>
+  </g><g class="marker" transform="translate(164.58365907169986, 113.74354476123426)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo8\n 24 cells\n cell size: 118.50\n coverage: 3.26"' fill="rgb(234,184,184)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo8"></circle>
+  </g><g class="marker" transform="translate(189.4307190287318, 167.18112528983647)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeLo9\n 40 cells\n cell size: 39.50\n coverage: 1.95"' fill="rgb(246,225,225)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeLo9"></circle>
+  </g><g class="marker" transform="translate(245.24150105316707, 167.8007640130321)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu1\n 126 cells\n cell size: 39.00\n coverage: 6.05"' fill="rgb(208,96,96)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu1"></circle>
+  </g><g class="marker" transform="translate(181.52563870873257, 171.02319918087483)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu2a\n 34 cells\n cell size: 36.50\n coverage: 3.91"' fill="rgb(228,164,164)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu2a"></circle>
+  </g><g class="marker" transform="translate(141.7222210142363, 143.70784291380463)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu2b\n 15 cells\n cell size: 64.00\n coverage: 2.60"' fill="rgb(240,205,205)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu2b"></circle>
+  </g><g class="marker" transform="translate(155.7153595143659, 121.75740108327113)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu3a\n 20 cells\n cell size: 100.50\n coverage: 6.38"' fill="rgb(205,86,86)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu3a"></circle>
+  </g><g class="marker" transform="translate(190.63179195261037, 140.0489018374274)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu3b\n 41 cells\n cell size: 69.00\n coverage: 3.85"' fill="rgb(229,166,166)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu3b"></circle>
+  </g><g class="marker" transform="translate(224.93674634612026, 173.06437903276912)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu3c\n 83 cells\n cell size: 35.00\n coverage: 4.67"' fill="rgb(221,140,140)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu3c"></circle>
+  </g><g class="marker" transform="translate(196.2288771483363, 178.96749029056147)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu4a\n 46 cells\n cell size: 31.00\n coverage: 2.35"' fill="rgb(243,213,213)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu4a"></circle>
+  </g><g class="marker" transform="translate(144.86143805746357, 183.91830048967145)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu4b\n 16 cells\n cell size: 28.00\n coverage: 2.02"' fill="rgb(246,223,223)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu4b"></circle>
+  </g><g class="marker" transform="translate(196.2288771483363, 177.42320242817053)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu4c\n 46 cells\n cell size: 32.00\n coverage: 2.71"' fill="rgb(239,201,201)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu4c"></circle>
+  </g><g class="marker" transform="translate(155.7153595143659, 167.18112528983647)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu4d\n 20 cells\n cell size: 39.50\n coverage: 2.06"' fill="rgb(245,222,222)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu4d"></circle>
+  </g><g class="marker" transform="translate(168.4770149727316, 165.36820804738963)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu4e\n 26 cells\n cell size: 41.00\n coverage: 2.81"' fill="rgb(238,198,198)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu4e"></circle>
+  </g><g class="marker" transform="translate(172.08169951032855, 186.59646211907753)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeTu4f\n 28 cells\n cell size: 26.50\n coverage: 1.89"' fill="rgb(247,227,227)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeTu4f"></circle>
+  </g><g class="marker" transform="translate(10.0, 24.318497452191195)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC1\n 1 cells\n cell size: 745.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC1"></circle>
+  </g><g class="marker" transform="translate(10.0, 90.01758139112931)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC10\n 1 cells\n cell size: 193.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC10"></circle>
+  </g><g class="marker" transform="translate(10.0, 18.077058042960857)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC11\n 1 cells\n cell size: 847.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC11"></circle>
+  </g><g class="marker" transform="translate(10.0, 102.27777898576369)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC12\n 1 cells\n cell size: 150.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC12"></circle>
+  </g><g class="marker" transform="translate(10.0, 46.82864161591067)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC2\n 1 cells\n cell size: 469.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC2"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 75.71042642289979)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC20\n 2 cells\n cell size: 259.00\n coverage: 1.27"' fill="rgb(252,246,246)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC20"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 68.40055249348956)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC21\n 3 cells\n cell size: 301.00\n coverage: 1.45"' fill="rgb(251,241,241)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC21"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 53.84508423935421)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC22\n 2 cells\n cell size: 406.00\n coverage: 1.26"' fill="rgb(253,247,247)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC22"></circle>
+  </g><g class="marker" transform="translate(10.0, 28.90227428688894)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC23\n 1 cells\n cell size: 678.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC23"></circle>
+  </g><g class="marker" transform="translate(10.0, 89.7662062478147)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC24\n 1 cells\n cell size: 194.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC24"></circle>
+  </g><g class="marker" transform="translate(10.0, 23.605558903864903)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC25\n 1 cells\n cell size: 756.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC25"></circle>
+  </g><g class="marker" transform="translate(10.0, 108.86561488655437)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC26\n 1 cells\n cell size: 131.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC26"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 80.44039942556554)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC27\n 3 cells\n cell size: 235.00\n coverage: 1.74"' fill="rgb(248,232,232)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC27"></circle>
+  </g><g class="marker" transform="translate(10.0, 58.230122123114825)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC3\n 1 cells\n cell size: 371.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC3"></circle>
+  </g><g class="marker" transform="translate(10.0, 37.08668233965233)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC4a\n 1 cells\n cell size: 573.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC4a"></circle>
+  </g><g class="marker" transform="translate(10.0, 42.08905917347846)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC4b\n 1 cells\n cell size: 517.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC4b"></circle>
+  </g><g class="marker" transform="translate(10.0, 94.50258120481521)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC5\n 1 cells\n cell size: 176.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC5"></circle>
+  </g><g class="marker" transform="translate(10.0, 88.04204156890523)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC6\n 1 cells\n cell size: 201.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC6"></circle>
+  </g><g class="marker" transform="translate(10.0, 138.6590649434636)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC7a\n 1 cells\n cell size: 71.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC7a"></circle>
+  </g><g class="marker" transform="translate(10.0, 114.3631834844299)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC7b\n 1 cells\n cell size: 117.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC7b"></circle>
+  </g><g class="marker" transform="translate(10.0, 116.48758146093965)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC8\n 1 cells\n cell size: 112.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC8"></circle>
+  </g><g class="marker" transform="translate(10.0, 79.21409123161476)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVC9\n 1 cells\n cell size: 241.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVC9"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 40.288190654179346)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVCMe1\n 2 cells\n cell size: 536.50\n coverage: 2.54"' fill="rgb(241,207,207)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVCMe1"></circle>
+  </g><g class="marker" transform="translate(211.52614153880117, 187.5229850272684)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP1\n 63 cells\n cell size: 26.00\n coverage: 2.53"' fill="rgb(241,207,207)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP1"></circle>
+  </g><g class="marker" transform="translate(172.08169951032855, 174.47436129126743)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP10\n 28 cells\n cell size: 34.00\n coverage: 2.18"' fill="rgb(244,218,218)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP10"></circle>
+  </g><g class="marker" transform="translate(166.56928097126823, 164.19607947543514)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP11\n 25 cells\n cell size: 42.00\n coverage: 1.93"' fill="rgb(246,226,226)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP11"></circle>
+  </g><g class="marker" transform="translate(116.87516105720438, 141.47962209750744)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP12\n 9 cells\n cell size: 67.00\n coverage: 1.94"' fill="rgb(246,225,225)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP12"></circle>
+  </g><g class="marker" transform="translate(144.86143805746357, 139.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP14\n 16 cells\n cell size: 70.00\n coverage: 3.01"' fill="rgb(236,192,192)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP14"></circle>
+  </g><g class="marker" transform="translate(134.76165545836574, 151.0793787766447)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP15\n 13 cells\n cell size: 55.00\n coverage: 3.22"' fill="rgb(235,185,185)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP15"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 123.23148304176388)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP16\n 4 cells\n cell size: 97.50\n coverage: 1.74"' fill="rgb(248,232,232)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP16"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 112.32769896442815)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP17\n 7 cells\n cell size: 122.00\n coverage: 1.53"' fill="rgb(250,238,238)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP17"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 90.7795966932832)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP18\n 3 cells\n cell size: 190.00\n coverage: 1.49"' fill="rgb(251,240,240)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP18"></circle>
+  </g><g class="marker" transform="translate(189.4307190287318, 175.9264387336766)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP2\n 40 cells\n cell size: 33.00\n coverage: 2.18"' fill="rgb(244,218,218)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP2"></circle>
+  </g><g class="marker" transform="translate(10.0, 151.9718988998275)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP20\n 1 cells\n cell size: 54.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP20"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 96.47668908326855)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP21\n 3 cells\n cell size: 169.00\n coverage: 1.44"' fill="rgb(251,241,241)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP21"></circle>
+  </g><g class="marker" transform="translate(10.0, 112.32769896442815)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP22\n 1 cells\n cell size: 122.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP22"></circle>
+  </g><g class="marker" transform="translate(10.0, 59.82942175922824)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP23\n 1 cells\n cell size: 359.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP23"></circle>
+  </g><g class="marker" transform="translate(10.0, 67.12465030441854)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP24\n 1 cells\n cell size: 309.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP24"></circle>
+  </g><g class="marker" transform="translate(10.0, 72.09232923335708)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP25\n 1 cells\n cell size: 279.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP25"></circle>
+  </g><g class="marker" transform="translate(10.0, 46.31282573250246)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP26\n 1 cells\n cell size: 474.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP26"></circle>
+  </g><g class="marker" transform="translate(10.0, 102.6031379378253)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP27\n 1 cells\n cell size: 149.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP27"></circle>
+  </g><g class="marker" transform="translate(10.0, 55.92564465152071)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP28\n 1 cells\n cell size: 389.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP28"></circle>
+  </g><g class="marker" transform="translate(10.0, 38.37696971899118)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP29\n 1 cells\n cell size: 558.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP29"></circle>
+  </g><g class="marker" transform="translate(181.52563870873257, 136.97581802257017)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP3\n 34 cells\n cell size: 73.50\n coverage: 3.32"' fill="rgb(234,182,182)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP3"></circle>
+  </g><g class="marker" transform="translate(10.0, 76.8505016283084)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP30\n 1 cells\n cell size: 253.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP30"></circle>
+  </g><g class="marker" transform="translate(10.0, 104.60236380391305)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP31\n 1 cells\n cell size: 143.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP31"></circle>
+  </g><g class="marker" transform="translate(10.0, 61.623476935209)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP32\n 1 cells\n cell size: 346.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP32"></circle>
+  </g><g class="marker" transform="translate(10.0, 49.383678770135646)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP33\n 1 cells\n cell size: 445.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP33"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 127.66831925576977)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP34\n 2 cells\n cell size: 89.00\n coverage: 1.33"' fill="rgb(252,245,245)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP34"></circle>
+  </g><g class="marker" transform="translate(10.0, 136.64604739013066)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP35\n 1 cells\n cell size: 74.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP35"></circle>
+  </g><g class="marker" transform="translate(10.0, 52.54476184293918)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP36\n 1 cells\n cell size: 417.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP36"></circle>
+  </g><g class="marker" transform="translate(10.0, 99.75040626110467)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP38\n 1 cells\n cell size: 158.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP38"></circle>
+  </g><g class="marker" transform="translate(10.0, 102.27777898576369)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP39\n 1 cells\n cell size: 150.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP39"></circle>
+  </g><g class="marker" transform="translate(150.59052057157027, 110.5658611426743)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP4\n 18 cells\n cell size: 126.50\n coverage: 2.85"' fill="rgb(238,197,197)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP4"></circle>
+  </g><g class="marker" transform="translate(10.0, 92.87200454567164)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP40\n 1 cells\n cell size: 182.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP40"></circle>
+  </g><g class="marker" transform="translate(10.0, 70.21142423531688)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP41\n 1 cells\n cell size: 290.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP41"></circle>
+  </g><g class="marker" transform="translate(10.0, 91.55374006791212)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP42\n 1 cells\n cell size: 187.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP42"></circle>
+  </g><g class="marker" transform="translate(10.0, 63.05000093233747)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP43\n 1 cells\n cell size: 336.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP43"></circle>
+  </g><g class="marker" transform="translate(10.0, 70.21142423531688)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP45\n 1 cells\n cell size: 290.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP45"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 92.3404038229319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP46\n 2 cells\n cell size: 184.00\n coverage: 1.64"' fill="rgb(249,235,235)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP46"></circle>
+  </g><g class="marker" transform="translate(10.0, 35.33591816210634)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP47\n 1 cells\n cell size: 594.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP47"></circle>
+  </g><g class="marker" transform="translate(10.0, 99.75040626110467)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP48\n 1 cells\n cell size: 158.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP48"></circle>
+  </g><g class="marker" transform="translate(10.0, 42.37213067252907)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP49\n 1 cells\n cell size: 514.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP49"></circle>
+  </g><g class="marker" transform="translate(111.14607854309769, 173.7642613517933)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP5\n 8 cells\n cell size: 34.50\n coverage: 1.54"' fill="rgb(250,238,238)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP5"></circle>
+  </g><g class="marker" transform="translate(10.0, 75.71042642289979)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP50\n 1 cells\n cell size: 259.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP50"></circle>
+  </g><g class="marker" transform="translate(10.0, 44.204217719440294)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP51\n 1 cells\n cell size: 495.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP51"></circle>
+  </g><g class="marker" transform="translate(10.0, 42.94326422420107)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP52\n 1 cells\n cell size: 508.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP52"></circle>
+  </g><g class="marker" transform="translate(10.0, 50.04397373288242)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP53\n 1 cells\n cell size: 439.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP53"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 153.34215801853284)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP54\n 2 cells\n cell size: 52.50\n coverage: 1.21"' fill="rgb(253,249,249)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP54"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 129.05419596394083)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP55\n 2 cells\n cell size: 86.50\n coverage: 1.18"' fill="rgb(253,249,249)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP55"></circle>
+  </g><g class="marker" transform="translate(10.0, 101.95458190316504)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP56\n 1 cells\n cell size: 151.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP56"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 120.56223083302075)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP58\n 3 cells\n cell size: 103.00\n coverage: 1.78"' fill="rgb(248,231,231)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP58"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 76.94672516507586)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP59\n 2 cells\n cell size: 252.50\n coverage: 1.21"' fill="rgb(253,248,248)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP59"></circle>
+  </g><g class="marker" transform="translate(200.2846404856341, 169.0642371789173)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP6\n 50 cells\n cell size: 38.00\n coverage: 2.80"' fill="rgb(238,199,199)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP6"></circle>
+  </g><g class="marker" transform="translate(10.0, 85.22148441486138)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP60\n 1 cells\n cell size: 213.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP60"></circle>
+  </g><g class="marker" transform="translate(10.0, 106.3335423230615)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP61\n 1 cells\n cell size: 138.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP61"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 88.77349869070855)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP62\n 3 cells\n cell size: 198.00\n coverage: 2.38"' fill="rgb(242,212,212)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP62"></circle>
+  </g><g class="marker" transform="translate(10.0, 93.13999961465132)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP63\n 1 cells\n cell size: 181.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP63"></circle>
+  </g><g class="marker" transform="translate(126.63598073772118, 126.0557633372978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP7\n 11 cells\n cell size: 92.00\n coverage: 2.94"' fill="rgb(237,194,194)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP7"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 125.52990976195929)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP8\n 7 cells\n cell size: 93.00\n coverage: 1.84"' fill="rgb(247,229,229)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP8"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 106.68729647848247)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP9\n 7 cells\n cell size: 137.00\n coverage: 1.77"' fill="rgb(248,231,231)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP9"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 34.36306609337595)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPLo1\n 2 cells\n cell size: 606.00\n coverage: 1.65"' fill="rgb(249,235,235)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPLo1"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 93.4094794284297)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPLo2\n 7 cells\n cell size: 180.00\n coverage: 1.87"' fill="rgb(247,228,228)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPLo2"></circle>
+  </g><g class="marker" transform="translate(10.0, 55.05813917634265)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPLp1\n 1 cells\n cell size: 396.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPLp1"></circle>
+  </g><g class="marker" transform="translate(10.0, 72.44226586478175)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPLp2\n 1 cells\n cell size: 277.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPLp2"></circle>
+  </g><g class="marker" transform="translate(97.1529400429681, 62.40288298013394)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe1\n 6 cells\n cell size: 340.50\n coverage: 4.98"' fill="rgb(218,130,130)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe1"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 97.93748901865783)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe10\n 2 cells\n cell size: 164.00\n coverage: 1.65"' fill="rgb(249,235,235)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe10"></circle>
+  </g><g class="marker" transform="translate(10.0, 59.626609865789874)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe11\n 1 cells\n cell size: 360.50\n coverage: 1.29"' fill="rgb(252,246,246)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe11"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 45.599751446130824)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe12\n 2 cells\n cell size: 481.00\n coverage: 2.56"' fill="rgb(241,206,206)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe12"></circle>
+  </g><g class="marker" transform="translate(10.0, 33.173740780223056)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe13\n 1 cells\n cell size: 621.00\n coverage: 1.65"' fill="rgb(249,234,234)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe13"></circle>
+  </g><g class="marker" transform="translate(88.28464048563411, 52.25401990155143)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe2\n 5 cells\n cell size: 419.50\n coverage: 5.05"' fill="rgb(218,128,128)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe2"></circle>
+  </g><g class="marker" transform="translate(10.0, 88.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe3\n 1 cells\n cell size: 200.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe3"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 71.3999192212795)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe4\n 2 cells\n cell size: 283.00\n coverage: 1.57"' fill="rgb(250,237,237)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe4"></circle>
+  </g><g class="marker" transform="translate(116.87516105720438, 125.52990976195929)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe5\n 9 cells\n cell size: 93.00\n coverage: 3.11"' fill="rgb(236,189,189)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe5"></circle>
+  </g><g class="marker" transform="translate(10.0, 86.96507546424613)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe6\n 1 cells\n cell size: 205.50\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe6"></circle>
+  </g><g class="marker" transform="translate(10.0, 83.64865974791292)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe7\n 1 cells\n cell size: 220.00\n coverage: 1.15"' fill="rgb(254,250,250)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe7"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 135.9931385001296)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe8\n 2 cells\n cell size: 75.00\n coverage: 1.16"' fill="rgb(253,250,250)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe8"></circle>
+  </g><g class="marker" transform="translate(97.1529400429681, 132.85392145690233)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPMe9\n 6 cells\n cell size: 80.00\n coverage: 1.81"' fill="rgb(248,230,230)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPMe9"></circle>
+  </g><g class="marker" transform="translate(10.0, 32.512477742285284)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPOL1\n 1 cells\n cell size: 629.50\n coverage: 1.58"' fill="rgb(250,237,237)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPOL1"></circle>
+  </g><g class="marker" transform="translate(10.0, 102.6031379378253)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVP_unclear\n 1 cells\n cell size: 149.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVP_unclear"></circle>
+  </g><g class="marker" transform="translate(10.0, 44.69803903680645)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPaMe1\n 1 cells\n cell size: 490.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPaMe1"></circle>
+  </g><g class="marker" transform="translate(10.0, 129.05419596394083)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"MeVPaMe2\n 1 cells\n cell size: 86.50\n coverage: 1.04"' fill="rgb(255,254,254)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="MeVPaMe2"></circle>
+  </g><g class="marker" transform="translate(340.1125768513497, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi1\n 886 cells\n cell size: 6.00\n coverage: 5.89"' fill="rgb(210,101,101)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi1"></circle>
+  </g><g class="marker" transform="translate(272.79153313847155, 204.07676641886246)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi10\n 222 cells\n cell size: 18.50\n coverage: 4.69"' fill="rgb(221,139,139)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi10"></circle>
+  </g><g class="marker" transform="translate(307.91061440782323, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi13\n 457 cells\n cell size: 10.00\n coverage: 5.12"' fill="rgb(217,126,126)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi13"></circle>
+  </g><g class="marker" transform="translate(256.8614380574636, 189.43071902873177)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi14\n 160 cells\n cell size: 25.00\n coverage: 4.66"' fill="rgb(221,140,140)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi14"></circle>
+  </g><g class="marker" transform="translate(318.57257383624795, 244.8539214569023)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi15\n 569 cells\n cell size: 8.00\n coverage: 5.56"' fill="rgb(213,112,112)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi15"></circle>
+  </g><g class="marker" transform="translate(228.8751610572044, 208.18972080563333)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi16\n 90 cells\n cell size: 17.00\n coverage: 3.19"' fill="rgb(235,186,186)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi16"></circle>
+  </g><g class="marker" transform="translate(229.9442366627022, 208.18972080563333)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi17\n 92 cells\n cell size: 17.00\n coverage: 4.06"' fill="rgb(227,159,159)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi17"></circle>
+  </g><g class="marker" transform="translate(180.0735612663234, 88.77349869070855)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi18\n 33 cells\n cell size: 198.00\n coverage: 7.30"' fill="rgb(197,57,57)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi18"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 46.725039911199644)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi19\n 7 cells\n cell size: 470.00\n coverage: 4.12"' fill="rgb(226,157,157)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi19"></circle>
+  </g><g class="marker" transform="translate(311.69741827944847, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi2\n 494 cells\n cell size: 9.00\n coverage: 5.03"' fill="rgb(218,128,128)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi2"></circle>
+  </g><g class="marker" transform="translate(10.0, 96.47668908326855)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi20\n 1 cells\n cell size: 169.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi20"></circle>
+  </g><g class="marker" transform="translate(339.9475988006877, 251.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi4\n 883 cells\n cell size: 7.00\n coverage: 6.82"' fill="rgb(201,72,72)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi4"></circle>
+  </g><g class="marker" transform="translate(340.1125768513497, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Mi9\n 886 cells\n cell size: 6.00\n coverage: 5.55"' fill="rgb(213,112,112)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Mi9"></circle>
+  </g><g class="marker" transform="translate(10.0, 18.946187455438917)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OA-AL2i1\n 1 cells\n cell size: 832.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OA-AL2i1"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 24.351153366122162)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OA-AL2i2\n 2 cells\n cell size: 744.50\n coverage: 1.77"' fill="rgb(248,231,231)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OA-AL2i2"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 25.075186763918225)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OA-AL2i3\n 2 cells\n cell size: 733.50\n coverage: 1.75"' fill="rgb(248,231,231)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OA-AL2i3"></circle>
+  </g><g class="marker" transform="translate(10.0, 28.19009491762273)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OA-AL2i4\n 1 cells\n cell size: 688.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OA-AL2i4"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 57.320918418230804)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OA-ASM1\n 2 cells\n cell size: 378.00\n coverage: 2.11"' fill="rgb(245,220,220)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OA-ASM1"></circle>
+  </g><g class="marker" transform="translate(10.0, 127.66831925576977)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OLVC1\n 1 cells\n cell size: 89.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OLVC1"></circle>
+  </g><g class="marker" transform="translate(10.0, 111.93062751878742)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OLVC2\n 1 cells\n cell size: 123.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OLVC2"></circle>
+  </g><g class="marker" transform="translate(10.0, 166.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OLVC3\n 1 cells\n cell size: 40.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OLVC3"></circle>
+  </g><g class="marker" transform="translate(10.0, 70.71722756579283)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OLVC4\n 1 cells\n cell size: 287.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OLVC4"></circle>
+  </g><g class="marker" transform="translate(10.0, 73.14978353143533)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OLVC5\n 1 cells\n cell size: 273.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OLVC5"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 191.41634092830014)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OLVC7\n 3 cells\n cell size: 24.00\n coverage: 1.60"' fill="rgb(249,236,236)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OLVC7"></circle>
+  </g><g class="marker" transform="translate(10.0, 217.63366000403735)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"OLVp_unclear\n 1 cells\n cell size: 14.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="OLVp_unclear"></circle>
+  </g><g class="marker" transform="translate(104.65098048159676, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"PVLP046\n 7 cells\n cell size: 9.00\n coverage: 1.81"' fill="rgb(248,230,230)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="PVLP046"></circle>
+  </g><g class="marker" transform="translate(244.8539214569023, 167.8007640130321)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm1\n 125 cells\n cell size: 39.00\n coverage: 5.70"' fill="rgb(212,108,108)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm1"></circle>
+  </g><g class="marker" transform="translate(185.63859309550344, 148.496064720951)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm10\n 37 cells\n cell size: 58.00\n coverage: 2.40"' fill="rgb(242,211,211)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm10"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 18.04835282998664)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm11\n 2 cells\n cell size: 847.50\n coverage: 1.98"' fill="rgb(246,224,224)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm11"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 26.865025654747285)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm12\n 2 cells\n cell size: 707.00\n coverage: 1.66"' fill="rgb(249,234,234)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm12"></circle>
+  </g><g class="marker" transform="translate(10.0, 20.010066652409478)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm13\n 1 cells\n cell size: 814.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm13"></circle>
+  </g><g class="marker" transform="translate(238.63598073772118, 158.72503991119962)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm2a\n 110 cells\n cell size: 47.00\n coverage: 5.89"' fill="rgb(210,101,101)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm2a"></circle>
+  </g><g class="marker" transform="translate(208.33542530392015, 137.30783966650893)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm2b\n 59 cells\n cell size: 73.00\n coverage: 5.13"' fill="rgb(217,125,125)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm2b"></circle>
+  </g><g class="marker" transform="translate(180.0735612663234, 132.85392145690233)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm3\n 33 cells\n cell size: 80.00\n coverage: 3.06"' fill="rgb(236,190,190)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm3"></circle>
+  </g><g class="marker" transform="translate(224.93674634612026, 191.41634092830014)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm4\n 83 cells\n cell size: 24.00\n coverage: 2.31"' fill="rgb(243,214,214)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm4"></circle>
+  </g><g class="marker" transform="translate(227.78205928081888, 157.70098141393422)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm5\n 88 cells\n cell size: 48.00\n coverage: 4.87"' fill="rgb(219,134,134)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm5"></circle>
+  </g><g class="marker" transform="translate(168.4770149727316, 106.86514304580123)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm6\n 26 cells\n cell size: 136.50\n coverage: 4.02"' fill="rgb(227,160,160)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm6"></circle>
+  </g><g class="marker" transform="translate(138.36633999596265, 97.6417982480425)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm7\n 14 cells\n cell size: 165.00\n coverage: 2.64"' fill="rgb(240,204,204)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm7"></circle>
+  </g><g class="marker" transform="translate(10.0, 244.8539214569023)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm7_Li28\n 1 cells\n cell size: 8.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm7_Li28"></circle>
+  </g><g class="marker" transform="translate(153.22040330671683, 109.61395244648415)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm8\n 19 cells\n cell size: 129.00\n coverage: 2.73"' fill="rgb(239,201,201)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm8"></circle>
+  </g><g class="marker" transform="translate(170.31274158580658, 113.13170044266602)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Pm9\n 27 cells\n cell size: 120.00\n coverage: 3.73"' fill="rgb(230,169,169)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Pm9"></circle>
+  </g><g class="marker" transform="translate(258.3582017519575, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"R7_unclear\n 165 cells\n cell size: 2.00\n coverage: 1.26"' fill="rgb(253,247,247)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="R7_unclear"></circle>
+  </g><g class="marker" transform="translate(189.4307190287318, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"R7d\n 40 cells\n cell size: 3.00\n coverage: 1.68"' fill="rgb(249,234,234)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="R7d"></circle>
+  </g><g class="marker" transform="translate(260.66116355042504, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"R7p\n 173 cells\n cell size: 2.00\n coverage: 1.23"' fill="rgb(253,248,248)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="R7p"></circle>
+  </g><g class="marker" transform="translate(274.5135176339704, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"R7y\n 230 cells\n cell size: 2.00\n coverage: 1.26"' fill="rgb(253,247,247)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="R7y"></circle>
+  </g><g class="marker" transform="translate(264.7056791175322, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"R8_unclear\n 188 cells\n cell size: 2.00\n coverage: 1.17"' fill="rgb(253,250,250)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="R8_unclear"></circle>
+  </g><g class="marker" transform="translate(182.93562096723088, 301.4307190287318)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"R8d\n 35 cells\n cell size: 2.50\n coverage: 1.54"' fill="rgb(250,238,238)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="R8d"></circle>
+  </g><g class="marker" transform="translate(260.3791860536454, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"R8p\n 172 cells\n cell size: 2.00\n coverage: 1.19"' fill="rgb(253,249,249)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="R8p"></circle>
+  </g><g class="marker" transform="translate(274.5135176339704, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"R8y\n 230 cells\n cell size: 2.00\n coverage: 1.23"' fill="rgb(253,248,248)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="R8y"></circle>
+  </g><g class="marker" transform="translate(10.0, 225.131700442666)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"SLP250\n 1 cells\n cell size: 12.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="SLP250"></circle>
+  </g><g class="marker" transform="translate(340.05764631815646, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T1\n 885 cells\n cell size: 2.00\n coverage: 2.45"' fill="rgb(242,209,209)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T1"></circle>
+  </g><g class="marker" transform="translate(335.63007240675364, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T2\n 808 cells\n cell size: 6.00\n coverage: 5.73"' fill="rgb(211,107,107)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T2"></circle>
+  </g><g class="marker" transform="translate(342.626744099608, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T2a\n 933 cells\n cell size: 6.00\n coverage: 6.78"' fill="rgb(202,74,74)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T2a"></circle>
+  </g><g class="marker" transform="translate(344.21662779711704, 278.5692809712682)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T3\n 964 cells\n cell size: 4.00\n coverage: 5.11"' fill="rgb(217,126,126)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T3"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T4_unclear\n 3 cells\n cell size: 10.00\n coverage: 1.12"' fill="rgb(254,251,251)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T4_unclear"></circle>
+  </g><g class="marker" transform="translate(337.22888525416346, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T4a\n 835 cells\n cell size: 10.00\n coverage: 9.93"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T4a"></circle>
+  </g><g class="marker" transform="translate(337.7503540220734, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T4b\n 844 cells\n cell size: 10.00\n coverage: 9.49"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T4b"></circle>
+  </g><g class="marker" transform="translate(340.60417995538216, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T4c\n 895 cells\n cell size: 10.00\n coverage: 10.17"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T4c"></circle>
+  </g><g class="marker" transform="translate(338.0949196800008, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T4d\n 850 cells\n cell size: 10.00\n coverage: 10.09"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T4d"></circle>
+  </g><g class="marker" transform="translate(336.70176529988277, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"T5a\n 826 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="T5a"></circle>
+  </g><g class="marker" transform="translate(184.3058800859362, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tlp11\n 36 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tlp11"></circle>
+  </g><g class="marker" transform="translate(217.3409350565364, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tlp12\n 71 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tlp12"></circle>
+  </g><g class="marker" transform="translate(206.65798383531902, 263.0793787766447)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tlp13\n 57 cells\n cell size: 5.50\n coverage: 1.06"' fill="rgb(254,253,253)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tlp13"></circle>
+  </g><g class="marker" transform="translate(340.16744542115333, 267.7153595143659)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm1\n 887 cells\n cell size: 5.00\n coverage: 4.71"' fill="rgb(221,139,139)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm1"></circle>
+  </g><g class="marker" transform="translate(309.5844477626349, 244.8539214569023)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm12\n 473 cells\n cell size: 8.00\n coverage: 4.19"' fill="rgb(226,155,155)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm12"></circle>
+  </g><g class="marker" transform="translate(267.47154455788717, 183.91830048967145)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm16\n 199 cells\n cell size: 28.00\n coverage: 6.19"' fill="rgb(207,92,92)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm16"></circle>
+  </g><g class="marker" transform="translate(339.9475988006877, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm2\n 883 cells\n cell size: 6.00\n coverage: 5.85"' fill="rgb(210,103,103)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm2"></circle>
+  </g><g class="marker" transform="translate(340.1125768513497, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm20\n 886 cells\n cell size: 6.00\n coverage: 6.49"' fill="rgb(204,83,83)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm20"></circle>
+  </g><g class="marker" transform="translate(147.81027919436667, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm23\n 17 cells\n cell size: 1.00\n coverage: 1.07"' fill="rgb(254,253,253)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm23"></circle>
+  </g><g class="marker" transform="translate(246.7616554583657, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm24\n 130 cells\n cell size: 2.00\n coverage: 1.34"' fill="rgb(252,244,244)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm24"></circle>
+  </g><g class="marker" transform="translate(203.1188973952884, 180.56241947139782)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm26\n 53 cells\n cell size: 30.00\n coverage: 3.22"' fill="rgb(234,185,185)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm26"></circle>
+  </g><g class="marker" transform="translate(281.95109693122436, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm29\n 268 cells\n cell size: 10.00\n coverage: 3.40"' fill="rgb(233,180,180)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm29"></circle>
+  </g><g class="marker" transform="translate(211.52614153880117, 195.64865974791292)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm30\n 63 cells\n cell size: 22.00\n coverage: 2.15"' fill="rgb(244,219,219)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm30"></circle>
+  </g><g class="marker" transform="translate(213.0462959439998, 214.2777789857637)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm31\n 65 cells\n cell size: 15.00\n coverage: 2.13"' fill="rgb(245,220,220)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm31"></circle>
+  </g><g class="marker" transform="translate(213.7889207806893, 163.0515329750863)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm32\n 66 cells\n cell size: 43.00\n coverage: 3.36"' fill="rgb(233,181,181)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm32"></circle>
+  </g><g class="marker" transform="translate(250.7125406174025, 200.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm33\n 141 cells\n cell size: 20.00\n coverage: 3.67"' fill="rgb(230,171,171)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm33"></circle>
+  </g><g class="marker" transform="translate(226.6638265392796, 206.77973854713503)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm34\n 86 cells\n cell size: 17.50\n coverage: 2.24"' fill="rgb(244,216,216)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm34"></circle>
+  </g><g class="marker" transform="translate(192.9484670249137, 191.41634092830014)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm35\n 43 cells\n cell size: 24.00\n coverage: 2.04"' fill="rgb(245,223,223)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm35"></circle>
+  </g><g class="marker" transform="translate(221.9145955013338, 191.41634092830014)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm36\n 78 cells\n cell size: 24.00\n coverage: 2.21"' fill="rgb(244,217,217)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm36"></circle>
+  </g><g class="marker" transform="translate(285.9560147664216, 229.36401926227882)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm37\n 291 cells\n cell size: 11.00\n coverage: 3.94"' fill="rgb(228,163,163)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm37"></circle>
+  </g><g class="marker" transform="translate(237.2909831007435, 193.4864823660296)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm38\n 107 cells\n cell size: 23.00\n coverage: 3.14"' fill="rgb(235,188,188)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm38"></circle>
+  </g><g class="marker" transform="translate(273.66014518450885, 225.131700442666)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm39\n 226 cells\n cell size: 12.00\n coverage: 3.49"' fill="rgb(232,177,177)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm39"></circle>
+  </g><g class="marker" transform="translate(10.0, 229.36401926227882)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm3_unclear\n 1 cells\n cell size: 11.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm3_unclear"></circle>
+  </g><g class="marker" transform="translate(337.34525129524513, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm4\n 837 cells\n cell size: 10.00\n coverage: 9.21"' fill="rgb(180,0,0)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm4"></circle>
+  </g><g class="marker" transform="translate(232.5184342378194, 208.18972080563333)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm40\n 97 cells\n cell size: 17.00\n coverage: 2.18"' fill="rgb(244,218,218)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm40"></circle>
+  </g><g class="marker" transform="translate(305.5107967789194, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm5Y\n 435 cells\n cell size: 9.00\n coverage: 4.62"' fill="rgb(222,141,141)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm5Y"></circle>
+  </g><g class="marker" transform="translate(290.1186373683882, 251.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm5a\n 317 cells\n cell size: 7.00\n coverage: 2.93"' fill="rgb(237,194,194)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm5a"></circle>
+  </g><g class="marker" transform="translate(280.4770149727316, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm5b\n 260 cells\n cell size: 9.00\n coverage: 3.03"' fill="rgb(236,191,191)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm5b"></circle>
+  </g><g class="marker" transform="translate(298.421038631898, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm5c\n 376 cells\n cell size: 9.00\n coverage: 4.06"' fill="rgb(227,159,159)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm5c"></circle>
+  </g><g class="marker" transform="translate(332.3944410961351, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm6\n 756 cells\n cell size: 10.00\n coverage: 8.48"' fill="rgb(186,20,20)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm6"></circle>
+  </g><g class="marker" transform="translate(340.0026536814642, 267.7153595143659)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm9\n 884 cells\n cell size: 5.00\n coverage: 4.62"' fill="rgb(222,141,141)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm9"></circle>
+  </g><g class="marker" transform="translate(283.02806303588346, 202.77959669328317)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY10\n 274 cells\n cell size: 19.00\n coverage: 5.87"' fill="rgb(210,102,102)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY10"></circle>
+  </g><g class="marker" transform="translate(272.5719346527324, 205.40947942842973)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY13\n 221 cells\n cell size: 18.00\n coverage: 4.62"' fill="rgb(222,141,141)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY13"></circle>
+  </g><g class="marker" transform="translate(277.18790264301094, 211.13856194253643)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY14\n 243 cells\n cell size: 16.00\n coverage: 4.59"' fill="rgb(222,142,142)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY14"></circle>
+  </g><g class="marker" transform="translate(233.5111417949256, 182.2114242353169)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY15\n 99 cells\n cell size: 29.00\n coverage: 3.55"' fill="rgb(232,175,175)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY15"></circle>
+  </g><g class="marker" transform="translate(227.78205928081888, 150.20294097530555)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY16\n 88 cells\n cell size: 56.00\n coverage: 5.72"' fill="rgb(211,107,107)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY16"></circle>
+  </g><g class="marker" transform="translate(266.483876472602, 229.36401926227882)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY17\n 195 cells\n cell size: 11.00\n coverage: 2.51"' fill="rgb(241,208,208)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY17"></circle>
+  </g><g class="marker" transform="translate(326.73768719308543, 244.8539214569023)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY18\n 673 cells\n cell size: 8.00\n coverage: 6.50"' fill="rgb(204,82,82)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY18"></circle>
+  </g><g class="marker" transform="translate(192.9484670249137, 167.8007640130321)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY19a\n 43 cells\n cell size: 39.00\n coverage: 3.04"' fill="rgb(236,191,191)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY19a"></circle>
+  </g><g class="marker" transform="translate(153.22040330671683, 165.96503739995714)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY19b\n 19 cells\n cell size: 40.50\n coverage: 2.13"' fill="rgb(245,219,219)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY19b"></circle>
+  </g><g class="marker" transform="translate(261.4974187951848, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY20\n 176 cells\n cell size: 2.00\n coverage: 1.19"' fill="rgb(253,249,249)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY20"></circle>
+  </g><g class="marker" transform="translate(263.3945220498081, 195.64865974791292)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY21\n 183 cells\n cell size: 22.00\n coverage: 5.69"' fill="rgb(212,108,108)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY21"></circle>
+  </g><g class="marker" transform="translate(303.2213868317544, 214.2777789857637)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY3\n 415 cells\n cell size: 15.00\n coverage: 7.23"' fill="rgb(197,59,59)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY3"></circle>
+  </g><g class="marker" transform="translate(283.02806303588346, 229.36401926227882)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY4\n 274 cells\n cell size: 11.00\n coverage: 3.53"' fill="rgb(232,176,176)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY4"></circle>
+  </g><g class="marker" transform="translate(327.66830095915617, 251.34901951840322)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY5a\n 686 cells\n cell size: 7.00\n coverage: 5.97"' fill="rgb(209,99,99)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY5a"></circle>
+  </g><g class="marker" transform="translate(276.78590876838524, 208.18972080563333)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY9a\n 241 cells\n cell size: 17.00\n coverage: 4.67"' fill="rgb(221,140,140)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY9a"></circle>
+  </g><g class="marker" transform="translate(278.3743268747225, 211.13856194253643)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY9b\n 249 cells\n cell size: 16.00\n coverage: 4.90"' fill="rgb(219,133,133)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY9b"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 234.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"TmY_unclear\n 3 cells\n cell size: 10.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="TmY_unclear"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 175.9264387336766)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Tm_unclear\n 3 cells\n cell size: 33.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Tm_unclear"></circle>
+  </g><g class="marker" transform="translate(221.28696121931796, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Y11\n 77 cells\n cell size: 9.00\n coverage: 1.22"' fill="rgb(253,248,248)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Y11"></circle>
+  </g><g class="marker" transform="translate(232.5184342378194, 239.12483894279563)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Y12\n 97 cells\n cell size: 9.00\n coverage: 1.47"' fill="rgb(251,240,240)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Y12"></circle>
+  </g><g class="marker" transform="translate(230.99031960316623, 217.63366000403735)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Y13\n 94 cells\n cell size: 14.00\n coverage: 1.79"' fill="rgb(248,230,230)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Y13"></circle>
+  </g><g class="marker" transform="translate(235.90773400146338, 202.77959669328317)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Y14\n 104 cells\n cell size: 19.00\n coverage: 2.37"' fill="rgb(242,212,212)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Y14"></circle>
+  </g><g class="marker" transform="translate(288.24158200684, 217.63366000403735)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"Y3\n 305 cells\n cell size: 14.00\n coverage: 4.94"' fill="rgb(219,131,131)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="Y3"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 326.2777789857637)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe1\n 2 cells\n cell size: 1.50\n coverage: 1.50"' fill="rgb(250,239,239)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe1"></circle>
+  </g><g class="marker" transform="translate(10.0, 258.8470599570319)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe10\n 1 cells\n cell size: 6.00\n coverage: 1.11"' fill="rgb(254,252,252)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe10"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 59.023199180874826)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe12\n 4 cells\n cell size: 365.00\n coverage: 1.96"' fill="rgb(246,225,225)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe12"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe15\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe15"></circle>
+  </g><g class="marker" transform="translate(10.0, 43.521183679757826)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe17a\n 1 cells\n cell size: 502.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe17a"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 62.1890761217129)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe17b\n 3 cells\n cell size: 342.00\n coverage: 1.73"' fill="rgb(248,232,232)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe17b"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 35.49996884703296)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe17c\n 2 cells\n cell size: 592.00\n coverage: 1.47"' fill="rgb(251,240,240)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe17c"></circle>
+  </g><g class="marker" transform="translate(10.0, 25.709280585919544)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe17e\n 1 cells\n cell size: 724.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe17e"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 223.1460785430977)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe2\n 4 cells\n cell size: 12.50\n coverage: 1.35"' fill="rgb(252,244,244)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe2"></circle>
+  </g><g class="marker" transform="translate(10.0, 346.0)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe23\n 1 cells\n cell size: 1.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe23"></circle>
+  </g><g class="marker" transform="translate(10.0, 76.08749018689497)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe25\n 1 cells\n cell size: 257.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe25"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 73.50743942206651)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe26\n 3 cells\n cell size: 271.00\n coverage: 1.79"' fill="rgb(248,230,230)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe26"></circle>
+  </g><g class="marker" transform="translate(10.0, 128.21794071918112)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe3\n 1 cells\n cell size: 88.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe3"></circle>
+  </g><g class="marker" transform="translate(63.43758052860219, 79.82338080967071)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe30\n 3 cells\n cell size: 238.00\n coverage: 1.30"' fill="rgb(252,246,246)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe30"></circle>
+  </g><g class="marker" transform="translate(122.0, 68.56241947139779)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe4\n 10 cells\n cell size: 300.00\n coverage: 3.63"' fill="rgb(231,172,172)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe4"></circle>
+  </g><g class="marker" transform="translate(166.56928097126823, 149.34201616468098)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe5\n 25 cells\n cell size: 57.00\n coverage: 2.33"' fill="rgb(243,213,213)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe5"></circle>
+  </g><g class="marker" transform="translate(10.0, 312.2846404856341)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe6a\n 1 cells\n cell size: 2.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe6a"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 195.64865974791292)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe6c\n 2 cells\n cell size: 22.00\n coverage: 1.07"' fill="rgb(254,253,253)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe6c"></circle>
+  </g><g class="marker" transform="translate(43.71535951436589, 44.00808446186676)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe9\n 2 cells\n cell size: 497.00\n coverage: 1.47"' fill="rgb(251,240,240)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe9"></circle>
+  </g><g class="marker" transform="translate(10.0, 292.5624194713978)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"aMe_unclear\n 1 cells\n cell size: 3.00\n coverage: 1.00"' fill="rgb(255,255,255)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="aMe_unclear"></circle>
+  </g><g class="marker" transform="translate(77.43071902873179, 116.27091748589328)" onmouseover="sT(event)" onmouseout="ht(event)">
+    <circle r="4" data-base-r="4" class="dot" data-title='"l-LNv\n 4 cells\n cell size: 112.50\n coverage: 1.53"' fill="rgb(250,238,238)" stroke="#000" stroke-width="0.5" data-base-sw="0.5" data-type="l-LNv"></circle>
+  </g></g><text class="axis-label" text-anchor="middle" x="228.0" y="456" data-tooltip='"cells per type per eye"' onmouseover="sT(event)" onmouseout="ht(event)">Population size</text>
+<text class="axis-label" text-anchor="middle" transform="translate(25, 238.0) rotate(-90)" data-tooltip='"median columns per cell"' onmouseover="sT(event)" onmouseout="ht(event)">Cell size</text>
+
+<text class="title" text-anchor="end" dominant-baseline="hanging" x="406" y="60">ME (L)</text><g transform="translate(418, 60)">
+  <defs>
+    <linearGradient id="covGradV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgb(180,0,0)" />
+      <stop offset="100%" stop-color="rgb(255,255,255)" />
+    </linearGradient>
+  </defs>
+  <text class="legend-title" text-anchor="middle" transform="translate(30, 178.0) rotate(-90)" data-tooltip='"mean cells per column"' onmouseover="sT(event)" onmouseout="ht(event)">Coverage factor</text>
+  <rect x="0" y="0" width="12" height="356" fill="url(#covGradV)" stroke="#ccc" stroke-width="0.5" />
+  <text class="legend-label" x="16" y="10" text-anchor="start">>9</text>
+  <text class="legend-label" x="16" y="354" text-anchor="start">1</text>
+</g><g id="tooltip" class="tooltip-box" opacity="0">
+  <rect id="tooltip-rect" class="tooltip-rect" />
+  <g id="tooltip-text-group" />
+</g>
+
+</svg>

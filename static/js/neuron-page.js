@@ -589,5 +589,133 @@ function initializeAllTooltips() {
   }, 100);
 }
 
+function highlightInSvgDocument(doc, neuronType) {
+  const needleName = String(neuronType || "").trim().toLowerCase();
+  if (!needleName) return 0;
+
+  let candidates = Array.from(doc.querySelectorAll('g.marker'));
+  if (candidates.length === 0) {
+    candidates = Array.from(doc.querySelectorAll('circle.dot'))
+      .map(c => c.closest('g.marker') || c.parentNode)
+      .filter(Boolean);
+  }
+  if (candidates.length === 0) return 0;
+  const seenSvgs = new WeakSet();
+  let hitCount = 0;
+
+  for (const g of candidates) {
+    const svgEl = g.ownerSVGElement || doc.querySelector('svg');
+    if (!svgEl || seenSvgs.has(svgEl)) continue;
+
+    const circle = g.querySelector('circle') || g;
+    if (!circle) continue;
+
+    const haystack  = (circle.getAttribute('data-type') || '').toLowerCase();
+    if (!haystack) continue;
+
+    // Require an exact, case-insensitive name match
+    if (haystack !== needleName) continue;
+
+    const win = doc.defaultView;
+    const rect = circle.getBoundingClientRect();
+    const evtLike = {
+      currentTarget: g,
+      clientX: rect.left + rect.width / 2,
+      clientY: rect.top  + rect.height / 2
+    };
+
+    let usedShowTip = false;
+    try {
+      if (win && typeof win.showTip === 'function') {
+        win.showTip(evtLike);
+        usedShowTip = true;
+      }
+    } catch (_) {}
+
+    if (!usedShowTip) {
+      try {
+        g.parentNode && g.parentNode.appendChild(g);
+
+        const baseR  = parseFloat(circle.getAttribute('data-base-r') || '4');
+        const baseSW = parseFloat(circle.getAttribute('data-base-sw') ||
+                                  (doc.defaultView?.getComputedStyle(circle).strokeWidth || '0.5'));
+        circle.setAttribute('r', String(baseR * 3));
+        circle.setAttribute('stroke-width', String(baseSW * 3));
+
+        const tip = doc.getElementById('tooltip');
+        const tg  = doc.getElementById('tooltip-text-group');
+        const bg  = doc.getElementById('tooltip-bg');
+        if (tip && tg && bg) {
+          while (tg.firstChild) tg.removeChild(tg.firstChild);
+          const lines = (circle.getAttribute('data-title') || '')
+            .split('\n').filter(s => s.trim().length);
+          const pad = 6, lh = 14;
+          lines.forEach((line, i) => {
+            const t = doc.createElementNS('http://www.w3.org/2000/svg', 'text');
+            t.setAttribute('x', pad);
+            t.setAttribute('y', pad + lh + i * lh);
+            t.setAttribute('class', 'tooltip-text');
+            t.textContent = line;
+            tg.appendChild(t);
+          });
+          const boxW = 350;
+          const boxH = lines.length * lh + pad * 2;
+          bg.setAttribute('width',  boxW);
+          bg.setAttribute('height', boxH);
+
+          const svgRect = svgEl.getBoundingClientRect();
+          let x = rect.left - svgRect.left + 10;
+          let y = rect.top  - svgRect.top  - boxH - 10;
+          const vbW = svgEl.viewBox?.baseVal?.width  || svgRect.width;
+          if (x + boxW > vbW) x = vbW - boxW - 5;
+          if (y < 0) y = rect.top - svgRect.top + 10;
+
+          tip.setAttribute('transform', `translate(${x},${y})`);
+          tip.setAttribute('opacity', '1');
+
+          const tEl = g.querySelector('title');
+          if (tEl) tEl.textContent = '';
+        }
+      } catch (_) {}
+    }
+
+    seenSvgs.add(svgEl);
+    hitCount++;
+  }
+
+  return hitCount;
+}
+
+// Discover SVGs in the page and highlight all of them.
+function highlightNeuronAllPlots(neuronType) {
+  const needle = String(neuronType || '').trim();
+  if (!needle) return;
+
+  const objects = Array.from(document.querySelectorAll('object[type="image/svg+xml"]'));
+  for (const obj of objects) {
+    const run = () => {
+      try {
+        const doc = obj.contentDocument;
+        if (doc) {
+          const added = highlightInSvgDocument(doc, needle);
+          if (added === 0) {
+            // helpful debug
+            console.warn('No match in <object> SVG:', obj.data);
+          }
+        }
+      } catch (e) {
+        console.warn('Cannot access <object> (likely cross-origin):', obj.data);
+      }
+    };
+    if (obj.contentDocument && obj.contentDocument.readyState !== 'loading') {
+      run();
+    } else {
+      obj.addEventListener('load', run, { once: true });
+    }
+  }
+  
+}
+
+
 // Initialize responsive navigation
 initializeResponsiveNavigation();
