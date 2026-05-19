@@ -7,7 +7,7 @@
  * This file is generated at build time with embedded neuron data.
  * Do not edit manually - it will be overwritten during the build process.
  *
- * Generated on: 2026-05-15 17:13:55
+ * Generated on: 2026-05-18 20:41:14
  * Total neuron types: 11732
  */
 
@@ -97981,14 +97981,7 @@
     {
       "name": "LC12",
       "urls": {
-        "combined": "LC12.html",
-        "left": "LC12_L.html",
-        "right": "LC12_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC12"
-        ]
+        "combined": "LC12.html"
       }
     },
     {
@@ -98076,200 +98069,91 @@
     {
       "name": "LC17",
       "urls": {
-        "combined": "LC17.html",
-        "left": "LC17_L.html",
-        "right": "LC17_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC17"
-        ]
+        "combined": "LC17.html"
       }
     },
     {
       "name": "LC18",
       "urls": {
-        "combined": "LC18.html",
-        "left": "LC18_L.html",
-        "right": "LC18_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC18"
-        ]
+        "combined": "LC18.html"
       }
     },
     {
       "name": "LC19",
       "urls": {
-        "combined": "LC19.html",
-        "left": "LC19_L.html",
-        "right": "LC19_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC19"
-        ],
-        "synonyms": [
-          "Cachero 2010: pIP-b",
-          "Yu 2010: pIP8"
-        ]
+        "combined": "LC19.html"
       }
     },
     {
       "name": "LC20a",
       "urls": {
-        "combined": "LC20a.html",
-        "left": "LC20a_L.html",
-        "right": "LC20a_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC20a"
-        ]
+        "combined": "LC20a.html"
       }
     },
     {
       "name": "LC20b",
       "urls": {
-        "combined": "LC20b.html",
-        "left": "LC20b_L.html",
-        "right": "LC20b_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC20b"
-        ]
+        "combined": "LC20b.html"
       }
     },
     {
       "name": "LC21",
       "urls": {
-        "combined": "LC21.html",
-        "left": "LC21_L.html",
-        "right": "LC21_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC21"
-        ]
+        "combined": "LC21.html"
       }
     },
     {
       "name": "LC22",
       "urls": {
-        "combined": "LC22.html",
-        "left": "LC22_L.html",
-        "right": "LC22_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC22"
-        ]
+        "combined": "LC22.html"
       }
     },
     {
       "name": "LC23",
       "urls": {
-        "combined": "LC23.html",
-        "left": "LC23_L.html",
-        "right": "LC23_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LCe07"
-        ]
+        "combined": "LC23.html"
       }
     },
     {
       "name": "LC24",
       "urls": {
-        "combined": "LC24.html",
-        "left": "LC24_L.html",
-        "right": "LC24_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC24"
-        ]
+        "combined": "LC24.html"
       }
     },
     {
       "name": "LC25",
       "urls": {
-        "combined": "LC25.html",
-        "left": "LC25_L.html",
-        "right": "LC25_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC25"
-        ]
+        "combined": "LC25.html"
       }
     },
     {
       "name": "LC26",
       "urls": {
-        "combined": "LC26.html",
-        "left": "LC26_L.html",
-        "right": "LC26_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC26"
-        ]
+        "combined": "LC26.html"
       }
     },
     {
       "name": "LC27",
       "urls": {
-        "combined": "LC27.html",
-        "left": "LC27_L.html",
-        "right": "LC27_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC27"
-        ]
+        "combined": "LC27.html"
       }
     },
     {
       "name": "LC28",
       "urls": {
-        "combined": "LC28.html",
-        "left": "LC28_L.html",
-        "right": "LC28_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC28a"
-        ]
+        "combined": "LC28.html"
       }
     },
     {
       "name": "LC29",
       "urls": {
-        "combined": "LC29.html",
-        "left": "LC29_L.html",
-        "right": "LC29_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LC29"
-        ]
+        "combined": "LC29.html"
       }
     },
     {
       "name": "LC30",
       "urls": {
-        "combined": "LC30.html",
-        "left": "LC30_L.html",
-        "right": "LC30_R.html"
-      },
-      "types": {
-        "flywire": [
-          "LCe02"
-        ]
+        "combined": "LC30.html"
       }
     },
     {
@@ -150302,7 +150186,7 @@
     }
   ],
   "metadata": {
-    "generated": "2026-05-15 17:13:55",
+    "generated": "2026-05-18 20:41:14",
     "total_types": 11732,
     "version": "2.0"
   }

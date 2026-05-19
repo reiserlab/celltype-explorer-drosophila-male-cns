@@ -1,8 +1,8 @@
 <svg
-    width="378"
-    height="403"
+    width="380"
+    height="410"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 378 403"
+    viewBox="0 0 380 410"
 >
 <defs>
 <style>
@@ -86,7 +86,7 @@ function computeTitleForPath(path, layer) {let baseTitle = "";
   let x = evt.clientX - svgRect.left + 10;
   let y = evt.clientY - svgRect.top - boxHeight - 10;
 
-  if (x + boxWidth > 378) x = 378 - boxWidth - 5;
+  if (x + boxWidth > 380) x = 380 - boxWidth - 5;
   if (y < 0) y = evt.clientY - svgRect.top + 10;
   if (x < 0) x = 5;
 
@@ -190,21 +190,21 @@ function updateLayer(layer, regionId) {const toInt = (v) => {
   setActiveLayerControl(regionId, L);
 }
 //]]>
-</script><rect width="418" height="403" fill="#f8f9fa" stroke="none" /><text x="5" y="15" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#CCCCCC">Cell Count (All Columns)</text>
-<text x="5" y="28" text-anchor="start" font-family="Arial, sans-serif" font-size="10" fill="#CCCCCC">Dm19 (R)</text>
-<text x="5" y="41" text-anchor="start" font-family="Arial, sans-serif" font-size="10" fill="#CCCCCC">LOP (R)</text><g id="layerControls-LOP"><g transform="translate(5.0, 365.5248982235242)" onclick="updateLayer(0, 'LOP')">
+</script><rect width="420" height="410" fill="#f8f9fa" stroke="none" /><text x="5" y="15" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#CCCCCC">Cell Count (All Columns)</text>
+<text x="5" y="28" text-anchor="start" font-family="Arial, sans-serif" font-size="10" fill="#CCCCCC">Dm19<tspan dx="6" font-weight="bold" fill="#dc3545" fill-opacity="0.4">(R)</tspan></text>
+<text x="5" y="41" text-anchor="start" font-family="Arial, sans-serif" font-size="10" fill="#CCCCCC">LOP<tspan dx="6" font-weight="bold" fill="#dc3545" fill-opacity="0.4">(R)</tspan></text><g id="layerControls-LOP"><g transform="translate(5.0, 372.0)" onclick="updateLayer(0, 'LOP')">
     <rect width="24" height="32" rx="2" ry="2" class="ls active" data-layer="0" fill="#fff" />
     <text x="-16.0" y="12" class="lsr" transform="rotate(-90 0 0 )">LOP</text>
-  </g><g transform="translate(25, 365.5248982235242)" onclick="updateLayer(1, 'LOP')" class="active">
+  </g><g transform="translate(25, 372.0)" onclick="updateLayer(1, 'LOP')" class="active">
     <rect width="40" height="8" rx="2" ry="2" class="ls inactive" data-layer="1" fill="#ffffff" />
     <text x="16" y="4.0" class="lsl inactive">1</text>
-  </g><g transform="translate(25, 373.5248982235242)" onclick="updateLayer(2, 'LOP')" class="active">
+  </g><g transform="translate(25, 380.0)" onclick="updateLayer(2, 'LOP')" class="active">
     <rect width="40" height="8" rx="2" ry="2" class="ls inactive" data-layer="2" fill="#ffffff" />
     <text x="16" y="4.0" class="lsl inactive">2</text>
-  </g><g transform="translate(25, 381.5248982235242)" onclick="updateLayer(3, 'LOP')" class="active">
+  </g><g transform="translate(25, 388.0)" onclick="updateLayer(3, 'LOP')" class="active">
     <rect width="40" height="8" rx="2" ry="2" class="ls inactive" data-layer="3" fill="#ffffff" />
     <text x="16" y="4.0" class="lsl inactive">3</text>
-  </g><g transform="translate(25, 389.5248982235242)" onclick="updateLayer(4, 'LOP')" class="active">
+  </g><g transform="translate(25, 396.0)" onclick="updateLayer(4, 'LOP')" class="active">
     <rect width="40" height="8" rx="2" ry="2" class="ls inactive" data-layer="4" fill="#ffffff" />
     <text x="16" y="4.0" class="lsl inactive">4</text>
   </g></g><g id="hexplot-LOP" data-current-layer="0"><g transform="translate(154.7,381.81)"><path d="M6.00,0.00 L3.00,5.20 L-3.00,5.20 L-6.00,0.00 L-3.00,-5.20 L3.00,-5.20 Z" fill="#ffffff" default-fill="#ffffff" layer-colors='[]' tooltip-layers='[]' base-title='"Column: 1, 7\nCell count: 0\nROI: LOP (right)"' stroke="none" opacity="0.8" style="cursor: pointer;" onmouseover="sT(evt)" onmouseout="ht(); rT(evt);" ><title>Column: 1, 7

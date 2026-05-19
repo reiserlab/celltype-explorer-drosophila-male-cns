@@ -180,19 +180,91 @@
     }
 }
 
-/* Small screen styles - show hamburger button */
+/* Backdrop overlay for small-screen drawer. Hidden by default; shown only
+   when the drawer is open. Defined outside any media query so the JS class
+   toggle works the same way at all sizes — but on large screens it's never
+   visible since the drawer isn't a drawer. */
+.hamburger-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.hamburger-backdrop.open {
+    display: block;
+    opacity: 1;
+}
+
+/* Section structure inside the drawer / dropdown */
+.hamburger-section + .hamburger-section {
+    border-top: 1px solid #e9ecef;
+    margin-top: 8px;
+    padding-top: 8px;
+}
+.hamburger-section-title {
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 20px 8px;
+}
+.hamburger-link-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 20px;
+    flex-wrap: wrap;
+}
+.hamburger-link-row .icon-link img {
+    display: block;
+}
+.hamburger-search {
+    padding: 4px 16px 8px;
+}
+.hamburger-search input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+/* Wide screens: site-nav section duplicates the top header-bar, so hide it. */
+@media (min-width: 1700px) {
+    .hamburger-section-site {
+        display: none;
+    }
+}
+
+/* Small screen styles - hamburger button + slide-in drawer */
 @media (max-width: 1699px) {
     /* Hide all other header elements */
     .header-flex {
         display: none;
     }
 
+    /* On neuron-type pages collapse the top header-bar to brand-only:
+       its other columns (Home/Types/Help, search, social) are now inside
+       the drawer. Index/help pages still need their inline nav, so we
+       scope this to .is-neuron-page. */
+    body.is-neuron-page .neuron-header-bar > .row > div:nth-child(1),
+    body.is-neuron-page .neuron-header-bar > .row > div:nth-child(3) {
+        display: none;
+    }
+    body.is-neuron-page .neuron-header-bar > .row {
+        justify-content: center;
+    }
+
     .hamburger-menu {
         position: fixed;
         top: 10px;
-        left: 30px;
+        left: 10px;
         width: auto;
-        z-index: 1001;
+        z-index: 1002;
         background: transparent;
         border: none;
         box-shadow: none;
@@ -211,69 +283,46 @@
         backdrop-filter: blur(10px);
     }
 
-    .hamburger-menu:hover .hamburger-btn,
-    .hamburger-menu.menu-open .hamburger-btn {
-        display: block;
-        border-bottom: none;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
+    /* Drawer: slides in from the left edge, full viewport height. */
     .hamburger-dropdown {
-        display: none;
-        position: absolute;
-        top: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(255, 255, 255, 0.95);
-        border: 1px solid #ddd;
-        border-top: none;
-        border-radius: 0 0 8px 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        backdrop-filter: blur(10px);
-        padding: 8px 0;
-        min-width: 250px;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition:
-            opacity 0.3s ease,
-            visibility 0.3s ease,
-            transform 0.3s ease;
-        transform: translateX(-50%) translateY(-10px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        max-width: 85vw;
+        height: 100vh;
+        background: #fff;
+        border: none;
+        border-right: 1px solid #ddd;
+        border-radius: 0;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+        padding: 56px 0 16px;  /* leave room above for the hamburger button */
+        overflow-y: auto;
+        z-index: 1001;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        display: block;
+        opacity: 1;
+        visibility: visible;
     }
-
-    .hamburger-menu:hover .hamburger-dropdown,
     .hamburger-dropdown.open {
-        display: block;
-        opacity: 1;
-        visibility: visible;
-        left: 0px;
-        transform: translateX(0) translateY(0);
+        transform: translateX(0);
     }
 
-    .hamburger-menu:hover,
-    .hamburger-menu.menu-open {
-        background: rgba(255, 255, 255, 0.95);
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        backdrop-filter: blur(10px);
+    /* When drawer is open, lift the hamburger button above it and shift it
+       so it appears inside the drawer area as a close affordance. */
+    .hamburger-menu.menu-open .hamburger-btn {
+        background: #fff;
     }
 
-    /* Ensure dropdown is hidden by default on small screens */
+    /* Override the static "display: none" rule from the base block so the
+       fixed positioning above takes effect. */
     #hamburgerDropdown {
-        display: none;
-        opacity: 0;
-        visibility: hidden;
+        display: block;
     }
 
-    /* Show dropdown when open class is applied or on hover */
-    .hamburger-menu:hover #hamburgerDropdown,
-    #hamburgerDropdown.open {
-        display: block;
-        opacity: 1;
-        visibility: visible;
+    .hamburger-section-title {
+        padding-left: 24px;
     }
 }
 
@@ -550,6 +599,11 @@ span.truman-hl {
     margin-bottom: 1rem;
     text-align: center;
     border: 1px solid #e5e7eb;
+    /* Stretch to fill the row height so cards align with the tallest sibling.
+       Flexboxgrid's .row is display:flex, so cols already stretch; this just
+       lets the card inside the col take that full height. */
+    height: calc(100% - 1rem);
+    box-sizing: border-box;
 }
 
 .total-column {
@@ -1386,13 +1440,17 @@ abbr[data-original-title]:hover {
     max-width: 110px;
 }
 
-/* Adjust specific columns for better fit */
+/* Below the md breakpoint each table is full-width and behaves fine with an
+   auto-sized first column. Above md, the tables sit side-by-side and the
+   first column was inflating because cols 2-6 only request 75% (5 * 15%) of
+   the table width, leaving the remaining 25% to col 1. Scoped fix at the
+   bottom of this file switches the connectivity tables to table-layout:fixed
+   with explicit column widths summing to 100% only on wide screens. */
 #upstream-table th:first-child,
 #downstream-table th:first-child,
 #upstream-table td:first-child,
 #downstream-table td:first-child {
-    width: 40%;
-    min-width: 200px;
+    min-width: 5em;
 }
 
 #upstream-table th:nth-child(2),
@@ -1454,6 +1512,30 @@ abbr[data-original-title]:hover {
     }
     .row .col-xs-12.col-md-6:last-child {
         padding-left: 1rem;
+    }
+
+    /* Connectivity tables: use auto-layout so the partner-name column
+       sizes itself to the widest cell (across header *and* every body row),
+       which is what we need to "always show full names". With fixed-layout
+       the column only sees the first row (the th) and longer body names
+       overflow into the next column. */
+    #upstream-table,
+    #downstream-table {
+        table-layout: auto !important;
+    }
+    #upstream-table th:first-child,
+    #downstream-table th:first-child,
+    #upstream-table td:first-child,
+    #downstream-table td:first-child {
+        /* Override the table-wide max-width:110px and overflow:hidden so the
+           partner-name column can grow to fit the longest entry without
+           ellipsis-truncating it. width:auto + white-space:nowrap lets the
+           browser take the column's max-content as the column width. */
+        width: auto !important;
+        max-width: none !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        white-space: nowrap !important;
     }
 }
 
@@ -2795,7 +2877,8 @@ abbr[data-original-title]:hover {
     display: flex;
     align-items: center;
     gap: 8px;
-    width: 100%;
+    width: auto;
+    max-width: 18em;
 }
 
 .p-c-label {
@@ -3069,6 +3152,15 @@ table.dataTable#roi-table tbody > tr > td:first-child {
 
 .neuron-search-dropdown.is-open {
     display: block;
+}
+
+/* Floating variant used by the sidebar-drawer search instance: appended to
+   <body> and positioned with viewport coordinates so the drawer's
+   overflow-y:auto can't clip the suggestion list. JS sets top/left/width. */
+.neuron-search-dropdown.neuron-search-dropdown-floating {
+    position: fixed;
+    right: auto;
+    z-index: 1100;
 }
 
 .neuron-search-no-results {

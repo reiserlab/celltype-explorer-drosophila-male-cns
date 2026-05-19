@@ -403,43 +403,75 @@ function initializeResponsiveNavigation() {
     var btn = document.getElementById("hamburgerBtn");
     var dropdown = document.getElementById("hamburgerDropdown");
     var menu = document.getElementById("hamburgerMenu");
+    var backdrop = document.getElementById("hamburgerBackdrop");
 
     if (!dropdown || !menu) return;
 
-    // Handle button click and hover (only relevant on small screens)
+    // Drawer mode is only active under this breakpoint (matches the CSS).
+    var DRAWER_BREAKPOINT = 1700;
+    function isDrawerMode() {
+      return window.innerWidth < DRAWER_BREAKPOINT;
+    }
+
+    function openDrawer() {
+      dropdown.classList.add("open");
+      menu.classList.add("menu-open");
+      if (backdrop) backdrop.classList.add("open");
+      if (btn) btn.setAttribute("aria-expanded", "true");
+      if (isDrawerMode()) document.body.style.overflow = "hidden";
+    }
+    function closeDrawer() {
+      dropdown.classList.remove("open");
+      menu.classList.remove("menu-open");
+      if (backdrop) backdrop.classList.remove("open");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+    function toggleDrawer() {
+      if (dropdown.classList.contains("open")) closeDrawer();
+      else openDrawer();
+    }
+
+    // Button click toggles the drawer.
     if (btn) {
       btn.addEventListener("click", function (e) {
         e.stopPropagation();
-        dropdown.classList.toggle("open");
-        menu.classList.toggle("menu-open");
+        toggleDrawer();
       });
 
-      // Handle hover to open menu on small screens
-      btn.addEventListener("mouseenter", function (e) {
-        dropdown.classList.add("open");
-        menu.classList.add("menu-open");
+      // On large screens (no drawer), the menu sits open inline — hover-open
+      // is a nicety for the floating widget but irrelevant once the drawer
+      // owns the small-screen experience. Gate hover behaviors accordingly.
+      btn.addEventListener("mouseenter", function () {
+        if (!isDrawerMode()) openDrawer();
       });
     }
 
-    // Handle hover over entire menu area
     if (menu) {
-      menu.addEventListener("mouseenter", function (e) {
-        dropdown.classList.add("open");
-        menu.classList.add("menu-open");
+      menu.addEventListener("mouseenter", function () {
+        if (!isDrawerMode()) openDrawer();
       });
-
-      // Close menu when mouse leaves the entire menu area
-      menu.addEventListener("mouseleave", function (e) {
-        dropdown.classList.remove("open");
-        menu.classList.remove("menu-open");
+      menu.addEventListener("mouseleave", function () {
+        if (!isDrawerMode()) closeDrawer();
       });
     }
 
-    // Close when clicking outside (only on small screens)
+    // Backdrop click closes the drawer (small screens only).
+    if (backdrop) {
+      backdrop.addEventListener("click", closeDrawer);
+    }
+
+    // ESC closes the drawer.
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && dropdown.classList.contains("open")) {
+        closeDrawer();
+      }
+    });
+
+    // Click outside the menu (large screens) — keep the legacy behavior.
     document.body.addEventListener("click", function (e) {
-      if (!menu.contains(e.target)) {
-        dropdown.classList.remove("open");
-        menu.classList.remove("menu-open");
+      if (!menu.contains(e.target) && !isDrawerMode()) {
+        closeDrawer();
       }
     });
 
@@ -449,13 +481,17 @@ function initializeResponsiveNavigation() {
 
     menuLinks.forEach(function (link) {
       link.addEventListener("click", function (e) {
-        // Close menu on small screens
-        dropdown.classList.remove("open");
-        menu.classList.remove("menu-open");
+        // Always close menu on click — applies to both in-page anchors and
+        // site-nav links.
+        closeDrawer();
 
-        // Smooth scroll to target
+        // Only intercept same-page anchor links for smooth scrolling; let
+        // cross-page links (Home/Types/Help) navigate normally.
+        var href = this.getAttribute("href") || "";
+        if (!href.startsWith("#")) return;
+
         e.preventDefault();
-        var targetId = this.getAttribute("href").substring(1); // Remove #
+        var targetId = href.substring(1);
         var target = document.getElementById(targetId);
         if (target) {
           target.scrollIntoView({

@@ -13,6 +13,11 @@ class NeuronSearch {
   constructor(inputId = "menulines", options = {}) {
     this.inputElement = document.getElementById(inputId);
     this.minQueryLength = options.minQueryLength ?? 1;
+    // floatingDropdown: re-parent the suggestion list to <body> and position
+    // it with fixed coordinates derived from the input's bounding rect. Used
+    // by the sidebar-drawer copy on small screens, where the drawer's
+    // overflow-y:auto would otherwise clip an absolutely-positioned dropdown.
+    this.floatingDropdown = options.floatingDropdown ?? false;
     this.neuronTypes = [];
     this.neuronData = [];
     this.filteredTypes = [];
@@ -27,6 +32,14 @@ class NeuronSearch {
     this.urlPrefix = this.isNeuronPage ? '' : 'types/';
 
     this.dropdown = this.createDropdown();
+
+    if (this.floatingDropdown) {
+      this._positionDropdown = this._positionDropdown.bind(this);
+      // Capture-phase scroll listener catches scrolls on every ancestor
+      // (scroll events don't bubble) — needed when the drawer itself scrolls.
+      window.addEventListener("scroll", this._positionDropdown, { passive: true, capture: true });
+      window.addEventListener("resize", this._positionDropdown, { passive: true });
+    }
   }
 
   /**
@@ -160,10 +173,23 @@ class NeuronSearch {
     const dropdown = document.createElement("div");
     dropdown.className = "neuron-search-dropdown";
 
-    const parent = this.inputElement.parentNode;
-    parent.appendChild(dropdown);
+    if (this.floatingDropdown) {
+      // Re-parent to <body> so an overflow-clipping ancestor can't crop it.
+      dropdown.classList.add("neuron-search-dropdown-floating");
+      document.body.appendChild(dropdown);
+    } else {
+      this.inputElement.parentNode.appendChild(dropdown);
+    }
 
     return dropdown;
+  }
+
+  _positionDropdown() {
+    if (!this.floatingDropdown || !this.isDropdownVisible) return;
+    const rect = this.inputElement.getBoundingClientRect();
+    this.dropdown.style.top = `${rect.bottom}px`;
+    this.dropdown.style.left = `${rect.left}px`;
+    this.dropdown.style.width = `${rect.width}px`;
   }
 
   setupEventListeners() {
@@ -521,6 +547,7 @@ class NeuronSearch {
     ) {
       this.dropdown.classList.add('is-open');
       this.isDropdownVisible = true;
+      this._positionDropdown && this._positionDropdown();
     }
   }
 
@@ -545,6 +572,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (document.getElementById('menulines')) {
     window.neuronSearch = new NeuronSearch('menulines');
     inits.push(window.neuronSearch.init());
+  }
+  if (document.getElementById('menulines-drawer')) {
+    // Sidebar-drawer copy of the header search. floatingDropdown re-parents
+    // the suggestion list to <body> so the drawer's overflow-y:auto can't
+    // clip it.
+    window.neuronSearchDrawer = new NeuronSearch('menulines-drawer', { floatingDropdown: true });
+    inits.push(window.neuronSearchDrawer.init());
   }
   if (document.getElementById('landing-search')) {
     window.landingSearch = new NeuronSearch('landing-search', { minQueryLength: 2 });
