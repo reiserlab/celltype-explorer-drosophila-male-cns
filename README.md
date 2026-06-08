@@ -1,17 +1,17 @@
 # Male CNS – Cell Type Explorer - Dataset Documentation
 
-**Dataset:** male-cns:v0.9\
+**Dataset:** male-cns:v1.0\
 **Server:** neuprint.janelia.org\
-**Dataset UUID:** 79f9a4cb54b0463cad8615b26bf8f137\
-**Dataset Last Updated:** 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)\
-**Generated:** 2026-05-18 20:41:14 UTC\
-**Total Neuron Types:** 11732
+**Dataset UUID:** 4b2087c0fbe046bfaf0d60bc970e3e5d\
+**Dataset Last Updated:** 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)\
+**Generated:** 2026-06-08 15:38:13 UTC\
+**Total Neuron Types:** 11751
 
 ---
 
 ## Overview
 
-This website provides an interactive catalog of neuron types from the male-cns:v0.9 dataset. The catalog allows you to explore detailed information about each neuron type, including connectivity patterns, anatomical distributions, and morphological properties.
+This website provides an interactive catalog of neuron types from the male-cns:v1.0 dataset. The catalog allows you to explore detailed information about each neuron type, including connectivity patterns, anatomical distributions, and morphological properties.
 
 ## Getting Started
 
@@ -184,9 +184,9 @@ Neurotransmitter assignments are computational predictions based on:
 ## Dataset Information
 
 **Source Database**: neuPrint (neuprint.janelia.org)
-**Dataset Version**: male-cns:v0.9
-**Dataset UUID**: 79f9a4cb54b0463cad8615b26bf8f137
-**Dataset Last Updated**: 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
+**Dataset Version**: male-cns:v1.0
+**Dataset UUID**: 4b2087c0fbe046bfaf0d60bc970e3e5d
+**Dataset Last Updated**: 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)
 **Data Type**: Electron microscopy connectome data
 **Species**: *Drosophila melanogaster*
 **Resolution**: Synaptic-level connectivity
@@ -207,9 +207,9 @@ Neurotransmitter assignments are computational predictions based on:
 
 When using data from this catalog, please cite:
 1. The original neuPrint database and dataset
-2. The specific dataset version (male-cns:v0.9) with UUID 79f9a4cb54b0463cad8615b26bf8f137
-3. The dataset last updated on 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)
-4. The generation date of this catalog (2026-05-18)
+2. The specific dataset version (male-cns:v1.0) with UUID 4b2087c0fbe046bfaf0d60bc970e3e5d
+3. The dataset last updated on 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)
+4. The generation date of this catalog (2026-06-08)
 
 For the most current citation information, visit the neuPrint database at neuprint.janelia.org.
 
@@ -230,4 +230,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2026-05-18 at 20:41:14 UTC using dataset male-cns:v0.9 (UUID: 79f9a4cb54b0463cad8615b26bf8f137, last updated: 2025-06-18 14:41:50.300008536-04:00 / 2025-09-29T23:44:02-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2026-06-08 at 15:38:13 UTC using dataset male-cns:v1.0 (UUID: 4b2087c0fbe046bfaf0d60bc970e3e5d, last updated: 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*

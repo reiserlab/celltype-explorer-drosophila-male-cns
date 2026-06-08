@@ -23,18 +23,12 @@ const NEUROGLANCER_TEMPLATE = {
     ]
   },
   "position": [
-    48311.90234375,
-    25295.765625,
-    28509.505859375
+    48686.5,
+    27515.5,
+    24721.5
   ],
   "crossSectionScale": 88.13122564876332,
-  "projectionOrientation": [
-    0,
-    -0.002181659685447812,
-    0,
-    0.999997615814209
-  ],
-  "projectionScale": 99656.51830908704,
+  "projectionScale": 134522.22897188037,
   "layers": [
     {
       "type": "image",
@@ -52,7 +46,7 @@ const NEUROGLANCER_TEMPLATE = {
       "type": "segmentation",
       "source": [
         {
-          "url": "precomputed://gs://flyem-male-cns/v0.9/segmentation",
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation",
           "subsources": {
             "default": true,
             "mesh": true
@@ -60,36 +54,40 @@ const NEUROGLANCER_TEMPLATE = {
           "enableDefaultSubsources": false
         },
         {
-          "url": "precomputed://gs://flyem-male-cns/v0.9/segmentation/type_property",
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation/type_property",
           "subsources": {
             "default": true
           },
           "enableDefaultSubsources": false
         },
         {
-          "url": "precomputed://gs://flyem-male-cns/v0.9/segmentation/tags_property",
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation/type_and_group_property",
+          "enableDefaultSubsources": false
+        },
+        {
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation/tags_property",
           "subsources": {
             "default": true
           },
           "enableDefaultSubsources": false
         },
         {
-          "url": "precomputed://gs://flyem-male-cns/v0.9/segmentation/numeric_properties",
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation/numeric_properties",
           "subsources": {
             "default": true
           },
           "enableDefaultSubsources": false
         },
         {
-          "url": "precomputed://gs://flyem-male-cns/v0.9/segmentation/instance_property",
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation/instance_property",
           "enableDefaultSubsources": false
         },
         {
-          "url": "precomputed://gs://flyem-male-cns/v0.9/segmentation/flywireType_property",
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation/flywireType_property",
           "enableDefaultSubsources": false
         },
         {
-          "url": "precomputed://gs://flyem-male-cns/v0.9/segmentation/meshes-malecns/single-res-meshes",
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation/meshes-malecns/single-res-meshes",
           "enableDefaultSubsources": false
         }
       ],
@@ -174,7 +172,7 @@ const NEUROGLANCER_TEMPLATE = {
     {
       "type": "segmentation",
       "source": {
-        "url": "precomputed://gs://flyem-male-cns/rois/vnc-neuropil-shell",
+        "url": "precomputed://gs://flyem-male-cns/rois/vnc-neuropil-shell-v2",
         "subsources": {
           "default": true,
           "properties": true,
@@ -196,7 +194,7 @@ const NEUROGLANCER_TEMPLATE = {
     {
       "type": "segmentation",
       "source": {
-        "url": "precomputed://gs://flyem-male-cns/rois/vnc-shell",
+        "url": "precomputed://gs://flyem-male-cns/rois/vnc-shell-v2",
         "subsources": {
           "default": true,
           "properties": true,
@@ -219,7 +217,7 @@ const NEUROGLANCER_TEMPLATE = {
     {
       "type": "segmentation",
       "source": {
-        "url": "precomputed://gs://flyem-male-cns/rois/fullbrain-roi-v4",
+        "url": "precomputed://gs://flyem-male-cns/rois/fullbrain-roi-v5",
         "subsources": {
           "default": true,
           "properties": true,
@@ -322,7 +320,226 @@ const NEUROGLANCER_TEMPLATE = {
         "94",
         "96"
       ],
-      "name": "brain-neuropils"
+      "name": "brain-neuropils",
+      "archived": true
+    },
+    {
+      "type": "segmentation",
+      "source": {
+        "url": "precomputed://gs://flyem-male-cns/rois/malecns-subcompartments-v3",
+        "subsources": {
+          "default": true,
+          "properties": true,
+          "mesh": true
+        },
+        "enableDefaultSubsources": false
+      },
+      "pick": false,
+      "tab": "segments",
+      "selectedAlpha": 0,
+      "segments": [
+        "1",
+        "10",
+        "100",
+        "101",
+        "102",
+        "103",
+        "104",
+        "105",
+        "106",
+        "107",
+        "108",
+        "109",
+        "11",
+        "110",
+        "111",
+        "112",
+        "113",
+        "114",
+        "115",
+        "116",
+        "117",
+        "118",
+        "119",
+        "12",
+        "120",
+        "121",
+        "122",
+        "123",
+        "124",
+        "125",
+        "126",
+        "127",
+        "128",
+        "129",
+        "13",
+        "130",
+        "131",
+        "132",
+        "133",
+        "134",
+        "135",
+        "136",
+        "137",
+        "138",
+        "139",
+        "14",
+        "140",
+        "141",
+        "142",
+        "143",
+        "144",
+        "145",
+        "146",
+        "147",
+        "148",
+        "149",
+        "15",
+        "150",
+        "151",
+        "152",
+        "153",
+        "154",
+        "155",
+        "156",
+        "157",
+        "158",
+        "159",
+        "16",
+        "160",
+        "161",
+        "162",
+        "163",
+        "164",
+        "165",
+        "166",
+        "167",
+        "168",
+        "169",
+        "17",
+        "170",
+        "171",
+        "172",
+        "173",
+        "174",
+        "175",
+        "176",
+        "177",
+        "178",
+        "179",
+        "18",
+        "180",
+        "181",
+        "182",
+        "183",
+        "184",
+        "185",
+        "186",
+        "187",
+        "188",
+        "189",
+        "19",
+        "190",
+        "2",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "3",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "4",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "49",
+        "5",
+        "50",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57",
+        "58",
+        "59",
+        "6",
+        "60",
+        "61",
+        "62",
+        "63",
+        "64",
+        "65",
+        "66",
+        "67",
+        "68",
+        "69",
+        "7",
+        "70",
+        "71",
+        "72",
+        "73",
+        "74",
+        "75",
+        "76",
+        "77",
+        "78",
+        "79",
+        "8",
+        "80",
+        "81",
+        "82",
+        "83",
+        "84",
+        "85",
+        "86",
+        "87",
+        "88",
+        "89",
+        "9",
+        "90",
+        "91",
+        "92",
+        "93",
+        "94",
+        "95",
+        "96",
+        "97",
+        "98",
+        "99",
+        "195",
+        "191",
+        "196",
+        "192",
+        "197",
+        "193",
+        "198",
+        "194",
+        "199"
+      ],
+      "name": "brain-neuropil-subcompartments",
+      "archived": true
     },
     {
       "type": "segmentation",
@@ -364,7 +581,8 @@ const NEUROGLANCER_TEMPLATE = {
         "8",
         "9"
       ],
-      "name": "vnc-neuropils"
+      "name": "vnc-neuropils",
+      "archived": true
     },
     {
       "type": "segmentation",
@@ -461,7 +679,7 @@ const NEUROGLANCER_TEMPLATE = {
     },
     {
       "type": "annotation",
-      "source": "precomputed://gs://flyem-male-cns/v0.9/malecns-v0.9-soma-points",
+      "source": "precomputed://gs://flyem-male-cns/v1.0/malecns-v1.0-soma-points",
       "tab": "rendering",
       "annotationColor": "#ffffff",
       "shader": "#uicontrol float radius slider(min=1, max=30, step=1, default=5)\n#uicontrol bool color_by_birthtime checkbox(default=false)\n#uicontrol bool color_by_itoleeHl checkbox(default=false)\n#uicontrol bool color_by_trumanHl checkbox(default=false)\n\n#uicontrol bool color_by_top_input_compartment checkbox(default=false)\n#uicontrol bool color_by_top_output_compartment checkbox(default=false)\n\n#uicontrol bool color_by_top_input_neuropil checkbox(default=false)\n#uicontrol bool color_by_top_output_neuropil checkbox(default=false)\n\n#uicontrol bool color_by_optic_column checkbox(default=false)\n#uicontrol bool color_by_top_input_optic_layer checkbox(default=false)\n#uicontrol bool color_by_top_output_optic_layer checkbox(default=false)\n\n#uicontrol int color_seed slider(min=0, max=4294967295, default=0);\n#uicontrol bool hide_uncolored checkbox(default=true)\n#uicontrol bool hide_vnc checkbox(default=false)\n#uicontrol bool hide_brain checkbox(default=false)\n#uicontrol bool hide_tosoma checkbox(default=false)\n\n\nuint hash_function(uint state, uint value) {\n    uint k1 = 0xcc9e2d51u;\n    uint k2 = 0x1b873593u;\n    \n    value = value * k1;\n    value = (value << 15) | (value >> 17);\n    value = value * k2;\n    state = state ^ value;\n    state = (state << 13) | (state >> 19);\n    state = state * 5u + 0xe6546b64u;\n    \n    return state;\n}\n\nvec3 hsv_to_rgb(float h, float s, float v) {\n    h *= 6.0;\n    float hue_index = floor(h);\n    float remainder = h - hue_index;\n    float val1 = v * (1.0 - s);\n    float val2 = v * (1.0 - (s * remainder));\n    float val3 = v * (1.0 - (s * (1.0 - remainder)));\n    \n    int hue_remainder = int(hue_index) % 6;\n    \n    if (hue_remainder == 0) {\n        return vec3(v, val3, val1);\n    } else if (hue_remainder == 1) {\n        return vec3(val2, v, val1);\n    } else if (hue_remainder == 2) {\n        return vec3(val1, v, val3);\n    } else if (hue_remainder == 3) {\n        return vec3(val1, val2, v);\n    } else if (hue_remainder == 4) {\n        return vec3(val3, val1, v);\n    } else { // hue_remainder == 5\n        return vec3(v, val1, val2);\n    }\n}\n\nvec3 color_from_segment_id(uint color_seed_, uint segment_id) {\n    uint result = hash_function(color_seed_, segment_id);\n    \n    // We only support 32-bit segment IDs, so newvalue is always 0,\n    // and (id >> 32) would be undefined behavior!\n    // uint newvalue = id >> 32;\n    \n    uint newvalue = 0u;\n    uint result2 = hash_function(result, newvalue);\n    \n    float c0 = float(result2 & 0xFFu) / 255.0;\n    float c1 = float((result2 >> 8) & 0xFFu) / 255.0;\n    \n    float h = c0;\n    float s = 0.5 + 0.5 * c1;\n    float v = 1.0;\n    \n    return hsv_to_rgb(h, s, v);\n}\n\nvoid set_color_for_id(uint id) {\n    if (id == 0u) {\n        if (hide_uncolored) {\n            discard;\n        }\n        //setPointMarkerBorderWidth(0.2);\n        //setPointMarkerColor(vec4(vec3(0.0, 0.0, 0.0), 0.0));\n        //setPointMarkerBorderColor(vec3(1.0, 1.0, 1.0));\n    }\n    else {\n        setColor(color_from_segment_id(uint(color_seed), id));\n    }\n}\n\nvoid main() {\n    setPointMarkerSize(radius);\n    setPointMarkerBorderWidth(1.0);\n    setPointMarkerBorderColor(vec3(0.0, 0.0, 0.0));\n    \n    if (hide_vnc && prop_is_vnc() == 1u) {\n        discard;\n    }\n    \n    if (hide_brain && prop_is_vnc() == 0u) {\n        discard;\n    }\n    \n    if (prop_kind() == 1u && hide_tosoma)\n    discard;\n    \n    // default color: soma vs. tosoma\n    if (prop_kind() == 1u) {\n        setColor(vec3(0.0, 1.0, 1.0));\n    }\n    else {\n        setColor(vec3(1.0, 1.0, 1.0));\n    }\n    \n    if (\n        int(color_by_top_input_compartment) +\n        int(color_by_top_output_compartment) +\n        int(color_by_top_input_neuropil) +\n        int(color_by_top_output_neuropil) +\n        int(color_by_top_input_optic_layer) +\n        int(color_by_top_output_optic_layer) +\n        int(color_by_optic_column) +\n        int(color_by_birthtime) +\n        int(color_by_itoleeHl || color_by_trumanHl)\n        > 1) {\n        discard;\n    }\n        \n    if (color_by_top_input_compartment) {\n        set_color_for_id(uint(prop_top_input_compartment()));\n        return;\n    }\n    if (color_by_top_output_compartment) {\n        set_color_for_id(uint(prop_top_output_compartment()));\n        return;\n    }\n    if (color_by_top_input_neuropil) {\n        set_color_for_id(uint(prop_top_input_neuropil()));\n        return;\n    }\n    if (color_by_top_output_neuropil) {\n        set_color_for_id(uint(prop_top_output_neuropil()));\n        return;\n    }\n    if (color_by_top_input_optic_layer) {\n        set_color_for_id(uint(prop_top_input_optic_layer()));\n        return;\n    }\n    if (color_by_top_output_optic_layer) {\n        set_color_for_id(uint(prop_top_output_optic_layer()));\n        return;\n    }\n    if (color_by_optic_column) {\n        set_color_for_id(uint(prop_assigned_optic_column()));\n        return;\n    }\n    if (color_by_birthtime) {\n        set_color_for_id(uint(prop_birthtime()));\n        return;\n    }\n    \n    // We permit showing both itoleeHl and trumanHl simultaneously\n    if (color_by_itoleeHl && color_by_trumanHl) {\n        uint id = bool(prop_itoleeHl()) ? uint(prop_itoleeHl()) : uint(prop_trumanHl());\n        set_color_for_id(id);\n        return;\n    }\n    \n    if (color_by_itoleeHl) {\n        set_color_for_id(uint(prop_itoleeHl()));\n        return;\n    }\n    if (color_by_trumanHl) {\n        set_color_for_id(uint(prop_trumanHl()));\n        return;\n    }\n}",
@@ -480,7 +698,7 @@ const NEUROGLANCER_TEMPLATE = {
     {
       "type": "segmentation",
       "source": {
-        "url": "precomputed://gs://flyem-male-cns/v0.9/malecns-v0.9-nuclei-seg-16nm",
+        "url": "precomputed://gs://flyem-male-cns/v1.0/malecns-v1.0-nuclei-seg-16nm",
         "subsources": {
           "default": true,
           "mesh": true
@@ -496,18 +714,14 @@ const NEUROGLANCER_TEMPLATE = {
       "type": "segmentation",
       "source": [
         {
-          "url": "precomputed://gs://flyem-male-cns/v0.9/segmentation/meshes-malecns-mirrored/single-res-meshes",
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation/meshes-malecns-mirrored/single-res-meshes",
           "subsources": {
-            "default": true,
-            "properties": true
+            "default": true
           },
           "enableDefaultSubsources": false
         },
         {
-          "url": "precomputed://gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-precomputed",
-          "subsources": {
-            "properties": true
-          },
+          "url": "precomputed://gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns-mirrored/skeletons-precomputed",
           "enableDefaultSubsources": false
         }
       ],
@@ -766,6 +980,33 @@ const NEUROGLANCER_TEMPLATE = {
       "archived": true
     },
     {
+      "type": "annotation",
+      "source": "precomputed://gs://flyem-male-cns/v1.0/malecns-v1.0-optic-lobe-column-pins/",
+      "tab": "rendering",
+      "codeVisible": false,
+      "shader": "// These should match the segment IDs\n// in the brain-neuropils layer.\n#define LO_L 43\n#define LO_R 44\n#define LOP_L 45\n#define LOP_R 46\n#define ME_L 47\n#define ME_R 48\n\n// These are hard-coded from the data\n#define LO_MAX_DEPTH 75\n#define LOP_MAX_DEPTH 50\n#define ME_MAX_DEPTH 120\n  \nvec3 viridis(float t) {\n\n    const vec3 c0 = vec3(0.2777273272234177, 0.005407344544966578, 0.3340998053353061);\n    const vec3 c1 = vec3(0.1050930431085774, 1.404613529898575, 1.384590162594685);\n    const vec3 c2 = vec3(-0.3308618287255563, 0.214847559468213, 0.09509516302823659);\n    const vec3 c3 = vec3(-4.634230498983486, -5.799100973351585, -19.33244095627987);\n    const vec3 c4 = vec3(6.228269936347081, 14.17993336680509, 56.69055260068105);\n    const vec3 c5 = vec3(4.776384997670288, -13.74514537774601, -65.35303263337234);\n    const vec3 c6 = vec3(-5.435455855934631, 4.645852612178535, 26.3124352495832);\n\n    return c0+t*(c1+t*(c2+t*(c3+t*(c4+t*(c5+t*c6)))));\n}\n\nvoid main() {\n  float normalized_depth;\n  switch (int(prop_roi())) {\n    case LO_R:\n    case LO_L:\n      normalized_depth = float(prop_depth()) / float(LO_MAX_DEPTH);\n      break;\n    case LOP_R:\n    case LOP_L:\n      normalized_depth = float(prop_depth()) / float(LOP_MAX_DEPTH);\n      break;\n    case ME_R:\n    case ME_L:\n      normalized_depth = float(prop_depth()) / float(ME_MAX_DEPTH);\n      break;\n  }\n  vec3 depth_color = viridis(normalized_depth);\n  setColor(depth_color);\n  setEndpointMarkerSize(0.0, 0.0);\n}\n",
+      "linkedSegmentationLayer": {
+        "neuropil": "brain-neuropils",
+        "ME(L)_column_segment": "ME(L)-columns",
+        "LO(L)_column_segment": "LO(L)-columns",
+        "LOP(L)_column_segment": "LOP(L)-columns",
+        "ME(R)_column_segment": "ME(R)-columns",
+        "LO(R)_column_segment": "LO(R)-columns",
+        "LOP(R)_column_segment": "LOP(R)-columns"
+      },
+      "filterBySegmentation": [
+        "LO(L)_column_segment",
+        "LO(R)_column_segment",
+        "LOP(L)_column_segment",
+        "LOP(R)_column_segment",
+        "ME(L)_column_segment",
+        "ME(R)_column_segment",
+        "neuropil"
+      ],
+      "name": "optic-column-pins",
+      "archived": true
+    },
+    {
       "type": "segmentation",
       "source": {
         "url": "precomputed://gs://flyem-male-cns/rois/OL(R)-v0",
@@ -824,7 +1065,7 @@ const NEUROGLANCER_TEMPLATE = {
     },
     {
       "type": "segmentation",
-      "source": "gs://flyem-male-cns/hemibrain2mcns_meshes/|neuroglancer-precomputed:",
+      "source": "precomputed://gs://flyem-male-cns/hemibrain2mcns_meshes/v1.2/meshes/",
       "tab": "segments",
       "segments": [],
       "segmentDefaultColor": "#e90002",
@@ -833,11 +1074,36 @@ const NEUROGLANCER_TEMPLATE = {
     },
     {
       "type": "segmentation",
-      "source": "gs://flyem-male-cns/flywire2mcns_meshes/783/|neuroglancer-precomputed:",
+      "source": "precomputed://gs://flyem-male-cns/flywire2mcns_meshes/783/",
       "tab": "segments",
       "segments": [],
       "segmentDefaultColor": "#d400ff",
       "name": "flywire-meshes",
+      "archived": true
+    },
+    {
+      "type": "segmentation",
+      "source": {
+        "url": "precomputed://gs://flyem-male-cns/manc2mcns_meshes/v1.2/meshes/",
+        "subsources": {
+          "default": true,
+          "properties": true
+        },
+        "enableDefaultSubsources": false
+      },
+      "tab": "segments",
+      "segments": [],
+      "segmentDefaultColor": "#00ff00",
+      "name": "manc-meshes",
+      "archived": true
+    },
+    {
+      "type": "segmentation",
+      "source": "precomputed://gs://flyem-male-cns/banc2mcns_meshes/626",
+      "tab": "segments",
+      "segments": [],
+      "segmentDefaultColor": "#ff7e00",
+      "name": "banc-meshes",
       "archived": true
     },
     {
@@ -856,12 +1122,136 @@ const NEUROGLANCER_TEMPLATE = {
       "archived": true
     },
     {
+      "type": "image",
+      "source": [
+        {
+          "url": "gs://flyem-male-cns/micro-ct/Z0720-07_luz_g-_CropRotate8bit.n5/|n5:",
+          "transform": {
+            "matrix": [
+              [
+                0.9659,
+                -0.2588,
+                0,
+                -6000
+              ],
+              [
+                -0.25,
+                -0.933,
+                -0.2588,
+                150000
+              ],
+              [
+                0.067,
+                0.25,
+                -0.9659,
+                139000
+              ]
+            ],
+            "outputDimensions": {
+              "x": [
+                8e-9,
+                "m"
+              ],
+              "y": [
+                8e-9,
+                "m"
+              ],
+              "z": [
+                8e-9,
+                "m"
+              ]
+            },
+            "inputDimensions": {
+              "x": [
+                0.0000011993,
+                "m"
+              ],
+              "y": [
+                0.0000011993,
+                "m"
+              ],
+              "z": [
+                0.0000011993,
+                "m"
+              ]
+            }
+          },
+          "subsources": {
+            "default": true
+          },
+          "enableDefaultSubsources": false
+        },
+        "# NOTE: The micro-ct layer is unaligned to the EM. Also, the Z-resolution may be wrong."
+      ],
+      "tab": "rendering",
+      "shaderControls": {
+        "normalized": {
+          "range": [
+            36,
+            255
+          ]
+        }
+      },
+      "volumeRendering": "on",
+      "volumeRenderingDepthSamples": 10447.551088355996,
+      "name": "micro-ct",
+      "archived": true
+    },
+    {
+      "type": "image",
+      "source": {
+        "url": "precomputed://gs://flyem-male-cns/malecns-tbar-point-cloud-512nm-smoothed/",
+        "subsources": {
+          "default": true
+        },
+        "enableDefaultSubsources": false
+      },
+      "tab": "rendering",
+      "shaderControls": {
+        "normalized": {
+          "range": [
+            -0.000922614113694098,
+            0.5755773291420491
+          ],
+          "window": [
+            -0.39765375785958196,
+            0.972308472887937
+          ]
+        }
+      },
+      "volumeRendering": "on",
+      "volumeRenderingDepthSamples": 7131.550214521843,
+      "name": "tbar-cloud",
+      "archived": true
+    },
+    {
       "type": "annotation",
-      "source": "precomputed://gs://flyem-male-cns/v0.9/male-cns-v0.9-synapses-precomputed/",
+      "source": "precomputed://gs://flyem-male-cns/v1.0/synapse-ground-truth/malecns-v1.0-synapse-ground-truth-lines/",
+      "tab": "rendering",
+      "codeVisible": false,
+      "shader": "#uicontrol bool show_pre checkbox(default=true)\n#uicontrol bool show_post checkbox(default=true)\n\n#uicontrol float pre_size slider(min=1.0, max=20.0, default=6.0)\n#uicontrol float post_size slider(min=1.0, max=20.0, default=4.0)\n\n#uicontrol vec3 pre_default color(default=\"red\")\n#uicontrol vec3 post_default color(default=\"cyan\")\n\n#define PROP_KIND_PRESYN 0\n#define PROP_KIND_PRESYN_TO_POSTSYN 1\n\nvoid main() {\n    vec3 pre_color = pre_default;\n    vec3 post_color = post_default;\n    bool _show_post = show_post && int(prop_kind()) == PROP_KIND_PRESYN_TO_POSTSYN;\n\n    setLineWidth(0.0);\n    setLineColor(vec3(1.0, 1.0, 1.0));\n    setEndpointMarkerColor(\n        vec4(pre_color, 1.0), vec4(post_color, 1.0)\n    );\n\n    if (show_pre && _show_post) {\n        setLineWidth(1.0);\n        setEndpointMarkerSize(pre_size, post_size);\n    }\n    else if (_show_post) {\n        setEndpointMarkerSize(0.0, post_size);\n    }\n    else if (show_pre) {\n        setEndpointMarkerSize(pre_size, 0.0);\n    }\n    else {\n        setEndpointMarkerSize(0.0, 0.0);\n    }\n}",
+      "name": "synapse-groundtruth",
+      "archived": true
+    },
+    {
+      "type": "annotation",
+      "source": "precomputed://gs://flyem-male-cns/v1.0/synapse-ground-truth/malecns-v1.0-synapse-ground-truth-boxes/",
+      "tab": "rendering",
+      "codeVisible": false,
+      "shader": "#uicontrol bool show_pre_boxes checkbox(default=true)\n#uicontrol bool show_post_boxes checkbox(default=true)\n\n#uicontrol vec3 presyn_boxes color(default=\"red\")\n#uicontrol vec3 postsyn_boxes color(default=\"cyan\")\n\nvoid main() {\n  if (int(prop_kind()) == 0) {\n    if (!show_pre_boxes) {\n      discard;\n    }\n    setColor(vec4(presyn_boxes, 1.0));\n  } else {\n    if (!show_post_boxes) {\n      discard;\n    }\n    setColor(vec4(postsyn_boxes, 1.0));\n  }\n}\n",
+      "shaderControls": {
+        "presyn_boxes": "#ff00ff"
+      },
+      "name": "synapse-groundtruth-boxes",
+      "archived": true
+    },
+    {
+      "type": "annotation",
+      "source": "precomputed://gs://flyem-male-cns/v1.0/male-cns-v1.0-synapses-precomputed/",
       "tab": "rendering",
       "annotationColor": "#000000",
       "codeVisible": false,
-      "shader": "#uicontrol bool show_pre checkbox(default=true)\n#uicontrol bool show_post_partners checkbox(default=false)\n\n#uicontrol float pre_size slider(min=1.0, max=20.0, default=6.0)\n#uicontrol float post_size slider(min=1.0, max=20.0, default=4.0)\n\n#uicontrol vec3 pre_default color(default=\"red\")\n#uicontrol vec3 post_default color(default=\"blue\")\n\n#define acetylcholine_code 0\n#define dopamine_code 1\n#define gaba_code 2\n#define glutamate_code 3\n#define histamine_code 4\n#define octopamine_code 5\n#define serotonin_code 6\n#define unknown_nt_code 7\n\n#uicontrol bool color_by_neurotransmitter checkbox(default=true)\n\n#uicontrol vec3 acetylcholine color(default=\"#1f77b4\")\n#uicontrol vec3 dopamine color(default=\"#ff7f0e\")\n#uicontrol vec3 gaba color(default=\"#2ca02c\")\n#uicontrol vec3 glutamate color(default=\"#d62728\")\n#uicontrol vec3 histamine color(default=\"#9467bd\")\n#uicontrol vec3 octopamine color(default=\"#8c564b\")\n#uicontrol vec3 serotonin color(default=\"#e377c2\")\n#uicontrol vec3 unknown_nt color(default=\"#7f7f7f\")\n\n#uicontrol bool color_by_nt_probability checkbox(default=false)\n#uicontrol bool color_by_nt_confidence checkbox(default=false)\n\n#uicontrol bool color_by_tbar_fanout checkbox(default=false)\n#uicontrol float max_fanout_display slider(min=1.0, max=20.0, step=1.0, default=10.0)\n\n#define unknown_compartment_code 0\n#define axon_code 1\n#define dendrite_code 2\n#define linker_code 3\n#define cell_body_fiber_code 4\n\n#uicontrol bool color_by_compartment checkbox(default=true)\n\n#uicontrol vec3 axon color(default=\"#1f77b4\")\n#uicontrol vec3 dendrite color(default=\"#ff7f0e\")\n#uicontrol vec3 linker color(default=\"#2ca02c\")\n#uicontrol vec3 cell_body_fiber color(default=\"#d62728\")\n#uicontrol vec3 unknown_compartment color(default=\"#7f7f7f\")\n\n#uicontrol int color_seed slider(min=0, max=4294967295, default=0);\n#uicontrol bool color_by_neuropil checkbox(default=true)\n#uicontrol bool color_by_optic_column checkbox(default=false)\n#uicontrol bool color_by_optic_layer checkbox(default=false)\n#uicontrol bool color_by_neuron_id checkbox(default=false)\n#uicontrol bool hide_uncolored checkbox(default=true)\n\nvec3 viridis(float t) {\n\n    const vec3 c0 = vec3(0.2777273272234177, 0.005407344544966578, 0.3340998053353061);\n    const vec3 c1 = vec3(0.1050930431085774, 1.404613529898575, 1.384590162594685);\n    const vec3 c2 = vec3(-0.3308618287255563, 0.214847559468213, 0.09509516302823659);\n    const vec3 c3 = vec3(-4.634230498983486, -5.799100973351585, -19.33244095627987);\n    const vec3 c4 = vec3(6.228269936347081, 14.17993336680509, 56.69055260068105);\n    const vec3 c5 = vec3(4.776384997670288, -13.74514537774601, -65.35303263337234);\n    const vec3 c6 = vec3(-5.435455855934631, 4.645852612178535, 26.3124352495832);\n\n    return c0+t*(c1+t*(c2+t*(c3+t*(c4+t*(c5+t*c6)))));\n}\n  \nuint hash_function(uint state, uint value) {\n    uint k1 = 0xcc9e2d51u;\n    uint k2 = 0x1b873593u;\n    \n    value = value * k1;\n    value = (value << 15) | (value >> 17);\n    value = value * k2;\n    state = state ^ value;\n    state = (state << 13) | (state >> 19);\n    state = state * 5u + 0xe6546b64u;\n    \n    return state;\n}\n\nvec3 hsv_to_rgb(float h, float s, float v) {\n    h *= 6.0;\n    float hue_index = floor(h);\n    float remainder = h - hue_index;\n    float val1 = v * (1.0 - s);\n    float val2 = v * (1.0 - (s * remainder));\n    float val3 = v * (1.0 - (s * (1.0 - remainder)));\n    \n    int hue_remainder = int(hue_index) % 6;\n    \n    if (hue_remainder == 0) {\n        return vec3(v, val3, val1);\n    } else if (hue_remainder == 1) {\n        return vec3(val2, v, val1);\n    } else if (hue_remainder == 2) {\n        return vec3(val1, v, val3);\n    } else if (hue_remainder == 3) {\n        return vec3(val1, val2, v);\n    } else if (hue_remainder == 4) {\n        return vec3(val3, val1, v);\n    } else { // hue_remainder == 5\n        return vec3(v, val1, val2);\n    }\n}\n\nvec3 color_from_segment_id(uint color_seed_, uint segment_id) {\n    uint result = hash_function(color_seed_, segment_id);\n    \n    // We only support 32-bit segment IDs, so newvalue is always 0,\n    // and (id >> 32) would be undefined behavior!\n    // uint newvalue = id >> 32;\n    \n    uint newvalue = 0u;\n    uint result2 = hash_function(result, newvalue);\n    \n    float c0 = float(result2 & 0xFFu) / 255.0;\n    float c1 = float((result2 >> 8) & 0xFFu) / 255.0;\n    \n    float h = c0;\n    float s = 0.5 + 0.5 * c1;\n    float v = 1.0;\n    \n    return hsv_to_rgb(h, s, v);\n}\n\nvec3 get_color_for_id(uint id) {\n    if (id == 0u) {\n        if (hide_uncolored) {\n            discard;\n        }\n        //setPointMarkerBorderWidth(0.2);\n        vec3 white = vec3(1.0, 1.0, 1.0);\n        return white;\n    }\n    else {\n        return color_from_segment_id(uint(color_seed), id);\n    }\n}\n\nvec3 get_nt_color() {\n    vec3 pre_color;\n    \n    switch (int(prop_predicted_nt())) {\n        case acetylcholine_code:\n            pre_color = acetylcholine;\n            break;\n        case dopamine_code:\n            pre_color = dopamine;\n            break;\n        case gaba_code:\n            pre_color = gaba;\n            break;\n        case glutamate_code:\n            pre_color = glutamate;\n            break;\n        case histamine_code:\n            pre_color = histamine;\n            break;\n        case octopamine_code:\n            pre_color = octopamine;\n            break;\n        case serotonin_code:\n            pre_color = serotonin;\n            break;\n        case unknown_nt_code:\n            pre_color = unknown_nt;\n            break;\n        default:\n            pre_color = vec3(1.0, 1.0, 1.0);\n            break;\n    }\n    return pre_color;\n}\n\nvec3 get_compartment_color(int compartment_code) {\n    vec3 color;\n\n    switch (compartment_code) {\n        case axon_code:\n            color = axon;\n            break;\n        case dendrite_code:\n            color = dendrite;\n            break;\n        case linker_code:\n            color = linker;\n            break;\n        case cell_body_fiber_code:\n            color = cell_body_fiber;\n            break;\n        case unknown_compartment_code:\n            color = unknown_compartment;\n            break;\n        default:\n            color = vec3(1.0, 1.0, 1.0);\n            break;\n    }\n    return color;\n}\n\nvoid main() {    \n    vec3 pre_color = pre_default;\n    vec3 post_color = post_default;\n    bool show_post = show_post_partners;\n\n    setLineColor(vec3(1.0, 1.0, 1.0));\n    setEndpointMarkerColor(\n        vec4(pre_color, 1.0), vec4(post_color, 1.0)\n    );\n\n    if (int(color_by_neurotransmitter) + \n        int(color_by_nt_probability) + \n        int(color_by_nt_confidence) + \n        int(color_by_tbar_fanout) + \n        int(color_by_compartment) + \n        int(color_by_neuropil) + \n        int(color_by_optic_column) + \n        int(color_by_optic_layer) + \n        int(color_by_neuron_id)\n    > 1) {\n        // No special color if the user has invalid selections.\n    }\n    else if (color_by_neurotransmitter) {\n        pre_color = get_nt_color();\n    }\n    else if (color_by_nt_probability) {\n       pre_color = viridis(prop_predicted_nt_prob());\n    }\n    else if (color_by_nt_confidence) {\n       pre_color = viridis(prop_nt_tbar_confidence_score());\n    }\n    else if (color_by_tbar_fanout) {\n       float display_fanout = min(float(max_fanout_display), float(prop_tbar_fanout())) / float(max_fanout_display);\n       pre_color = viridis(display_fanout);\n    }\n    else if (color_by_compartment) {\n        pre_color = get_compartment_color(int(prop_compartment_pre()));\n        post_color = get_compartment_color(int(prop_compartment_post()));\n    }\n    else if (color_by_neuropil) {\n        pre_color = post_color = get_color_for_id(uint(prop_primary_roi()));\n    }\n    else if (color_by_optic_column) {\n        pre_color = post_color = get_color_for_id(uint(prop_optic_column()));\n    }\n    else if (color_by_optic_layer) {\n        pre_color = post_color = get_color_for_id(uint(prop_optic_layer()));\n    }\n    else if (color_by_neuron_id) {\n        pre_color = get_color_for_id(uint(prop_body_pre_u32()));\n        post_color = get_color_for_id(uint(prop_body_post_u32()));\n    }\n\n    setEndpointMarkerColor(\n        vec4(pre_color, 1.0), vec4(post_color, 1.0)\n    );\n\n    if (show_pre && show_post) {\n        setLineWidth(1.0);\n        setEndpointMarkerSize(pre_size, post_size);\n    }\n    else if (show_post) {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(0.0, post_size);\n    }\n    else if (show_pre) {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(pre_size, 0.0);\n    }\n    else {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(0.0, 0.0);\n    }\n}\n",
+      "shader": "// To use the \"only_show_shader_hardcoded_connections\"\n// checkbox, edit the #define below and\n// paste in neuron segment IDs of your choosing.\n// (Don't list more than a few hundred.)\n// Only connections in which BOTH pre and post\n// belong to these segments will be shown.\n\n#define HARDCODED_SEGMENT_LIST 111, 222, 333\n\n#uicontrol bool show_pre checkbox(default=true)\n#uicontrol bool show_post_partners checkbox(default=false)\nbool show_post = show_post_partners;\n\n#uicontrol float pre_size slider(min=1.0, max=20.0, default=6.0)\n#uicontrol float post_size slider(min=1.0, max=20.0, default=4.0)\n\n#uicontrol vec3 pre_default color(default=\"red\")\n#uicontrol vec3 post_default color(default=\"blue\")\n\n#define acetylcholine_code 0\n#define dopamine_code 1\n#define gaba_code 2\n#define glutamate_code 3\n#define histamine_code 4\n#define octopamine_code 5\n#define serotonin_code 6\n#define unknown_nt_code 7\n\n#uicontrol bool color_by_neurotransmitter checkbox(default=true)\n\n#uicontrol vec3 acetylcholine color(default=\"#1f77b4\")\n#uicontrol vec3 dopamine color(default=\"#ff7f0e\")\n#uicontrol vec3 gaba color(default=\"#2ca02c\")\n#uicontrol vec3 glutamate color(default=\"#d62728\")\n#uicontrol vec3 histamine color(default=\"#9467bd\")\n#uicontrol vec3 octopamine color(default=\"#8c564b\")\n#uicontrol vec3 serotonin color(default=\"#e377c2\")\n#uicontrol vec3 unknown_nt color(default=\"#7f7f7f\")\n\n#uicontrol bool color_by_nt_probability checkbox(default=false)\n#uicontrol bool color_by_nt_confidence checkbox(default=false)\n\n#uicontrol bool color_by_tbar_fanout checkbox(default=false)\n#uicontrol float max_fanout_display slider(min=1.0, max=20.0, step=1.0, default=10.0)\n\n#define unknown_compartment_code 0\n#define axon_code 1\n#define dendrite_code 2\n#define linker_code 3\n#define cell_body_fiber_code 4\n\n#uicontrol bool color_by_compartment checkbox(default=true)\n\n#uicontrol vec3 axon color(default=\"#1f77b4\")\n#uicontrol vec3 dendrite color(default=\"#ff7f0e\")\n#uicontrol vec3 linker color(default=\"#2ca02c\")\n#uicontrol vec3 cell_body_fiber color(default=\"#d62728\")\n#uicontrol vec3 unknown_compartment color(default=\"#7f7f7f\")\n\n#uicontrol int color_seed slider(min=0, max=4294967295, default=0);\n#uicontrol bool color_by_neuropil checkbox(default=true)\n#uicontrol bool color_by_optic_column checkbox(default=false)\n#uicontrol bool color_by_optic_layer checkbox(default=false)\n#uicontrol bool color_by_neuron_id checkbox(default=false)\n#uicontrol bool hide_uncolored checkbox(default=true)\n\n#ifndef HARDCODED_SEGMENT_LIST\n  #define HARDCODED_SEGMENT_LIST 0\n#endif\n\nconst int segment_list[] = int[](HARDCODED_SEGMENT_LIST);\n#uicontrol bool only_show_shader_hardcoded_connections checkbox(default=false)\n\n\nvec3 viridis(float t) {\n\n    const vec3 c0 = vec3(0.2777273272234177, 0.005407344544966578, 0.3340998053353061);\n    const vec3 c1 = vec3(0.1050930431085774, 1.404613529898575, 1.384590162594685);\n    const vec3 c2 = vec3(-0.3308618287255563, 0.214847559468213, 0.09509516302823659);\n    const vec3 c3 = vec3(-4.634230498983486, -5.799100973351585, -19.33244095627987);\n    const vec3 c4 = vec3(6.228269936347081, 14.17993336680509, 56.69055260068105);\n    const vec3 c5 = vec3(4.776384997670288, -13.74514537774601, -65.35303263337234);\n    const vec3 c6 = vec3(-5.435455855934631, 4.645852612178535, 26.3124352495832);\n\n    return c0+t*(c1+t*(c2+t*(c3+t*(c4+t*(c5+t*c6)))));\n}\n  \nuint hash_function(uint state, uint value) {\n    uint k1 = 0xcc9e2d51u;\n    uint k2 = 0x1b873593u;\n    \n    value = value * k1;\n    value = (value << 15) | (value >> 17);\n    value = value * k2;\n    state = state ^ value;\n    state = (state << 13) | (state >> 19);\n    state = state * 5u + 0xe6546b64u;\n    \n    return state;\n}\n\nvec3 hsv_to_rgb(float h, float s, float v) {\n    h *= 6.0;\n    float hue_index = floor(h);\n    float remainder = h - hue_index;\n    float val1 = v * (1.0 - s);\n    float val2 = v * (1.0 - (s * remainder));\n    float val3 = v * (1.0 - (s * (1.0 - remainder)));\n    \n    int hue_remainder = int(hue_index) % 6;\n    \n    if (hue_remainder == 0) {\n        return vec3(v, val3, val1);\n    } else if (hue_remainder == 1) {\n        return vec3(val2, v, val1);\n    } else if (hue_remainder == 2) {\n        return vec3(val1, v, val3);\n    } else if (hue_remainder == 3) {\n        return vec3(val1, val2, v);\n    } else if (hue_remainder == 4) {\n        return vec3(val3, val1, v);\n    } else { // hue_remainder == 5\n        return vec3(v, val1, val2);\n    }\n}\n\nvec3 color_from_segment_id(uint color_seed_, uint segment_id) {\n    uint result = hash_function(color_seed_, segment_id);\n    \n    // We only support 32-bit segment IDs, so newvalue is always 0,\n    // and (id >> 32) would be undefined behavior!\n    // uint newvalue = id >> 32;\n    \n    uint newvalue = 0u;\n    uint result2 = hash_function(result, newvalue);\n    \n    float c0 = float(result2 & 0xFFu) / 255.0;\n    float c1 = float((result2 >> 8) & 0xFFu) / 255.0;\n    \n    float h = c0;\n    float s = 0.5 + 0.5 * c1;\n    float v = 1.0;\n    \n    return hsv_to_rgb(h, s, v);\n}\n\nvec3 get_color_for_id(uint id) {\n    if (id == 0u) {\n        if (hide_uncolored) {\n            discard;\n        }\n        //setPointMarkerBorderWidth(0.2);\n        vec3 white = vec3(1.0, 1.0, 1.0);\n        return white;\n    }\n    else {\n        return color_from_segment_id(uint(color_seed), id);\n    }\n}\n\nvec3 get_nt_color() {\n    vec3 pre_color;\n    \n    switch (int(prop_predicted_nt())) {\n        case acetylcholine_code:\n            pre_color = acetylcholine;\n            break;\n        case dopamine_code:\n            pre_color = dopamine;\n            break;\n        case gaba_code:\n            pre_color = gaba;\n            break;\n        case glutamate_code:\n            pre_color = glutamate;\n            break;\n        case histamine_code:\n            pre_color = histamine;\n            break;\n        case octopamine_code:\n            pre_color = octopamine;\n            break;\n        case serotonin_code:\n            pre_color = serotonin;\n            break;\n        case unknown_nt_code:\n            pre_color = unknown_nt;\n            break;\n        default:\n            pre_color = vec3(1.0, 1.0, 1.0);\n            break;\n    }\n    return pre_color;\n}\n\nvec3 get_compartment_color(int compartment_code) {\n    vec3 color;\n\n    switch (compartment_code) {\n        case axon_code:\n            color = axon;\n            break;\n        case dendrite_code:\n            color = dendrite;\n            break;\n        case linker_code:\n            color = linker;\n            break;\n        case cell_body_fiber_code:\n            color = cell_body_fiber;\n            break;\n        case unknown_compartment_code:\n            color = unknown_compartment;\n            break;\n        default:\n            color = vec3(1.0, 1.0, 1.0);\n            break;\n    }\n    return color;\n}\n\nbool is_in_segment_list(uint value) {\n    for (int i = 0; i < segment_list.length(); i++) {\n        if (uint(segment_list[i]) == value) return true;\n    }\n    return false;\n}\n\nvoid main() {    \n    vec3 pre_color = pre_default;\n    vec3 post_color = post_default;\n\n    if (only_show_shader_hardcoded_connections) {\n        if (!is_in_segment_list(prop_body_pre_u32()) || !is_in_segment_list(prop_body_post_u32())) {\n            discard;\n        }\n    }\n\n    setLineColor(vec3(1.0, 1.0, 1.0));\n    setEndpointMarkerColor(\n        vec4(pre_color, 1.0), vec4(post_color, 1.0)\n    );\n\n    if (int(color_by_neurotransmitter) + \n        int(color_by_nt_probability) + \n        int(color_by_nt_confidence) + \n        int(color_by_tbar_fanout) + \n        int(color_by_compartment) + \n        int(color_by_neuropil) + \n        int(color_by_optic_column) + \n        int(color_by_optic_layer) + \n        int(color_by_neuron_id)\n    > 1) {\n        // Invalid selection.\n        discard;\n    }\n    else if (color_by_neurotransmitter) {\n        pre_color = get_nt_color();\n    }\n    else if (color_by_nt_probability) {\n       pre_color = viridis(prop_predicted_nt_prob());\n    }\n    else if (color_by_nt_confidence) {\n       pre_color = viridis(prop_nt_tbar_confidence_score());\n    }\n    else if (color_by_tbar_fanout) {\n       float display_fanout = min(float(max_fanout_display), float(prop_tbar_fanout())) / float(max_fanout_display);\n       pre_color = viridis(display_fanout);\n    }\n    else if (color_by_compartment) {\n        pre_color = get_compartment_color(int(prop_compartment_pre()));\n        post_color = get_compartment_color(int(prop_compartment_post()));\n    }\n    else if (color_by_neuropil) {\n        pre_color = post_color = get_color_for_id(uint(prop_primary_roi()));\n    }\n    else if (color_by_optic_column) {\n        pre_color = post_color = get_color_for_id(uint(prop_optic_column()));\n    }\n    else if (color_by_optic_layer) {\n        pre_color = post_color = get_color_for_id(uint(prop_optic_layer()));\n    }\n    else if (color_by_neuron_id) {\n        pre_color = get_color_for_id(uint(prop_body_pre_u32()));\n        post_color = get_color_for_id(uint(prop_body_post_u32()));\n    }\n\n    setEndpointMarkerColor(\n        vec4(pre_color, 1.0), vec4(post_color, 1.0)\n    );\n\n    if (show_pre && show_post) {\n        setLineWidth(1.0);\n        setEndpointMarkerSize(pre_size, post_size);\n    }\n    else if (show_post) {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(0.0, post_size);\n    }\n    else if (show_pre) {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(pre_size, 0.0);\n    }\n    else {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(0.0, 0.0);\n    }\n}\n",
       "shaderControls": {
         "color_by_neurotransmitter": false,
         "color_by_compartment": false,
@@ -879,11 +1269,13 @@ const NEUROGLANCER_TEMPLATE = {
     },
     {
       "type": "annotation",
-      "source": "precomputed://gs://flyem-male-cns/v0.9/male-cns-v0.9-synapses-precomputed/",
+      "source": "precomputed://gs://flyem-male-cns/v1.0/male-cns-v1.0-synapses-precomputed/",
       "tab": "rendering",
       "codeVisible": false,
-      "shader": "#uicontrol bool show_pre_partners checkbox(default=true)\n#uicontrol bool show_post checkbox(default=false)\n\n#uicontrol float pre_size slider(min=1.0, max=20.0, default=6.0)\n#uicontrol float post_size slider(min=1.0, max=20.0, default=4.0)\n\n#uicontrol vec3 pre_default color(default=\"red\")\n#uicontrol vec3 post_default color(default=\"blue\")\n\n#define acetylcholine_code 0\n#define dopamine_code 1\n#define gaba_code 2\n#define glutamate_code 3\n#define histamine_code 4\n#define octopamine_code 5\n#define serotonin_code 6\n#define unknown_nt_code 7\n\n#uicontrol bool color_by_neurotransmitter checkbox(default=true)\n\n#uicontrol vec3 acetylcholine color(default=\"#1f77b4\")\n#uicontrol vec3 dopamine color(default=\"#ff7f0e\")\n#uicontrol vec3 gaba color(default=\"#2ca02c\")\n#uicontrol vec3 glutamate color(default=\"#d62728\")\n#uicontrol vec3 histamine color(default=\"#9467bd\")\n#uicontrol vec3 octopamine color(default=\"#8c564b\")\n#uicontrol vec3 serotonin color(default=\"#e377c2\")\n#uicontrol vec3 unknown_nt color(default=\"#7f7f7f\")\n\n#uicontrol bool color_by_nt_probability checkbox(default=false)\n#uicontrol bool color_by_nt_confidence checkbox(default=false)\n\n#uicontrol bool color_by_tbar_fanout checkbox(default=false)\n#uicontrol float max_fanout_display slider(min=1.0, max=20.0, step=1.0, default=10.0)\n\n#define unknown_compartment_code 0\n#define axon_code 1\n#define dendrite_code 2\n#define linker_code 3\n#define cell_body_fiber_code 4\n\n#uicontrol bool color_by_compartment checkbox(default=true)\n\n#uicontrol vec3 axon color(default=\"#1f77b4\")\n#uicontrol vec3 dendrite color(default=\"#ff7f0e\")\n#uicontrol vec3 linker color(default=\"#2ca02c\")\n#uicontrol vec3 cell_body_fiber color(default=\"#d62728\")\n#uicontrol vec3 unknown_compartment color(default=\"#7f7f7f\")\n\n#uicontrol int color_seed slider(min=0, max=4294967295, default=0);\n#uicontrol bool color_by_neuropil checkbox(default=true)\n#uicontrol bool color_by_optic_column checkbox(default=false)\n#uicontrol bool color_by_optic_layer checkbox(default=false)\n#uicontrol bool color_by_neuron_id checkbox(default=false)\n#uicontrol bool hide_uncolored checkbox(default=true)\n\nvec3 viridis(float t) {\n\n    const vec3 c0 = vec3(0.2777273272234177, 0.005407344544966578, 0.3340998053353061);\n    const vec3 c1 = vec3(0.1050930431085774, 1.404613529898575, 1.384590162594685);\n    const vec3 c2 = vec3(-0.3308618287255563, 0.214847559468213, 0.09509516302823659);\n    const vec3 c3 = vec3(-4.634230498983486, -5.799100973351585, -19.33244095627987);\n    const vec3 c4 = vec3(6.228269936347081, 14.17993336680509, 56.69055260068105);\n    const vec3 c5 = vec3(4.776384997670288, -13.74514537774601, -65.35303263337234);\n    const vec3 c6 = vec3(-5.435455855934631, 4.645852612178535, 26.3124352495832);\n\n    return c0+t*(c1+t*(c2+t*(c3+t*(c4+t*(c5+t*c6)))));\n}\n  \nuint hash_function(uint state, uint value) {\n    uint k1 = 0xcc9e2d51u;\n    uint k2 = 0x1b873593u;\n    \n    value = value * k1;\n    value = (value << 15) | (value >> 17);\n    value = value * k2;\n    state = state ^ value;\n    state = (state << 13) | (state >> 19);\n    state = state * 5u + 0xe6546b64u;\n    \n    return state;\n}\n\nvec3 hsv_to_rgb(float h, float s, float v) {\n    h *= 6.0;\n    float hue_index = floor(h);\n    float remainder = h - hue_index;\n    float val1 = v * (1.0 - s);\n    float val2 = v * (1.0 - (s * remainder));\n    float val3 = v * (1.0 - (s * (1.0 - remainder)));\n    \n    int hue_remainder = int(hue_index) % 6;\n    \n    if (hue_remainder == 0) {\n        return vec3(v, val3, val1);\n    } else if (hue_remainder == 1) {\n        return vec3(val2, v, val1);\n    } else if (hue_remainder == 2) {\n        return vec3(val1, v, val3);\n    } else if (hue_remainder == 3) {\n        return vec3(val1, val2, v);\n    } else if (hue_remainder == 4) {\n        return vec3(val3, val1, v);\n    } else { // hue_remainder == 5\n        return vec3(v, val1, val2);\n    }\n}\n\nvec3 color_from_segment_id(uint color_seed_, uint segment_id) {\n    uint result = hash_function(color_seed_, segment_id);\n    \n    // We only support 32-bit segment IDs, so newvalue is always 0,\n    // and (id >> 32) would be undefined behavior!\n    // uint newvalue = id >> 32;\n    \n    uint newvalue = 0u;\n    uint result2 = hash_function(result, newvalue);\n    \n    float c0 = float(result2 & 0xFFu) / 255.0;\n    float c1 = float((result2 >> 8) & 0xFFu) / 255.0;\n    \n    float h = c0;\n    float s = 0.5 + 0.5 * c1;\n    float v = 1.0;\n    \n    return hsv_to_rgb(h, s, v);\n}\n\nvec3 get_color_for_id(uint id) {\n    if (id == 0u) {\n        if (hide_uncolored) {\n            discard;\n        }\n        //setPointMarkerBorderWidth(0.2);\n        vec3 white = vec3(1.0, 1.0, 1.0);\n        return white;\n    }\n    else {\n        return color_from_segment_id(uint(color_seed), id);\n    }\n}\n\nvec3 get_nt_color() {\n    vec3 pre_color;\n    \n    switch (int(prop_predicted_nt())) {\n        case acetylcholine_code:\n            pre_color = acetylcholine;\n            break;\n        case dopamine_code:\n            pre_color = dopamine;\n            break;\n        case gaba_code:\n            pre_color = gaba;\n            break;\n        case glutamate_code:\n            pre_color = glutamate;\n            break;\n        case histamine_code:\n            pre_color = histamine;\n            break;\n        case octopamine_code:\n            pre_color = octopamine;\n            break;\n        case serotonin_code:\n            pre_color = serotonin;\n            break;\n        case unknown_nt_code:\n            pre_color = unknown_nt;\n            break;\n        default:\n            pre_color = vec3(1.0, 1.0, 1.0);\n            break;\n    }\n    return pre_color;\n}\n\nvec3 get_compartment_color(int compartment_code) {\n    vec3 color;\n\n    switch (compartment_code) {\n        case axon_code:\n            color = axon;\n            break;\n        case dendrite_code:\n            color = dendrite;\n            break;\n        case linker_code:\n            color = linker;\n            break;\n        case cell_body_fiber_code:\n            color = cell_body_fiber;\n            break;\n        case unknown_compartment_code:\n            color = unknown_compartment;\n            break;\n        default:\n            color = vec3(1.0, 1.0, 1.0);\n            break;\n    }\n    return color;\n}\n\nvoid main() {    \n    vec3 pre_color = pre_default;\n    vec3 post_color = post_default;\n    bool show_pre = show_pre_partners;\n\n    setLineColor(vec3(1.0, 1.0, 1.0));\n    setEndpointMarkerColor(\n        vec4(pre_color, 1.0), vec4(post_color, 1.0)\n    );\n\n    if (int(color_by_neurotransmitter) + \n        int(color_by_nt_probability) + \n        int(color_by_nt_confidence) + \n        int(color_by_tbar_fanout) + \n        int(color_by_compartment) + \n        int(color_by_neuropil) + \n        int(color_by_optic_column) + \n        int(color_by_optic_layer) + \n        int(color_by_neuron_id)\n    > 1) {\n        // No special color if the user has invalid selections.\n    }\n    else if (color_by_neurotransmitter) {\n        pre_color = get_nt_color();\n    }\n    else if (color_by_nt_probability) {\n       pre_color = viridis(prop_predicted_nt_prob());\n    }\n    else if (color_by_nt_confidence) {\n       pre_color = viridis(prop_nt_tbar_confidence_score());\n    }\n    else if (color_by_tbar_fanout) {\n       float display_fanout = min(float(max_fanout_display), float(prop_tbar_fanout())) / float(max_fanout_display);\n       pre_color = viridis(display_fanout);\n    }\n    else if (color_by_compartment) {\n        pre_color = get_compartment_color(int(prop_compartment_pre()));\n        post_color = get_compartment_color(int(prop_compartment_post()));\n    }\n    else if (color_by_neuropil) {\n        pre_color = post_color = get_color_for_id(uint(prop_primary_roi()));\n    }\n    else if (color_by_optic_column) {\n        pre_color = post_color = get_color_for_id(uint(prop_optic_column()));\n    }\n    else if (color_by_optic_layer) {\n        pre_color = post_color = get_color_for_id(uint(prop_optic_layer()));\n    }\n    else if (color_by_neuron_id) {\n        pre_color = get_color_for_id(uint(prop_body_pre_u32()));\n        post_color = get_color_for_id(uint(prop_body_post_u32()));\n    }\n\n    setEndpointMarkerColor(\n        vec4(pre_color, 1.0), vec4(post_color, 1.0)\n    );\n\n    if (show_pre && show_post) {\n        setLineWidth(1.0);\n        setEndpointMarkerSize(pre_size, post_size);\n    }\n    else if (show_post) {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(0.0, post_size);\n    }\n    else if (show_pre) {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(pre_size, 0.0);\n    }\n    else {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(0.0, 0.0);\n    }\n}\n",
+      "shader": "// To use the \"only_show_shader_hardcoded_connections\"\n// checkbox, edit the #define below and\n// paste in neuron segment IDs of your choosing.\n// (Don't list more than a few hundred.)\n// Only connections in which BOTH pre and post\n// belong to these segments will be shown.\n\n#define HARDCODED_SEGMENT_LIST 111, 222, 333\n\n#uicontrol bool show_pre_partners checkbox(default=true)\n#uicontrol bool show_post checkbox(default=false)\nbool show_pre = show_pre_partners;\n\n#uicontrol float pre_size slider(min=1.0, max=20.0, default=6.0)\n#uicontrol float post_size slider(min=1.0, max=20.0, default=4.0)\n\n#uicontrol vec3 pre_default color(default=\"red\")\n#uicontrol vec3 post_default color(default=\"blue\")\n\n#define acetylcholine_code 0\n#define dopamine_code 1\n#define gaba_code 2\n#define glutamate_code 3\n#define histamine_code 4\n#define octopamine_code 5\n#define serotonin_code 6\n#define unknown_nt_code 7\n\n#uicontrol bool color_by_neurotransmitter checkbox(default=true)\n\n#uicontrol vec3 acetylcholine color(default=\"#1f77b4\")\n#uicontrol vec3 dopamine color(default=\"#ff7f0e\")\n#uicontrol vec3 gaba color(default=\"#2ca02c\")\n#uicontrol vec3 glutamate color(default=\"#d62728\")\n#uicontrol vec3 histamine color(default=\"#9467bd\")\n#uicontrol vec3 octopamine color(default=\"#8c564b\")\n#uicontrol vec3 serotonin color(default=\"#e377c2\")\n#uicontrol vec3 unknown_nt color(default=\"#7f7f7f\")\n\n#uicontrol bool color_by_nt_probability checkbox(default=false)\n#uicontrol bool color_by_nt_confidence checkbox(default=false)\n\n#uicontrol bool color_by_tbar_fanout checkbox(default=false)\n#uicontrol float max_fanout_display slider(min=1.0, max=20.0, step=1.0, default=10.0)\n\n#define unknown_compartment_code 0\n#define axon_code 1\n#define dendrite_code 2\n#define linker_code 3\n#define cell_body_fiber_code 4\n\n#uicontrol bool color_by_compartment checkbox(default=true)\n\n#uicontrol vec3 axon color(default=\"#1f77b4\")\n#uicontrol vec3 dendrite color(default=\"#ff7f0e\")\n#uicontrol vec3 linker color(default=\"#2ca02c\")\n#uicontrol vec3 cell_body_fiber color(default=\"#d62728\")\n#uicontrol vec3 unknown_compartment color(default=\"#7f7f7f\")\n\n#uicontrol int color_seed slider(min=0, max=4294967295, default=0);\n#uicontrol bool color_by_neuropil checkbox(default=true)\n#uicontrol bool color_by_optic_column checkbox(default=false)\n#uicontrol bool color_by_optic_layer checkbox(default=false)\n#uicontrol bool color_by_neuron_id checkbox(default=false)\n#uicontrol bool hide_uncolored checkbox(default=true)\n\n#ifndef HARDCODED_SEGMENT_LIST\n  #define HARDCODED_SEGMENT_LIST 0\n#endif\n\nconst int segment_list[] = int[](HARDCODED_SEGMENT_LIST);\n#uicontrol bool only_show_shader_hardcoded_connections checkbox(default=false)\n\n\nvec3 viridis(float t) {\n\n    const vec3 c0 = vec3(0.2777273272234177, 0.005407344544966578, 0.3340998053353061);\n    const vec3 c1 = vec3(0.1050930431085774, 1.404613529898575, 1.384590162594685);\n    const vec3 c2 = vec3(-0.3308618287255563, 0.214847559468213, 0.09509516302823659);\n    const vec3 c3 = vec3(-4.634230498983486, -5.799100973351585, -19.33244095627987);\n    const vec3 c4 = vec3(6.228269936347081, 14.17993336680509, 56.69055260068105);\n    const vec3 c5 = vec3(4.776384997670288, -13.74514537774601, -65.35303263337234);\n    const vec3 c6 = vec3(-5.435455855934631, 4.645852612178535, 26.3124352495832);\n\n    return c0+t*(c1+t*(c2+t*(c3+t*(c4+t*(c5+t*c6)))));\n}\n  \nuint hash_function(uint state, uint value) {\n    uint k1 = 0xcc9e2d51u;\n    uint k2 = 0x1b873593u;\n    \n    value = value * k1;\n    value = (value << 15) | (value >> 17);\n    value = value * k2;\n    state = state ^ value;\n    state = (state << 13) | (state >> 19);\n    state = state * 5u + 0xe6546b64u;\n    \n    return state;\n}\n\nvec3 hsv_to_rgb(float h, float s, float v) {\n    h *= 6.0;\n    float hue_index = floor(h);\n    float remainder = h - hue_index;\n    float val1 = v * (1.0 - s);\n    float val2 = v * (1.0 - (s * remainder));\n    float val3 = v * (1.0 - (s * (1.0 - remainder)));\n    \n    int hue_remainder = int(hue_index) % 6;\n    \n    if (hue_remainder == 0) {\n        return vec3(v, val3, val1);\n    } else if (hue_remainder == 1) {\n        return vec3(val2, v, val1);\n    } else if (hue_remainder == 2) {\n        return vec3(val1, v, val3);\n    } else if (hue_remainder == 3) {\n        return vec3(val1, val2, v);\n    } else if (hue_remainder == 4) {\n        return vec3(val3, val1, v);\n    } else { // hue_remainder == 5\n        return vec3(v, val1, val2);\n    }\n}\n\nvec3 color_from_segment_id(uint color_seed_, uint segment_id) {\n    uint result = hash_function(color_seed_, segment_id);\n    \n    // We only support 32-bit segment IDs, so newvalue is always 0,\n    // and (id >> 32) would be undefined behavior!\n    // uint newvalue = id >> 32;\n    \n    uint newvalue = 0u;\n    uint result2 = hash_function(result, newvalue);\n    \n    float c0 = float(result2 & 0xFFu) / 255.0;\n    float c1 = float((result2 >> 8) & 0xFFu) / 255.0;\n    \n    float h = c0;\n    float s = 0.5 + 0.5 * c1;\n    float v = 1.0;\n    \n    return hsv_to_rgb(h, s, v);\n}\n\nvec3 get_color_for_id(uint id) {\n    if (id == 0u) {\n        if (hide_uncolored) {\n            discard;\n        }\n        //setPointMarkerBorderWidth(0.2);\n        vec3 white = vec3(1.0, 1.0, 1.0);\n        return white;\n    }\n    else {\n        return color_from_segment_id(uint(color_seed), id);\n    }\n}\n\nvec3 get_nt_color() {\n    vec3 pre_color;\n    \n    switch (int(prop_predicted_nt())) {\n        case acetylcholine_code:\n            pre_color = acetylcholine;\n            break;\n        case dopamine_code:\n            pre_color = dopamine;\n            break;\n        case gaba_code:\n            pre_color = gaba;\n            break;\n        case glutamate_code:\n            pre_color = glutamate;\n            break;\n        case histamine_code:\n            pre_color = histamine;\n            break;\n        case octopamine_code:\n            pre_color = octopamine;\n            break;\n        case serotonin_code:\n            pre_color = serotonin;\n            break;\n        case unknown_nt_code:\n            pre_color = unknown_nt;\n            break;\n        default:\n            pre_color = vec3(1.0, 1.0, 1.0);\n            break;\n    }\n    return pre_color;\n}\n\nvec3 get_compartment_color(int compartment_code) {\n    vec3 color;\n\n    switch (compartment_code) {\n        case axon_code:\n            color = axon;\n            break;\n        case dendrite_code:\n            color = dendrite;\n            break;\n        case linker_code:\n            color = linker;\n            break;\n        case cell_body_fiber_code:\n            color = cell_body_fiber;\n            break;\n        case unknown_compartment_code:\n            color = unknown_compartment;\n            break;\n        default:\n            color = vec3(1.0, 1.0, 1.0);\n            break;\n    }\n    return color;\n}\n\nbool is_in_segment_list(uint value) {\n    for (int i = 0; i < segment_list.length(); i++) {\n        if (uint(segment_list[i]) == value) return true;\n    }\n    return false;\n}\n\nvoid main() {    \n    vec3 pre_color = pre_default;\n    vec3 post_color = post_default;\n\n    if (only_show_shader_hardcoded_connections) {\n        if (!is_in_segment_list(prop_body_pre_u32()) || !is_in_segment_list(prop_body_post_u32())) {\n            discard;\n        }\n    }\n\n    setLineColor(vec3(1.0, 1.0, 1.0));\n    setEndpointMarkerColor(\n        vec4(pre_color, 1.0), vec4(post_color, 1.0)\n    );\n\n    if (int(color_by_neurotransmitter) + \n        int(color_by_nt_probability) + \n        int(color_by_nt_confidence) + \n        int(color_by_tbar_fanout) + \n        int(color_by_compartment) + \n        int(color_by_neuropil) + \n        int(color_by_optic_column) + \n        int(color_by_optic_layer) + \n        int(color_by_neuron_id)\n    > 1) {\n        // Invalid selection.\n        discard;\n    }\n    else if (color_by_neurotransmitter) {\n        pre_color = get_nt_color();\n    }\n    else if (color_by_nt_probability) {\n       pre_color = viridis(prop_predicted_nt_prob());\n    }\n    else if (color_by_nt_confidence) {\n       pre_color = viridis(prop_nt_tbar_confidence_score());\n    }\n    else if (color_by_tbar_fanout) {\n       float display_fanout = min(float(max_fanout_display), float(prop_tbar_fanout())) / float(max_fanout_display);\n       pre_color = viridis(display_fanout);\n    }\n    else if (color_by_compartment) {\n        pre_color = get_compartment_color(int(prop_compartment_pre()));\n        post_color = get_compartment_color(int(prop_compartment_post()));\n    }\n    else if (color_by_neuropil) {\n        pre_color = post_color = get_color_for_id(uint(prop_primary_roi()));\n    }\n    else if (color_by_optic_column) {\n        pre_color = post_color = get_color_for_id(uint(prop_optic_column()));\n    }\n    else if (color_by_optic_layer) {\n        pre_color = post_color = get_color_for_id(uint(prop_optic_layer()));\n    }\n    else if (color_by_neuron_id) {\n        pre_color = get_color_for_id(uint(prop_body_pre_u32()));\n        post_color = get_color_for_id(uint(prop_body_post_u32()));\n    }\n\n    setEndpointMarkerColor(\n        vec4(pre_color, 1.0), vec4(post_color, 1.0)\n    );\n\n    if (show_pre && show_post) {\n        setLineWidth(1.0);\n        setEndpointMarkerSize(pre_size, post_size);\n    }\n    else if (show_post) {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(0.0, post_size);\n    }\n    else if (show_pre) {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(pre_size, 0.0);\n    }\n    else {\n        setLineWidth(0.0);\n        setEndpointMarkerSize(0.0, 0.0);\n    }\n}\n",
       "shaderControls": {
+        "show_pre_partners": false,
+        "show_post": true,
         "color_by_neurotransmitter": false,
         "color_by_compartment": false,
         "color_by_neuropil": false
@@ -921,7 +1313,7 @@ const NEUROGLANCER_TEMPLATE = {
 };
 
 // Dataset information for conditional behavior
-const DATASET_NAME = "male-cns:v0.9";
+const DATASET_NAME = "male-cns:v1.0";
 const IS_FAFB_DATASET = DATASET_NAME.toLowerCase().includes("fafb");
 
 // Neuroglancer base URL from configuration

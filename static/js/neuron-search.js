@@ -5,8 +5,8 @@
  * This file is generated at build time.
  * Do not edit manually - it will be overwritten during the build process.
  *
- * Generated on: 2026-05-18 20:41:14
- * Total neuron types: 11732
+ * Generated on: 2026-06-08 15:38:13
+ * Total neuron types: 11751
  */
 
 class NeuronSearch {
