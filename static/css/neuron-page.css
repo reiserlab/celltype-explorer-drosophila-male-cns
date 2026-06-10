@@ -238,6 +238,13 @@
     .hamburger-section-site {
         display: none;
     }
+
+    /* On non-neuron pages the page-specific section isn't rendered, so the
+       only remaining content (the site section above) is hidden too. Hide
+       the whole hamburger element rather than leaving an empty sidebar. */
+    body:not(.is-neuron-page) .hamburger-menu {
+        display: none;
+    }
 }
 
 /* Small screen styles - hamburger button + slide-in drawer */
@@ -247,15 +254,21 @@
         display: none;
     }
 
-    /* On neuron-type pages collapse the top header-bar to brand-only:
-       its other columns (Home/Types/Help, search, social) are now inside
-       the drawer. Index/help pages still need their inline nav, so we
-       scope this to .is-neuron-page. */
-    body.is-neuron-page .neuron-header-bar > .row > div:nth-child(1),
-    body.is-neuron-page .neuron-header-bar > .row > div:nth-child(3) {
+    /* Collapse the top header-bar across all pages: hide the left nav
+       (Home/Types/Help) and the social/neuPrint links in the right column —
+       those are now reachable through the drawer. The search input stays
+       visible in the top row down to the 1024px breakpoint below. */
+    .neuron-header-bar > .row > div:nth-child(1) {
         display: none;
     }
-    body.is-neuron-page .neuron-header-bar > .row {
+    .neuron-header-bar
+        > .row
+        > div:nth-child(3)
+        > .row
+        > div:not(.header-search-col) {
+        display: none;
+    }
+    .neuron-header-bar > .row {
         justify-content: center;
     }
 
@@ -323,6 +336,22 @@
 
     .hamburger-section-title {
         padding-left: 24px;
+    }
+}
+
+/* While the top header-bar still shows the search input (1024-1699px),
+   the drawer's duplicate search input is redundant; hide it there. */
+@media (min-width: 1024px) and (max-width: 1699px) {
+    .hamburger-search {
+        display: none;
+    }
+}
+
+/* Below the flexboxgrid `md` breakpoint the search input also moves into
+   the drawer, leaving only the brand in the top header-bar. */
+@media (max-width: 1023px) {
+    .neuron-header-bar > .row > div:nth-child(3) {
+        display: none;
     }
 }
 

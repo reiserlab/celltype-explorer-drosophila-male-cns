@@ -1,6 +1,0 @@
-command: generate
-created_at: '2026-05-18T16:35:37.486811'
-options:
-  embed: false
-  image-format: svg
-  neuron-type: LC26

@@ -400,37 +400,39 @@ class NeuronSearch {
         }
       }
 
-      // Matched aliases preview: show synonym/flywire entries that contain the
-      // query so users see *why* a type was matched even when the type name doesn't.
-      if (query && neuronEntry && neuronEntry.types) {
-        const matchedAliases = [];
-        const seen = new Set();
+      // Aliases preview: list every synonym/flywire name for this type so users
+      // always see its alternative names. The query (if any) is highlighted
+      // where it occurs. Skip aliases that are exactly the type name itself
+      // (case-insensitive) — e.g. a flywire name identical to the type — since
+      // "aka: <same name>" is noise.
+      if (neuronEntry && neuronEntry.types) {
+        const aliases = [];
+        const seen = new Set([type.toLowerCase()]);
         if (Array.isArray(neuronEntry.types.synonyms)) {
           for (const synonym of neuronEntry.types.synonyms) {
             const colonIndex = synonym.indexOf(':');
             const namePart = colonIndex !== -1 ? synonym.substring(colonIndex + 1).trim() : synonym;
-            if (
-              namePart && !seen.has(namePart) &&
-              (synonym.toLowerCase().includes(query) || namePart.toLowerCase().includes(query))
-            ) {
-              seen.add(namePart);
-              matchedAliases.push(namePart);
+            const key = namePart.toLowerCase();
+            if (namePart && !seen.has(key)) {
+              seen.add(key);
+              aliases.push(namePart);
             }
           }
         }
         if (Array.isArray(neuronEntry.types.flywire)) {
           for (const flywireType of neuronEntry.types.flywire) {
-            if (flywireType && !seen.has(flywireType) && flywireType.toLowerCase().includes(query)) {
-              seen.add(flywireType);
-              matchedAliases.push(flywireType);
+            const key = flywireType && flywireType.toLowerCase();
+            if (flywireType && !seen.has(key)) {
+              seen.add(key);
+              aliases.push(flywireType);
             }
           }
         }
-        if (matchedAliases.length > 0) {
+        if (aliases.length > 0) {
           const aliasLine = document.createElement('div');
           aliasLine.className = 'neuron-search-aliases';
           aliasLine.appendChild(document.createTextNode('aka: '));
-          matchedAliases.forEach((alias, aliasIdx) => {
+          aliases.forEach((alias, aliasIdx) => {
             if (aliasIdx > 0) {
               aliasLine.appendChild(document.createTextNode(', '));
             }
