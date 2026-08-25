@@ -4,7 +4,7 @@
 **Server:** neuprint.janelia.org\
 **Dataset UUID:** 4b2087c0fbe046bfaf0d60bc970e3e5d\
 **Dataset Last Updated:** 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)\
-**Generated:** 2026-06-09 23:16:30 UTC\
+**Generated:** 2026-08-25 12:28:38 UTC\
 **Total Neuron Types:** 11751
 
 ---
@@ -209,7 +209,7 @@ When using data from this catalog, please cite:
 1. The original neuPrint database and dataset
 2. The specific dataset version (male-cns:v1.0) with UUID 4b2087c0fbe046bfaf0d60bc970e3e5d
 3. The dataset last updated on 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)
-4. The generation date of this catalog (2026-06-09)
+4. The generation date of this catalog (2026-08-25)
 
 For the most current citation information, visit the neuPrint database at neuprint.janelia.org.
 
@@ -230,4 +230,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2026-06-09 at 23:16:30 UTC using dataset male-cns:v1.0 (UUID: 4b2087c0fbe046bfaf0d60bc970e3e5d, last updated: 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2026-08-25 at 12:28:38 UTC using dataset male-cns:v1.0 (UUID: 4b2087c0fbe046bfaf0d60bc970e3e5d, last updated: 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*
