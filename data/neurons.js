@@ -7,7 +7,7 @@
  * This file is generated at build time with embedded neuron data.
  * Do not edit manually - it will be overwritten during the build process.
  *
- * Generated on: 2026-08-25 12:28:38
+ * Generated on: 2026-09-08 17:44:11
  * Total neuron types: 11751
  */
 
@@ -144010,7 +144010,7 @@
       },
       "types": {
         "flywire": [
-          "VP4+_vPN"
+          "VP4_vPN"
         ]
       }
     },
@@ -144023,7 +144023,7 @@
       },
       "types": {
         "flywire": [
-          "VP4+_vPN"
+          "VP4_vPN"
         ]
       }
     },
@@ -150627,7 +150627,7 @@
     }
   ],
   "metadata": {
-    "generated": "2026-08-25 12:28:38",
+    "generated": "2026-09-08 17:44:11",
     "total_types": 11751,
     "version": "2.0"
   }

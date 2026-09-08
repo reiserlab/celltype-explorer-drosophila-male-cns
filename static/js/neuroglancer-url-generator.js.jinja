@@ -960,6 +960,10 @@ function generateNeuroglancerUrl(
 
       neuropilLayer.segments = brainRois;
       neuropilLayer.visible = brainRois.length > 0;
+      // Neuroglancer forces visible=false while restoring an archived layer,
+      // so the layer has to be un-archived for the meshes to show at all.
+      // When nothing is selected we leave the template's own value alone.
+      if (brainRois.length > 0) neuropilLayer.archived = false;
 
       console.log("[LAYER ASSIGNMENT] brain-neuropils:", brainRois, "contexts:",
         brainRois.map(id => selectedRoiContexts.get(id)));
@@ -973,6 +977,7 @@ function generateNeuroglancerUrl(
 
       vncNeuropilLayer.segments = vncRois;
       vncNeuropilLayer.visible = vncRois.length > 0;
+      if (vncRois.length > 0) vncNeuropilLayer.archived = false;
 
       console.log("[LAYER ASSIGNMENT] vnc-neuropils:", vncRois, "contexts:",
         vncRois.map(id => selectedRoiContexts.get(id)));

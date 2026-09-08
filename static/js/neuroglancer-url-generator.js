@@ -249,8 +249,6 @@ const NEUROGLANCER_TEMPLATE = {
         "24",
         "25",
         "26",
-        "27",
-        "28",
         "29",
         "3",
         "30",
@@ -274,7 +272,6 @@ const NEUROGLANCER_TEMPLATE = {
         "47",
         "48",
         "49",
-        "5",
         "50",
         "51",
         "52",
@@ -283,11 +280,6 @@ const NEUROGLANCER_TEMPLATE = {
         "55",
         "56",
         "57",
-        "58",
-        "59",
-        "6",
-        "60",
-        "61",
         "62",
         "63",
         "64",
@@ -1320,8 +1312,8 @@ const IS_FAFB_DATASET = DATASET_NAME.toLowerCase().includes("fafb");
 const NEUROGLANCER_BASE_URL = "https://neuroglancer-demo.appspot.com";
 
 // ROI data loaded dynamically from Google Cloud Storage
-const ROI_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 93, 94, 95, 96];
-const ALL_ROIS = ["AL(L)", "AL(R)", "AME(L)", "AME(R)", "AMMC(L)", "AMMC(R)", "AOTU(L)", "AOTU(R)", "ATL(L)", "ATL(R)", "AVLP(L)", "AVLP(R)", "BU(L)", "BU(R)", "CA(L)", "CA(R)", "CAN(L)", "CAN(R)", "CRE(L)", "CRE(R)", "EB", "EPA(L)", "EPA(R)", "FB", "FLA(L)", "FLA(R)", "GA(L)", "GA(R)", "GNG", "GOR(L)", "GOR(R)", "IB", "ICL(L)", "ICL(R)", "IPS(L)", "IPS(R)", "LA(L)", "LA(R)", "LAL(L)", "LAL(R)", "LH(L)", "LH(R)", "LO(L)", "LO(R)", "LOP(L)", "LOP(R)", "ME(L)", "ME(R)", "NO", "PB", "PED(L)", "PED(R)", "PLP(L)", "PLP(R)", "PRW", "PVLP(L)", "PVLP(R)", "ROB(L)", "ROB(R)", "RUB(L)", "RUB(R)", "SAD", "SCL(L)", "SCL(R)", "SIP(L)", "SIP(R)", "SLP(L)", "SLP(R)", "SMP(L)", "SMP(R)", "SPS(L)", "SPS(R)", "VES(L)", "VES(R)", "WED(L)", "WED(R)", "a\u0027L(L)", "a\u0027L(R)", "aL(L)", "aL(R)", "b\u0027L(L)", "b\u0027L(R)", "bL(L)", "bL(R)", "gL(L)", "gL(R)", "AB(R)", "AB(L)", "CV-anterior", "CRN"];
+const ROI_IDS = [1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 93, 94, 95, 96];
+const ALL_ROIS = ["AL(L)", "AL(R)", "AME(L)", "AME(R)", "AOTU(L)", "AOTU(R)", "ATL(L)", "ATL(R)", "AVLP(L)", "AVLP(R)", "BU(L)", "BU(R)", "CA(L)", "CA(R)", "CAN(L)", "CAN(R)", "CRE(L)", "CRE(R)", "EB", "EPA(L)", "EPA(R)", "FB", "FLA(L)", "FLA(R)", "GNG", "GOR(L)", "GOR(R)", "IB", "ICL(L)", "ICL(R)", "IPS(L)", "IPS(R)", "LA(L)", "LA(R)", "LAL(L)", "LAL(R)", "LH(L)", "LH(R)", "LO(L)", "LO(R)", "LOP(L)", "LOP(R)", "ME(L)", "ME(R)", "NO", "PB", "PED(L)", "PED(R)", "PLP(L)", "PLP(R)", "PRW", "PVLP(L)", "PVLP(R)", "SAD", "SCL(L)", "SCL(R)", "SIP(L)", "SIP(R)", "SLP(L)", "SLP(R)", "SMP(L)", "SMP(R)", "SPS(L)", "SPS(R)", "VES(L)", "VES(R)", "WED(L)", "WED(R)", "a\u0027L(L)", "a\u0027L(R)", "aL(L)", "aL(R)", "b\u0027L(L)", "b\u0027L(R)", "bL(L)", "bL(R)", "gL(L)", "gL(R)", "AB(R)", "AB(L)", "CV-anterior", "CRN"];
 const VNC_IDS = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
 const VNC_NAMES = ["CV-posterior", "LegNp(T1)(L)", "LegNp(T1)(R)", "LegNp(T2)(L)", "LegNp(T2)(R)", "LegNp(T3)(L)", "LegNp(T3)(R)", "Ov(L)", "Ov(R)", "IntTct", "LTct", "NTct(UTct-T1)(L)", "NTct(UTct-T1)(R)", "WTct(UTct-T2)(L)", "WTct(UTct-T2)(R)", "HTct(UTct-T3)(L)", "HTct(UTct-T3)(R)", "ANm", "mVAC(T1)(L)", "mVAC(T1)(R)", "mVAC(T2)(L)", "mVAC(T2)(R)", "mVAC(T3)(L)", "mVAC(T3)(R)"];
 
@@ -2261,6 +2253,10 @@ function generateNeuroglancerUrl(
 
       neuropilLayer.segments = brainRois;
       neuropilLayer.visible = brainRois.length > 0;
+      // Neuroglancer forces visible=false while restoring an archived layer,
+      // so the layer has to be un-archived for the meshes to show at all.
+      // When nothing is selected we leave the template's own value alone.
+      if (brainRois.length > 0) neuropilLayer.archived = false;
 
       console.log("[LAYER ASSIGNMENT] brain-neuropils:", brainRois, "contexts:",
         brainRois.map(id => selectedRoiContexts.get(id)));
@@ -2274,6 +2270,7 @@ function generateNeuroglancerUrl(
 
       vncNeuropilLayer.segments = vncRois;
       vncNeuropilLayer.visible = vncRois.length > 0;
+      if (vncRois.length > 0) vncNeuropilLayer.archived = false;
 
       console.log("[LAYER ASSIGNMENT] vnc-neuropils:", vncRois, "contexts:",
         vncRois.map(id => selectedRoiContexts.get(id)));
