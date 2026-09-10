@@ -1311,6 +1311,9 @@ const IS_FAFB_DATASET = DATASET_NAME.toLowerCase().includes("fafb");
 // Neuroglancer base URL from configuration
 const NEUROGLANCER_BASE_URL = "https://neuroglancer-demo.appspot.com";
 
+// Per-neuron download formats ({key, label, url_template, kind, extension}), [] when disabled
+const NEUROGLANCER_DOWNLOAD_FORMATS = [{"extension": "swc", "key": "swc", "kind": "swc", "label": "SWC skeleton (coarse, ~16 KB per neuron)", "url_template": "https://www.googleapis.com/storage/v1/b/flyem-male-cns/o/v1.0%2Fsegmentation%2Fskeletons-malecns%2Fskeletons-swc%2F{body_id}.swc?alt=media"}, {"extension": "swc", "key": "swc-highres", "kind": "swc", "label": "SWC skeleton (high resolution, ~300 KB per neuron)", "url_template": "https://www.googleapis.com/storage/v1/b/flyem-male-cns/o/v1.0%2Fsegmentation%2Fskeletons-malecns%2Fskeletons-highres-swc%2F{body_id}.swc?alt=media"}, {"extension": "obj", "key": "obj", "kind": "ngmesh", "label": "OBJ mesh (converted from the Neuroglancer mesh, ~3 MB per neuron)", "url_template": "https://www.googleapis.com/storage/v1/b/flyem-male-cns/o/v1.0%2Fsegmentation%2Fsingle-res-meshes%2F{body_id}:0?alt=media"}];
+
 // ROI data loaded dynamically from Google Cloud Storage
 const ROI_IDS = [1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 93, 94, 95, 96];
 const ALL_ROIS = ["AL(L)", "AL(R)", "AME(L)", "AME(R)", "AOTU(L)", "AOTU(R)", "ATL(L)", "ATL(R)", "AVLP(L)", "AVLP(R)", "BU(L)", "BU(R)", "CA(L)", "CA(R)", "CAN(L)", "CAN(R)", "CRE(L)", "CRE(R)", "EB", "EPA(L)", "EPA(R)", "FB", "FLA(L)", "FLA(R)", "GNG", "GOR(L)", "GOR(R)", "IB", "ICL(L)", "ICL(R)", "IPS(L)", "IPS(R)", "LA(L)", "LA(R)", "LAL(L)", "LAL(R)", "LH(L)", "LH(R)", "LO(L)", "LO(R)", "LOP(L)", "LOP(R)", "ME(L)", "ME(R)", "NO", "PB", "PED(L)", "PED(R)", "PLP(L)", "PLP(R)", "PRW", "PVLP(L)", "PVLP(R)", "SAD", "SCL(L)", "SCL(R)", "SIP(L)", "SIP(R)", "SLP(L)", "SLP(R)", "SMP(L)", "SMP(R)", "SPS(L)", "SPS(R)", "VES(L)", "VES(R)", "WED(L)", "WED(R)", "a\u0027L(L)", "a\u0027L(R)", "aL(L)", "aL(R)", "b\u0027L(L)", "b\u0027L(R)", "bL(L)", "bL(R)", "gL(L)", "gL(R)", "AB(R)", "AB(L)", "CV-anterior", "CRN"];
@@ -2158,6 +2161,24 @@ function wireRoiClicks(pageData) {
 /* ────────────────────────────────────────────────────────────────────────── */
 
 /**
+ * Find the segmentation layer that holds the neuron body IDs (as opposed to
+ * the ROI / shell layers). Layer names are dataset specific.
+ *
+ * @param {Array<Object>} layers - Neuroglancer state layers
+ * @returns {Object|undefined} The neuron segmentation layer, if any
+ */
+function findMainSegmentationLayer(layers) {
+  if (!Array.isArray(layers)) return undefined;
+  return layers.find(
+    (l) =>
+      l &&
+      l.type === "segmentation" &&
+      l.segments !== undefined &&
+      (l.name === "cns-seg" || l.name === "flywire-fafb:v783b"),
+  );
+}
+
+/**
  * Generates a Neuroglancer URL based on the provided parameters
  *
  * @param {string} websiteTitle - The title for the neuroglancer session
@@ -2209,10 +2230,7 @@ function generateNeuroglancerUrl(
     }
 
     // Find the main segmentation layer (flexible for different datasets)
-    const mainSegLayer = neuroglancerState.layers.find(
-      (l) => l.type === "segmentation" && l.segments !== undefined &&
-           (l.name === "cns-seg" || l.name === "flywire-fafb:v783b")
-    );
+    const mainSegLayer = findMainSegmentationLayer(neuroglancerState.layers);
 
     // Find the neuropil layers (flexible for different datasets)
     const neuropilLayer = neuroglancerState.layers.find(
@@ -2350,6 +2368,11 @@ function updateNeuroglancerLinks(
  * @param {string[]} pageData.region - Region the type belongs to. Used for setting NG view.
  */
 function initializeNeuroglancerLinks(pageData) {
+  // Expose the live page state (mutated in place by the checkbox handlers) so
+  // other scripts, e.g. the SWC download, can read the current neuron selection.
+  if (typeof window !== "undefined") {
+    window.neuviewNeuroglancerPageData = pageData;
+  }
   const run = () => {
     // Initialize ROI contexts and sync selectedRoiIds with pageData.visibleRois
     if (pageData.visibleRois && Array.isArray(pageData.visibleRois)) {
@@ -2421,6 +2444,7 @@ if (typeof module !== "undefined" && module.exports) {
     wireRoiCheckboxes,
     getAllConnectivityBodyIds,
     hasActiveConnectivityBodies,
+    findMainSegmentationLayer,
   };
 } else if (typeof window !== "undefined") {
   // Make functions globally available for browser use
@@ -2434,6 +2458,7 @@ if (typeof module !== "undefined" && module.exports) {
   window.wireRoiCheckboxes = wireRoiCheckboxes;
   window.getAllConnectivityBodyIds = getAllConnectivityBodyIds;
   window.hasActiveConnectivityBodies = hasActiveConnectivityBodies;
+  window.findMainSegmentationLayer = findMainSegmentationLayer;
   window.roiNameToId = roiNameToId;
   window.vncNameToId = vncNameToId;
 }

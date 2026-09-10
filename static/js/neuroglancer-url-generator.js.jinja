@@ -18,6 +18,9 @@ const IS_FAFB_DATASET = DATASET_NAME.toLowerCase().includes("fafb");
 // Neuroglancer base URL from configuration
 const NEUROGLANCER_BASE_URL = "{{ neuroglancer_base_url }}";
 
+// Per-neuron download formats ({key, label, url_template, kind, extension}), [] when disabled
+const NEUROGLANCER_DOWNLOAD_FORMATS = {{ neuroglancer_download_formats | default([]) | tojson }};
+
 // ROI data loaded dynamically from Google Cloud Storage
 const ROI_IDS = {{ roi_ids|tojson }};
 const ALL_ROIS = {{ all_rois|tojson }};
@@ -865,6 +868,24 @@ function wireRoiClicks(pageData) {
 /* ────────────────────────────────────────────────────────────────────────── */
 
 /**
+ * Find the segmentation layer that holds the neuron body IDs (as opposed to
+ * the ROI / shell layers). Layer names are dataset specific.
+ *
+ * @param {Array<Object>} layers - Neuroglancer state layers
+ * @returns {Object|undefined} The neuron segmentation layer, if any
+ */
+function findMainSegmentationLayer(layers) {
+  if (!Array.isArray(layers)) return undefined;
+  return layers.find(
+    (l) =>
+      l &&
+      l.type === "segmentation" &&
+      l.segments !== undefined &&
+      (l.name === "cns-seg" || l.name === "flywire-fafb:v783b"),
+  );
+}
+
+/**
  * Generates a Neuroglancer URL based on the provided parameters
  *
  * @param {string} websiteTitle - The title for the neuroglancer session
@@ -916,10 +937,7 @@ function generateNeuroglancerUrl(
     }
 
     // Find the main segmentation layer (flexible for different datasets)
-    const mainSegLayer = neuroglancerState.layers.find(
-      (l) => l.type === "segmentation" && l.segments !== undefined &&
-           (l.name === "cns-seg" || l.name === "flywire-fafb:v783b")
-    );
+    const mainSegLayer = findMainSegmentationLayer(neuroglancerState.layers);
 
     // Find the neuropil layers (flexible for different datasets)
     const neuropilLayer = neuroglancerState.layers.find(
@@ -1057,6 +1075,11 @@ function updateNeuroglancerLinks(
  * @param {string[]} pageData.region - Region the type belongs to. Used for setting NG view.
  */
 function initializeNeuroglancerLinks(pageData) {
+  // Expose the live page state (mutated in place by the checkbox handlers) so
+  // other scripts, e.g. the SWC download, can read the current neuron selection.
+  if (typeof window !== "undefined") {
+    window.neuviewNeuroglancerPageData = pageData;
+  }
   const run = () => {
     // Initialize ROI contexts and sync selectedRoiIds with pageData.visibleRois
     if (pageData.visibleRois && Array.isArray(pageData.visibleRois)) {
@@ -1128,6 +1151,7 @@ if (typeof module !== "undefined" && module.exports) {
     wireRoiCheckboxes,
     getAllConnectivityBodyIds,
     hasActiveConnectivityBodies,
+    findMainSegmentationLayer,
   };
 } else if (typeof window !== "undefined") {
   // Make functions globally available for browser use
@@ -1141,6 +1165,7 @@ if (typeof module !== "undefined" && module.exports) {
   window.wireRoiCheckboxes = wireRoiCheckboxes;
   window.getAllConnectivityBodyIds = getAllConnectivityBodyIds;
   window.hasActiveConnectivityBodies = hasActiveConnectivityBodies;
+  window.findMainSegmentationLayer = findMainSegmentationLayer;
   window.roiNameToId = roiNameToId;
   window.vncNameToId = vncNameToId;
 }

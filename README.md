@@ -4,7 +4,7 @@
 **Server:** neuprint.janelia.org\
 **Dataset UUID:** 4b2087c0fbe046bfaf0d60bc970e3e5d\
 **Dataset Last Updated:** 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)\
-**Generated:** 2026-09-08 17:44:11 UTC\
+**Generated:** 2026-09-09 18:56:13 UTC\
 **Total Neuron Types:** 11751
 
 ---
@@ -97,6 +97,7 @@ Each neuron type in the index table links to a comprehensive analysis page conta
 - **Direct links** to explore neuron reconstructions in 3D space
 - **Zoom, rotate, and navigate** through the brain volume
 - **View neuron reconstructions** in their anatomical context
+- **Download neurons** as one zip file with one file per displayed neuron. Available formats: SWC skeleton (coarse, ~16 KB per neuron), SWC skeleton (high resolution, ~300 KB per neuron), OBJ mesh (converted from the Neuroglancer mesh, ~3 MB per neuron). Paste a Neuroglancer URL into the dialog to download exactly the neurons selected in the viewer
 
 ### Layer Analysis
 - **Detailed breakdown** of neuron presence across brain regions: Lamina (LA), Medulla (ME), Lobula (LO), Lobula Plate (LOP), Accessory Medulla (AME), and Central Brain (CB)
@@ -180,6 +181,7 @@ Neurotransmitter assignments are computational predictions based on:
 - **Printable pages** - Browser print function works with all pages
 - **Bookmarkable URLs** - Save direct links to specific neuron types
 - **Shareable content** - URLs can be shared with colleagues
+- **Neuron files** - The download icon above the 3D view saves skeletons or meshes of the displayed neurons (SWC skeleton (coarse, ~16 KB per neuron), SWC skeleton (high resolution, ~300 KB per neuron), OBJ mesh (converted from the Neuroglancer mesh, ~3 MB per neuron)) as a zip archive
 
 ## Dataset Information
 
@@ -209,7 +211,7 @@ When using data from this catalog, please cite:
 1. The original neuPrint database and dataset
 2. The specific dataset version (male-cns:v1.0) with UUID 4b2087c0fbe046bfaf0d60bc970e3e5d
 3. The dataset last updated on 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)
-4. The generation date of this catalog (2026-09-08)
+4. The generation date of this catalog (2026-09-09)
 
 For the most current citation information, visit the neuPrint database at neuprint.janelia.org.
 
@@ -230,4 +232,4 @@ For questions about the data or analysis methods, consult the neuPrint database 
 
 ---
 
-*This catalog was automatically generated from neuPrint data on 2026-09-08 at 17:44:11 UTC using dataset male-cns:v1.0 (UUID: 4b2087c0fbe046bfaf0d60bc970e3e5d, last updated: 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*
+*This catalog was automatically generated from neuPrint data on 2026-09-09 at 18:56:13 UTC using dataset male-cns:v1.0 (UUID: 4b2087c0fbe046bfaf0d60bc970e3e5d, last updated: 2026-03-28 11:56:30.222612573-04:00 / 2026-06-08T01:31:39-04:00 (segment property update)). For the most up-to-date information, please consult the original neuPrint database.*

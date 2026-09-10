@@ -3235,3 +3235,112 @@ table.dataTable#roi-table tbody > tr > td:first-child {
     color: #666;
     margin-top: 2px;
 }
+
+/* SWC skeleton download dialog (opened from the Neuroglancer header) */
+.swc-download-dialog {
+    width: min(40rem, calc(100vw - 2rem));
+    max-height: calc(100vh - 2rem);
+    padding: 1.25rem 1.5rem;
+    border: 1px solid rgba(127, 127, 127, 0.4);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--pm-app-text-color, #333);
+    font-size: 0.95rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+.swc-download-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+.swc-download-dialog-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+.swc-download-dialog h3 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+.swc-download-close {
+    flex: 0 0 auto;
+    min-width: unset;
+    min-height: unset;
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: inherit;
+}
+.swc-download-dialog p {
+    margin: 0 0 0.75rem;
+    font-family: var(--pm-font-family-primary);
+}
+.swc-download-formats {
+    width: auto;
+    margin: 0 0 0.75rem;
+    padding: 0.5rem 0.75rem 0.25rem;
+}
+.swc-download-formats legend {
+    padding: 0 0.4rem;
+    font-weight: 600;
+}
+.swc-download-format {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0 0 0.35rem;
+    font-weight: normal;
+    cursor: pointer;
+}
+.swc-download-format input[type="radio"] {
+    flex: 0 0 auto;
+    margin: 0 0.5rem 0 0;
+}
+/* Screenshot of Neuroglancer's "copy URL" button, floated beside the hint text */
+#swc-download-hint-image {
+    float: right;
+    width: 12rem;
+    max-width: 45%;
+    height: auto;
+    margin: 0 0 0.5rem 1rem;
+    border: 1px solid rgba(127, 127, 127, 0.4);
+    border-radius: 4px;
+}
+/* Contain the float so the URL field below starts on its own line */
+.swc-download-dialog p:has(#swc-download-hint-image) {
+    display: flow-root;
+}
+.swc-download-label {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+.swc-download-dialog input[type="text"] {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    font: inherit;
+}
+.swc-download-status {
+    min-height: 1.4em;
+    margin: 0 0 0.75rem;
+}
+.swc-download-status.is-error {
+    color: var(--pm-color-error, #c0392b);
+}
+.swc-download-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+.swc-download-actions button {
+    margin-bottom: 0;
+}
+.swc-download-link.is-busy {
+    opacity: 0.5;
+}
